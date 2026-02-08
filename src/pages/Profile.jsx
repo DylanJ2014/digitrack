@@ -39,11 +39,17 @@ export default function Profile() {
     e.preventDefault();
     setSaving(true);
     try {
-      await base44.auth.updateMe(formData);
+      const updateData = { ...formData };
+      delete updateData.email;
+      delete updateData.user_type;
+      delete updateData.role;
+      
+      await base44.auth.updateMe(updateData);
+      alert('Profile updated successfully!');
       window.location.href = createPageUrl('Dashboard');
     } catch (error) {
       console.error('Failed to save:', error);
-      alert('Failed to save changes. Please try again.');
+      alert(`Failed to save: ${error.message || 'Please try again.'}`);
       setSaving(false);
     }
   };

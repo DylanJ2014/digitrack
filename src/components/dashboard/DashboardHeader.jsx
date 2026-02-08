@@ -10,7 +10,7 @@ export default function DashboardHeader({ user }) {
   };
 
   return (
-    <div className="shadow-sm" style={{ backgroundColor: '#FF6F61' }}>
+    <div className="shadow-sm" style={{ backgroundColor: '#F2C94C' }}>
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div>

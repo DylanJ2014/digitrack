@@ -18,9 +18,9 @@ export default function DashboardHeader({ user }) {
             alt="DigiTrack Logo" 
             className="h-14"
           />
-          <div className="hidden md:block border-l border-gray-300 pl-6">
-            <p className="text-sm text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-              Log, Locate, Love Lost Property
+          <div className="border-l border-gray-300 pl-6">
+            <p className="text-sm text-gray-700 font-medium italic" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              Log, Locate and Love your lost property
             </p>
           </div>
         </div>

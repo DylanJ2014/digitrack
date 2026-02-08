@@ -38,9 +38,14 @@ export default function Profile() {
   const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
-    await base44.auth.updateMe(formData);
-    setSaving(false);
-    window.location.href = createPageUrl('Dashboard');
+    try {
+      await base44.auth.updateMe(formData);
+      window.location.href = createPageUrl('Dashboard');
+    } catch (error) {
+      console.error('Failed to save:', error);
+      alert('Failed to save changes. Please try again.');
+      setSaving(false);
+    }
   };
 
   if (loading) {

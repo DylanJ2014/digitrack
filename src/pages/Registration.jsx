@@ -73,6 +73,14 @@ export default function Registration() {
     <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
+          <img 
+            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
+            alt="DigiTrack Logo" 
+            className="h-16 mx-auto mb-2"
+          />
+          <p className="text-sm text-gray-700 font-medium italic mb-4" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+            Log, Locate and Love your lost property
+          </p>
           <CardTitle className="text-2xl" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Complete Your Registration</CardTitle>
           <p className="text-sm text-gray-600 mt-2">Welcome, {user?.full_name}</p>
         </CardHeader>

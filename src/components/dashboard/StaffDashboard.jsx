@@ -24,11 +24,21 @@ export default function StaffDashboard({ user }) {
   });
 
   const markFoundMutation = useMutation({
-    mutationFn: (itemId) => base44.entities.LostItem.update(itemId, { 
-      status: 'found', 
-      found_date: new Date().toISOString().split('T')[0],
-      found_by: user.email 
-    }),
+    mutationFn: async (item) => {
+      await base44.entities.LostItem.update(item.id, { 
+        status: 'found', 
+        found_date: new Date().toISOString().split('T')[0],
+        found_by: user.email 
+      });
+      
+      await base44.entities.Notification.create({
+        user_email: item.reported_by,
+        message: `Great news! Your ${item.item_name} has been found and is ready for collection.`,
+        item_name: item.item_name,
+        item_id: item.id,
+        is_read: false
+      });
+    },
     onSuccess: () => queryClient.invalidateQueries(['allLostItems']),
   });
 
@@ -65,6 +75,15 @@ export default function StaffDashboard({ user }) {
             found_by: user.email,
             last_location: item.last_location || existingItem.last_location
           });
+          
+          await base44.entities.Notification.create({
+            user_email: existingItem.reported_by,
+            message: `Great news! Your ${existingItem.item_name} has been located and is ready for collection.`,
+            item_name: existingItem.item_name,
+            item_id: existingItem.id,
+            is_read: false
+          });
+          
           results.matched++;
         } else {
           await base44.entities.LostItem.create({
@@ -188,7 +207,7 @@ export default function StaffDashboard({ user }) {
                   <LostItemCard 
                     key={item.id} 
                     item={item} 
-                    onMarkFound={() => markFoundMutation.mutate(item.id)}
+                    onMarkFound={() => markFoundMutation.mutate(item)}
                     isMarkingFound={markFoundMutation.isPending}
                     showStudentInfo
                   />
@@ -230,7 +249,7 @@ export default function StaffDashboard({ user }) {
                         <Button 
                           size="sm" 
                           variant="outline"
-                          onClick={() => markFoundMutation.mutate(item.id)}
+                          onClick={() => markFoundMutation.mutate(item)}
                           disabled={markFoundMutation.isPending}
                           style={{ fontFamily: 'Gill Sans, sans-serif' }}
                         >

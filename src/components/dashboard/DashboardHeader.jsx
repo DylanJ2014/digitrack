@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { LogOut, User } from 'lucide-react';
 import { createPageUrl } from '@/utils';
+import NotificationBell from './NotificationBell';
 
 export default function DashboardHeader({ user }) {
   const handleLogout = () => {
@@ -24,6 +25,7 @@ export default function DashboardHeader({ user }) {
             <p className="font-semibold text-gray-800" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.full_name}</p>
             <p className="text-xs text-gray-600 capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
           </div>
+          {user?.user_type === 'student' && <NotificationBell userEmail={user.email} />}
           <Button 
             variant="ghost" 
             size="icon" 

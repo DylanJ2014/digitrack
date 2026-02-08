@@ -5,17 +5,33 @@ import DashboardHeader from './DashboardHeader';
 import LostItemCard from './LostItemCard';
 import LogItemForm from './LogItemForm';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Plus, Search } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function StudentDashboard({ user }) {
   const [showForm, setShowForm] = useState(false);
   const queryClient = useQueryClient();
 
-  const { data: lostItems = [], isLoading } = useQuery({
-    queryKey: ['lostItems', user.email],
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const { data: myLostItems = [], isLoading: isLoadingMine } = useQuery({
+    queryKey: ['myLostItems', user.email],
     queryFn: () => base44.entities.LostItem.filter({ reported_by: user.email, status: 'lost' }, '-created_date'),
   });
+
+  const { data: allLostItems = [], isLoading: isLoadingAll } = useQuery({
+    queryKey: ['allLostItems'],
+    queryFn: () => base44.entities.LostItem.filter({ status: 'lost' }, '-created_date'),
+  });
+
+  const filteredAllItems = allLostItems.filter(item => 
+    item.item_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.student_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.last_location?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const markFoundMutation = useMutation({
     mutationFn: (itemId) => base44.entities.LostItem.update(itemId, { 
@@ -80,26 +96,73 @@ export default function StudentDashboard({ user }) {
           </Dialog>
         </div>
 
-        {isLoading ? (
-          <div className="text-white text-center py-8">Loading...</div>
-        ) : lostItems.length === 0 ? (
-          <div className="bg-white/10 rounded-lg p-8 text-center">
-            <p className="text-white text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-              No lost items reported. Click "Log Lost Item" to report a missing item.
-            </p>
-          </div>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {lostItems.map((item) => (
-              <LostItemCard 
-                key={item.id} 
-                item={item} 
-                onMarkFound={() => markFoundMutation.mutate(item.id)}
-                isMarkingFound={markFoundMutation.isPending}
+        <Tabs defaultValue="my-items" className="w-full">
+          <TabsList className="bg-white/10 mb-4">
+            <TabsTrigger value="my-items" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              My Lost Items
+            </TabsTrigger>
+            <TabsTrigger value="find-items" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <Search className="h-4 w-4 mr-2" />
+              Find Lost Items
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="my-items">
+            {isLoadingMine ? (
+              <div className="text-white text-center py-8">Loading...</div>
+            ) : myLostItems.length === 0 ? (
+              <div className="bg-white/10 rounded-lg p-8 text-center">
+                <p className="text-white text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  No lost items reported. Click "Log Lost Item" to report a missing item.
+                </p>
+              </div>
+            ) : (
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {myLostItems.map((item) => (
+                  <LostItemCard 
+                    key={item.id} 
+                    item={item} 
+                    onMarkFound={() => markFoundMutation.mutate(item.id)}
+                    isMarkingFound={markFoundMutation.isPending}
+                  />
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="find-items">
+            <div className="mb-4">
+              <Input
+                placeholder="Search by item name, description, student name, or location..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="bg-white"
+                style={{ fontFamily: 'Gill Sans, sans-serif' }}
               />
-            ))}
-          </div>
-        )}
+            </div>
+            {isLoadingAll ? (
+              <div className="text-white text-center py-8">Loading...</div>
+            ) : filteredAllItems.length === 0 ? (
+              <div className="bg-white/10 rounded-lg p-8 text-center">
+                <p className="text-white text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  No lost items found matching your search.
+                </p>
+              </div>
+            ) : (
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {filteredAllItems.map((item) => (
+                  <LostItemCard 
+                    key={item.id} 
+                    item={item} 
+                    onMarkFound={() => markFoundMutation.mutate(item.id)}
+                    isMarkingFound={markFoundMutation.isPending}
+                    showStudentInfo
+                  />
+                ))}
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

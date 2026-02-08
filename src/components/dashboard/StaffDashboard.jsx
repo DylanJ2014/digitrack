@@ -4,8 +4,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import DashboardHeader from './DashboardHeader';
 import LostItemCard from './LostItemCard';
 import LogItemForm from './LogItemForm';
+import BulkLogItemForm from './BulkLogItemForm';
 import { Button } from '@/components/ui/button';
-import { Plus, FileText } from 'lucide-react';
+import { Plus, FileText, ListPlus } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -13,6 +14,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 
 export default function StaffDashboard({ user }) {
   const [showForm, setShowForm] = useState(false);
+  const [showBulkForm, setShowBulkForm] = useState(false);
   const [yearFilter, setYearFilter] = useState('all');
   const queryClient = useQueryClient();
 
@@ -43,6 +45,22 @@ export default function StaffDashboard({ user }) {
     },
   });
 
+  const bulkCreateMutation = useMutation({
+    mutationFn: (items) => {
+      const itemsToCreate = items.map(item => ({
+        ...item,
+        year_group: extractYearGroup(item.form_group),
+        status: 'lost',
+        reported_by: user.email
+      }));
+      return base44.entities.LostItem.bulkCreate(itemsToCreate);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['allLostItems']);
+      setShowBulkForm(false);
+    },
+  });
+
   const extractYearGroup = (formGroup) => {
     const match = formGroup?.match(/(\d+)/);
     if (match) {
@@ -66,23 +84,43 @@ export default function StaffDashboard({ user }) {
           <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
             Staff Dashboard
           </h2>
-          <Dialog open={showForm} onOpenChange={setShowForm}>
-            <DialogTrigger asChild>
-              <Button className="bg-white hover:bg-gray-100" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
-                <Plus className="h-4 w-4 mr-2" />
-                Log Lost Item
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle style={{ fontFamily: 'Gill Sans, sans-serif' }}>Log a Lost Item</DialogTitle>
-              </DialogHeader>
-              <LogItemForm 
-                onSubmit={(data) => createItemMutation.mutate(data)}
-                isLoading={createItemMutation.isPending}
-              />
-            </DialogContent>
-          </Dialog>
+          <div className="flex gap-3">
+            <Dialog open={showForm} onOpenChange={setShowForm}>
+              <DialogTrigger asChild>
+                <Button className="bg-white hover:bg-gray-100" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Log Single Item
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle style={{ fontFamily: 'Gill Sans, sans-serif' }}>Log a Lost Item</DialogTitle>
+                </DialogHeader>
+                <LogItemForm 
+                  onSubmit={(data) => createItemMutation.mutate(data)}
+                  isLoading={createItemMutation.isPending}
+                />
+              </DialogContent>
+            </Dialog>
+
+            <Dialog open={showBulkForm} onOpenChange={setShowBulkForm}>
+              <DialogTrigger asChild>
+                <Button className="bg-white hover:bg-gray-100" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+                  <ListPlus className="h-4 w-4 mr-2" />
+                  Log Multiple Items
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-3xl">
+                <DialogHeader>
+                  <DialogTitle style={{ fontFamily: 'Gill Sans, sans-serif' }}>Log Multiple Lost Items</DialogTitle>
+                </DialogHeader>
+                <BulkLogItemForm 
+                  onSubmit={(items) => bulkCreateMutation.mutate(items)}
+                  isLoading={bulkCreateMutation.isPending}
+                />
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
 
         <Tabs defaultValue="cards" className="w-full">

@@ -1,7 +1,8 @@
 import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { LogOut } from 'lucide-react';
+import { LogOut, User } from 'lucide-react';
+import { createPageUrl } from '@/utils';
 
 export default function DashboardHeader({ user }) {
   const handleLogout = () => {
@@ -28,6 +29,9 @@ export default function DashboardHeader({ user }) {
             <p className="font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.full_name}</p>
             <p className="text-sm text-black capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
           </div>
+          <Button variant="outline" size="icon" onClick={() => window.location.href = createPageUrl('Profile')}>
+            <User className="h-4 w-4" />
+          </Button>
           <Button variant="outline" size="icon" onClick={handleLogout}>
             <LogOut className="h-4 w-4" />
           </Button>

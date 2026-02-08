@@ -46,18 +46,43 @@ export default function StaffDashboard({ user }) {
   });
 
   const bulkCreateMutation = useMutation({
-    mutationFn: (items) => {
-      const itemsToCreate = items.map(item => ({
-        ...item,
-        year_group: extractYearGroup(item.form_group),
-        status: 'lost',
-        reported_by: user.email
-      }));
-      return base44.entities.LostItem.bulkCreate(itemsToCreate);
+    mutationFn: async (items) => {
+      const allItems = await base44.entities.LostItem.list();
+      const results = { matched: 0, created: 0 };
+      
+      for (const item of items) {
+        const existingItem = allItems.find(existing => 
+          existing.student_name.toLowerCase() === item.student_name.toLowerCase() &&
+          existing.form_group.toLowerCase() === item.form_group.toLowerCase() &&
+          existing.item_name.toLowerCase() === item.item_name.toLowerCase() &&
+          existing.status === 'lost'
+        );
+        
+        if (existingItem) {
+          await base44.entities.LostItem.update(existingItem.id, {
+            status: 'found',
+            found_date: new Date().toISOString().split('T')[0],
+            found_by: user.email,
+            last_location: item.last_location || existingItem.last_location
+          });
+          results.matched++;
+        } else {
+          await base44.entities.LostItem.create({
+            ...item,
+            year_group: extractYearGroup(item.form_group),
+            status: 'lost',
+            reported_by: user.email
+          });
+          results.created++;
+        }
+      }
+      
+      return results;
     },
-    onSuccess: () => {
+    onSuccess: (results) => {
       queryClient.invalidateQueries(['allLostItems']);
       setShowBulkForm(false);
+      alert(`✓ ${results.matched} item(s) marked as located\n✓ ${results.created} new item(s) logged`);
     },
   });
 

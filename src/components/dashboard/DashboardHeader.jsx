@@ -18,7 +18,7 @@ export default function DashboardHeader({ user }) {
               alt="DigiTrack Logo" 
               className="h-12 mb-1"
             />
-            <p className="text-sm text-gray-500" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+            <p className="text-sm text-black" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               Log, Locate, Love Lost Property
             </p>
           </div>
@@ -26,7 +26,7 @@ export default function DashboardHeader({ user }) {
         <div className="flex items-center gap-4">
           <div className="text-right">
             <p className="font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.full_name}</p>
-            <p className="text-sm text-gray-500 capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
+            <p className="text-sm text-black capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
           </div>
           <Button variant="outline" size="icon" onClick={handleLogout}>
             <LogOut className="h-4 w-4" />

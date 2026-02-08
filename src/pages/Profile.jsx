@@ -38,12 +38,20 @@ export default function Profile() {
   const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
+    
+    const updateData = {};
+    if (formData.full_name !== undefined) updateData.full_name = formData.full_name;
+    if (user.user_type === 'student') {
+      if (formData.form_group !== undefined) updateData.form_group = formData.form_group;
+      if (formData.house !== undefined) updateData.house = formData.house;
+    } else if (user.user_type === 'parent') {
+      if (formData.child_name !== undefined) updateData.child_name = formData.child_name;
+      if (formData.child_form_group !== undefined) updateData.child_form_group = formData.child_form_group;
+    } else if (user.user_type === 'staff') {
+      if (formData.staff_role !== undefined) updateData.staff_role = formData.staff_role;
+    }
+    
     try {
-      const updateData = { ...formData };
-      delete updateData.email;
-      delete updateData.user_type;
-      delete updateData.role;
-      
       await base44.auth.updateMe(updateData);
       alert('Profile updated successfully!');
       window.location.href = createPageUrl('Dashboard');

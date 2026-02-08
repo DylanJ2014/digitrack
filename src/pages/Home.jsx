@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
 
 export default function Home() {
   const [checking, setChecking] = useState(true);
@@ -40,10 +39,11 @@ export default function Home() {
     <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
       <div className="text-center max-w-md">
         <div className="mb-8">
-          <div className="w-24 h-24 mx-auto mb-6 bg-white rounded-full flex items-center justify-center">
-            <Search className="w-12 h-12" style={{ color: '#254B77' }} />
-          </div>
-          <h1 className="text-4xl font-bold text-white mb-4">DigiTrack</h1>
+          <img 
+            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
+            alt="DigiTrack Logo" 
+            className="h-24 mx-auto mb-6"
+          />
           <p className="text-xl text-white/80 mb-2">Log, Locate, Love Lost Property</p>
           <p className="text-white/60">Your school's lost property management system</p>
         </div>

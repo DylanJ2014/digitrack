@@ -10,30 +10,40 @@ export default function DashboardHeader({ user }) {
   };
 
   return (
-    <div className="shadow-sm" style={{ backgroundColor: '#F2C94C' }}>
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div>
-            <img 
-              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
-              alt="DigiTrack Logo" 
-              className="h-12 mb-1"
-            />
-            <p className="text-sm text-black" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+    <div className="shadow-md border-b border-gray-200" style={{ backgroundColor: '#F2C94C' }}>
+      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-6">
+          <img 
+            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
+            alt="DigiTrack Logo" 
+            className="h-14"
+          />
+          <div className="hidden md:block border-l border-gray-300 pl-6">
+            <p className="text-sm text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               Log, Locate, Love Lost Property
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="text-right">
-            <p className="font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.full_name}</p>
-            <p className="text-sm text-black capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:block text-right mr-2">
+            <p className="font-semibold text-gray-800" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.full_name}</p>
+            <p className="text-xs text-gray-600 capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
           </div>
-          <Button variant="outline" size="icon" onClick={() => window.location.href = createPageUrl('Profile')}>
-            <User className="h-4 w-4" />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => window.location.href = createPageUrl('Profile')}
+            className="hover:bg-white/50"
+          >
+            <User className="h-5 w-5 text-gray-700" />
           </Button>
-          <Button variant="outline" size="icon" onClick={handleLogout}>
-            <LogOut className="h-4 w-4" />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={handleLogout}
+            className="hover:bg-white/50"
+          >
+            <LogOut className="h-5 w-5 text-gray-700" />
           </Button>
         </div>
       </div>

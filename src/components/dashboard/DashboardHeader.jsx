@@ -18,11 +18,6 @@ export default function DashboardHeader({ user }) {
             alt="DigiTrack Logo" 
             className="h-14"
           />
-          <div className="border-l border-gray-300 pl-6">
-            <p className="text-sm text-gray-700 font-medium italic" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-              Log, Locate and Love your lost property
-            </p>
-          </div>
         </div>
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right mr-2">

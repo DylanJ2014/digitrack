@@ -72,7 +72,7 @@ export default function StudentDashboard({ user }) {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-            My Lost Items
+            {user.full_name?.split(' ')[0]}'s Lost Items
           </h2>
           <Dialog open={showForm} onOpenChange={setShowForm}>
             <DialogTrigger asChild>
@@ -99,7 +99,7 @@ export default function StudentDashboard({ user }) {
         <Tabs defaultValue="my-items" className="w-full">
           <TabsList className="bg-white/10 mb-4">
             <TabsTrigger value="my-items" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-              My Lost Items
+              {user.full_name?.split(' ')[0]}'s Lost Items
             </TabsTrigger>
             <TabsTrigger value="find-items" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               <Search className="h-4 w-4 mr-2" />

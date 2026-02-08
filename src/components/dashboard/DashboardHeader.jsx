@@ -13,9 +13,11 @@ export default function DashboardHeader({ user }) {
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
-              DigiTrack
-            </h1>
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
+              alt="DigiTrack Logo" 
+              className="h-12 mb-1"
+            />
             <p className="text-sm text-gray-500" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               Log, Locate, Love Lost Property
             </p>

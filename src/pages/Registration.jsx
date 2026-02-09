@@ -105,7 +105,7 @@ export default function Registration() {
                 <SelectContent>
                   <SelectItem value="student">Student</SelectItem>
                   <SelectItem value="parent">Parent</SelectItem>
-                  <SelectItem value="staff">Staff</SelectItem>
+                  <SelectItem value="staff">School Staff Member</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -184,12 +184,16 @@ export default function Registration() {
             {userType === 'staff' && (
               <div className="space-y-2">
                 <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Staff Role</Label>
-                <Input
-                  value={formData.staff_role}
-                  onChange={(e) => setFormData({ ...formData, staff_role: e.target.value })}
-                  placeholder="e.g. Teacher, Admin, Receptionist"
-                  required
-                />
+                <Select value={formData.staff_role} onValueChange={(value) => setFormData({ ...formData, staff_role: value })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Lost Property Coordinator - Pre-Prep">Lost Property Coordinator - Pre-Prep</SelectItem>
+                    <SelectItem value="Lost Property Coordinator - Prep">Lost Property Coordinator - Prep</SelectItem>
+                    <SelectItem value="Lost Property Coordinator - Senior">Lost Property Coordinator - Senior</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             )}
 

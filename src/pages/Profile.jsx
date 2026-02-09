@@ -179,12 +179,16 @@ export default function Profile() {
               {user.user_type === 'staff' && (
                 <div className="space-y-2">
                   <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Staff Role</Label>
-                  <Input
-                    value={formData.staff_role}
-                    onChange={(e) => setFormData({ ...formData, staff_role: e.target.value })}
-                    placeholder="e.g. Teacher, Admin"
-                    style={{ fontFamily: 'Gill Sans, sans-serif' }}
-                  />
+                  <Select value={formData.staff_role} onValueChange={(value) => setFormData({ ...formData, staff_role: value })}>
+                    <SelectTrigger style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                      <SelectValue placeholder="Select your role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Lost Property Coordinator - Pre-Prep">Lost Property Coordinator - Pre-Prep</SelectItem>
+                      <SelectItem value="Lost Property Coordinator - Prep">Lost Property Coordinator - Prep</SelectItem>
+                      <SelectItem value="Lost Property Coordinator - Senior">Lost Property Coordinator - Senior</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
 

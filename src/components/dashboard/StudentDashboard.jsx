@@ -18,7 +18,7 @@ export default function StudentDashboard({ user }) {
 
   const { data: myLostItems = [], isLoading: isLoadingMine } = useQuery({
     queryKey: ['myLostItems', user.email],
-    queryFn: () => base44.entities.LostItem.filter({ reported_by: user.email, status: 'lost' }, '-created_date'),
+    queryFn: () => base44.entities.LostItem.filter({ reported_by: user.email }, '-created_date'),
   });
 
   const { data: allLostItems = [], isLoading: isLoadingAll } = useQuery({

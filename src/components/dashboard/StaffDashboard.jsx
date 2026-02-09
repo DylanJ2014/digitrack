@@ -15,7 +15,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 export default function StaffDashboard({ user }) {
   const [showForm, setShowForm] = useState(false);
   const [showBulkForm, setShowBulkForm] = useState(false);
-  const [yearFilter, setYearFilter] = useState('all');
   const queryClient = useQueryClient();
 
   const { data: allLostItems = [], isLoading } = useQuery({
@@ -198,11 +197,7 @@ export default function StaffDashboard({ user }) {
     return 'Year 7';
   };
 
-  const filteredItems = yearFilter === 'all' 
-    ? allLostItems 
-    : allLostItems.filter(item => item.year_group === yearFilter);
 
-  const yearGroups = ['Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11', 'Year 12', 'Year 13'];
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
@@ -254,42 +249,28 @@ export default function StaffDashboard({ user }) {
         </div>
 
         <Tabs defaultValue="cards" className="w-full">
-          <div className="flex items-center justify-between mb-4">
-            <TabsList className="bg-white/10">
-              <TabsTrigger value="cards" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                Card View
-              </TabsTrigger>
-              <TabsTrigger value="report" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                <FileText className="h-4 w-4 mr-2" />
-                Report View
-              </TabsTrigger>
-            </TabsList>
-            
-            <Select value={yearFilter} onValueChange={setYearFilter}>
-              <SelectTrigger className="w-40 bg-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                <SelectValue placeholder="Filter by Year" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Years</SelectItem>
-                {yearGroups.map(year => (
-                  <SelectItem key={year} value={year}>{year}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <TabsList className="bg-white/10 mb-4">
+            <TabsTrigger value="cards" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              Card View
+            </TabsTrigger>
+            <TabsTrigger value="report" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <FileText className="h-4 w-4 mr-2" />
+              Report View
+            </TabsTrigger>
+          </TabsList>
 
           <TabsContent value="cards">
             {isLoading ? (
               <div className="text-white text-center py-8">Loading...</div>
-            ) : filteredItems.length === 0 ? (
+            ) : allLostItems.length === 0 ? (
               <div className="bg-white/10 rounded-lg p-8 text-center">
                 <p className="text-white text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                  No lost items {yearFilter !== 'all' ? `for ${yearFilter}` : ''}.
+                  No lost items.
                 </p>
               </div>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {filteredItems.map((item) => (
+                {allLostItems.map((item) => (
                   <LostItemCard 
                     key={item.id} 
                     item={item} 
@@ -306,10 +287,10 @@ export default function StaffDashboard({ user }) {
             <div className="bg-white rounded-lg overflow-hidden">
               <div className="p-4 border-b">
                 <h3 className="text-lg font-semibold" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
-                  Lost Property Report {yearFilter !== 'all' ? `- ${yearFilter}` : '- All Years'}
+                  Lost Property Report - All Years
                 </h3>
                 <p className="text-sm text-gray-500" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                  {filteredItems.length} item(s) currently missing
+                  {allLostItems.length} item(s) currently missing
                 </p>
               </div>
               <Table>
@@ -324,7 +305,7 @@ export default function StaffDashboard({ user }) {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredItems.map((item) => (
+                  {allLostItems.map((item) => (
                     <TableRow key={item.id}>
                       <TableCell style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.student_name}</TableCell>
                       <TableCell style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.form_group}</TableCell>

@@ -83,7 +83,6 @@ export default function Registration() {
             className="h-16 mx-auto mb-4"
           />
           <CardTitle className="text-2xl text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Complete Your Registration</CardTitle>
-          <p className="text-sm text-gray-200 mt-2">Welcome, {user?.email}</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">

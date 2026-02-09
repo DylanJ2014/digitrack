@@ -124,11 +124,11 @@ export default function StaffDashboard({ user }) {
     <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
       <DashboardHeader user={user} />
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+          <h2 className="text-2xl font-bold text-white whitespace-nowrap" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
             Staff Dashboard
           </h2>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             <Dialog open={showForm} onOpenChange={setShowForm}>
               <DialogTrigger asChild>
                 <Button className="bg-white hover:bg-gray-100" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>

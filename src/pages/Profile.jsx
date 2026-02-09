@@ -24,6 +24,7 @@ export default function Profile() {
       setUser(currentUser);
       setFormData({
         full_name: currentUser.full_name || '',
+        school: currentUser.school || '',
         form_group: currentUser.form_group || '',
         house: currentUser.house || '',
         child_name: currentUser.child_name || '',
@@ -42,6 +43,7 @@ export default function Profile() {
     const updateData = {};
     if (formData.full_name !== undefined) updateData.full_name = formData.full_name;
     if (user.user_type === 'student') {
+      if (formData.school !== undefined) updateData.school = formData.school;
       if (formData.form_group !== undefined) updateData.form_group = formData.form_group;
       if (formData.house !== undefined) updateData.house = formData.house;
     } else if (user.user_type === 'parent') {
@@ -104,6 +106,19 @@ export default function Profile() {
               {user.user_type === 'student' && (
                 <>
                   <div className="space-y-2">
+                    <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>School</Label>
+                    <Select value={formData.school} onValueChange={(value) => setFormData({ ...formData, school: value })}>
+                      <SelectTrigger style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                        <SelectValue placeholder="Select your school" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Pre-Prep">Pre-Prep</SelectItem>
+                        <SelectItem value="Prep">Prep</SelectItem>
+                        <SelectItem value="Senior School">Senior School</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
                     <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Form Group</Label>
                     <Input
                       value={formData.form_group}
@@ -114,12 +129,24 @@ export default function Profile() {
                   </div>
                   <div className="space-y-2">
                     <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>House</Label>
-                    <Input
-                      value={formData.house}
-                      onChange={(e) => setFormData({ ...formData, house: e.target.value })}
-                      placeholder="e.g. Windsor"
-                      style={{ fontFamily: 'Gill Sans, sans-serif' }}
-                    />
+                    <Select value={formData.house} onValueChange={(value) => setFormData({ ...formData, house: value })}>
+                      <SelectTrigger style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                        <SelectValue placeholder="Select your house" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Viewpoint">Viewpoint</SelectItem>
+                        <SelectItem value="Foxburrow">Foxburrow</SelectItem>
+                        <SelectItem value="Pilgrims">Pilgrims</SelectItem>
+                        <SelectItem value="Underwood">Underwood</SelectItem>
+                        <SelectItem value="Lewisham">Lewisham</SelectItem>
+                        <SelectItem value="Aldercombe">Aldercombe</SelectItem>
+                        <SelectItem value="Newington">Newington</SelectItem>
+                        <SelectItem value="Harestone">Harestone</SelectItem>
+                        <SelectItem value="Ridgefield">Ridgefield</SelectItem>
+                        <SelectItem value="Beech Hanger">Beech Hanger</SelectItem>
+                        <SelectItem value="Townsend/Viney">Townsend/Viney</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </>
               )}

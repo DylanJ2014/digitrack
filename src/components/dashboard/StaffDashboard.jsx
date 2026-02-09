@@ -43,15 +43,48 @@ export default function StaffDashboard({ user }) {
   });
 
   const createItemMutation = useMutation({
-    mutationFn: (data) => base44.entities.LostItem.create({
-      ...data,
-      year_group: extractYearGroup(data.form_group),
-      status: 'lost',
-      reported_by: user.email
-    }),
-    onSuccess: () => {
+    mutationFn: async (data) => {
+      const allItems = await base44.entities.LostItem.list();
+      const existingItem = allItems.find(existing => 
+        existing.student_name.toLowerCase() === data.student_name.toLowerCase() &&
+        existing.form_group.toLowerCase() === data.form_group.toLowerCase() &&
+        existing.item_name.toLowerCase() === data.item_name.toLowerCase() &&
+        existing.status === 'lost'
+      );
+      
+      if (existingItem) {
+        await base44.entities.LostItem.update(existingItem.id, {
+          status: 'found',
+          found_date: new Date().toISOString().split('T')[0],
+          found_by: user.email,
+          last_location: data.last_location || existingItem.last_location
+        });
+        
+        await base44.entities.Notification.create({
+          user_email: existingItem.reported_by,
+          message: `Great news! Your ${existingItem.item_name} has been located and is ready for collection.`,
+          item_name: existingItem.item_name,
+          item_id: existingItem.id,
+          is_read: false
+        });
+        
+        return { matched: true };
+      } else {
+        await base44.entities.LostItem.create({
+          ...data,
+          year_group: extractYearGroup(data.form_group),
+          status: 'lost',
+          reported_by: user.email
+        });
+        return { matched: false };
+      }
+    },
+    onSuccess: (result) => {
       queryClient.invalidateQueries(['allLostItems']);
       setShowForm(false);
+      if (result.matched) {
+        alert('✓ Item matched with existing lost item and marked as located!');
+      }
     },
   });
 

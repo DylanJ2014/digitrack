@@ -41,17 +41,19 @@ export default function Profile() {
     e.preventDefault();
     setSaving(true);
     
-    const updateData = {};
-    if (formData.full_name !== undefined) updateData.full_name = formData.full_name;
+    const updateData = {
+      full_name: formData.full_name
+    };
+    
     if (user.user_type === 'student') {
-      if (formData.school !== undefined) updateData.school = formData.school;
-      if (formData.form_group !== undefined) updateData.form_group = formData.form_group;
-      if (formData.house !== undefined) updateData.house = formData.house;
+      updateData.school = formData.school;
+      updateData.form_group = formData.form_group;
+      updateData.house = formData.house;
     } else if (user.user_type === 'parent') {
-      if (formData.child_name !== undefined) updateData.child_name = formData.child_name;
-      if (formData.child_form_group !== undefined) updateData.child_form_group = formData.child_form_group;
+      updateData.child_name = formData.child_name;
+      updateData.child_form_group = formData.child_form_group;
     } else if (user.user_type === 'staff') {
-      if (formData.staff_role !== undefined) updateData.staff_role = formData.staff_role;
+      updateData.staff_role = formData.staff_role;
     }
     
     try {

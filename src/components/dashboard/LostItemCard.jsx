@@ -15,7 +15,7 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
           {item.status === 'found' ? (
             <Badge className="bg-green-500 hover:bg-green-600" style={{ fontFamily: 'Gill Sans, sans-serif' }}>LOCATED</Badge>
           ) : (
-            <Badge variant="destructive" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Lost</Badge>
+            <Badge variant="destructive" style={{ fontFamily: 'Gill Sans, sans-serif' }}>LOST</Badge>
           )}
         </div>
         {showStudentInfo && (

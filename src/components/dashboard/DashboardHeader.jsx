@@ -32,7 +32,7 @@ export default function DashboardHeader({ user }) {
             onClick={() => window.location.href = createPageUrl('Profile')}
             className="hover:bg-white/50"
           >
-            <User className="h-5 w-5 text-gray-700" />
+            <User className="h-5 w-5 text-white" />
           </Button>
           <Button 
             variant="ghost" 
@@ -40,7 +40,7 @@ export default function DashboardHeader({ user }) {
             onClick={handleLogout}
             className="hover:bg-white/50"
           >
-            <LogOut className="h-5 w-5 text-gray-700" />
+            <LogOut className="h-5 w-5 text-white" />
           </Button>
         </div>
       </div>

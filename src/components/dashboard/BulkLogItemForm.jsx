@@ -3,15 +3,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, X } from 'lucide-react';
 
 export default function BulkLogItemForm({ onSubmit, isLoading }) {
   const [items, setItems] = useState([
-    { student_name: '', form_group: '', item_name: '', description: '', date_lost: '', last_location: '' }
+    { student_name: '', form_group: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '' }
   ]);
 
   const addItem = () => {
-    setItems([...items, { student_name: '', form_group: '', item_name: '', description: '', date_lost: '', last_location: '' }]);
+    setItems([...items, { student_name: '', form_group: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '' }]);
   };
 
   const removeItem = (index) => {
@@ -28,7 +29,11 @@ export default function BulkLogItemForm({ onSubmit, isLoading }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(items);
+    const processedItems = items.map(item => ({
+      ...item,
+      item_name: item.item_category === 'Other' ? item.item_name : item.item_category
+    }));
+    onSubmit(processedItems);
   };
 
   return (
@@ -77,14 +82,57 @@ export default function BulkLogItemForm({ onSubmit, isLoading }) {
 
               <div className="space-y-2">
                 <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Item Name *</Label>
-                <Input
-                  value={item.item_name}
-                  onChange={(e) => updateItem(index, 'item_name', e.target.value)}
-                  placeholder="e.g. Water Bottle"
+                <Select 
+                  value={item.item_category} 
+                  onValueChange={(value) => {
+                    updateItem(index, 'item_category', value);
+                    if (value !== 'Other') updateItem(index, 'item_name', '');
+                  }}
                   required
-                  style={{ fontFamily: 'Gill Sans, sans-serif' }}
-                />
+                >
+                  <SelectTrigger style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                    <SelectValue placeholder="Select item type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Prep Blazer">Prep Blazer</SelectItem>
+                    <SelectItem value="Senior Blazer">Senior Blazer</SelectItem>
+                    <SelectItem value="Prep Winter Coat">Prep Winter Coat</SelectItem>
+                    <SelectItem value="Prep Rain Jacket">Prep Rain Jacket</SelectItem>
+                    <SelectItem value="Senior Black Coat">Senior Black Coat</SelectItem>
+                    <SelectItem value="Senior Festival Coat">Senior Festival Coat</SelectItem>
+                    <SelectItem value="Shirt">Shirt</SelectItem>
+                    <SelectItem value="Girls Blouse">Girls Blouse</SelectItem>
+                    <SelectItem value="Trousers">Trousers</SelectItem>
+                    <SelectItem value="Shorts">Shorts</SelectItem>
+                    <SelectItem value="Socks">Socks</SelectItem>
+                    <SelectItem value="Sports Top">Sports Top</SelectItem>
+                    <SelectItem value="Sports Shorts">Sports Shorts</SelectItem>
+                    <SelectItem value="Tracksuit Bottoms">Tracksuit Bottoms</SelectItem>
+                    <SelectItem value="iPad">iPad</SelectItem>
+                    <SelectItem value="iPad Stylus">iPad Stylus</SelectItem>
+                    <SelectItem value="Water Bottle">Water Bottle</SelectItem>
+                    <SelectItem value="Pencil Case">Pencil Case</SelectItem>
+                    <SelectItem value="Sports Equipment">Sports Equipment</SelectItem>
+                    <SelectItem value="Back Pack">Back Pack</SelectItem>
+                    <SelectItem value="Prep Sports Bag">Prep Sports Bag</SelectItem>
+                    <SelectItem value="Senior Sports Bag">Senior Sports Bag</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
+
+              {item.item_category === 'Other' && (
+                <div className="space-y-2">
+                  <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Custom Item Name *</Label>
+                  <Input
+                    value={item.item_name}
+                    onChange={(e) => updateItem(index, 'item_name', e.target.value)}
+                    placeholder="Enter item name"
+                    required
+                    style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                  />
+                </div>
+              )}
 
               <div className="space-y-2">
                 <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Date Lost *</Label>

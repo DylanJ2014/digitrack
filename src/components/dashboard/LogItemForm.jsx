@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function LogItemForm({ onSubmit, isLoading, studentName, formGroup, hideStudentFields }) {
   const [formData, setFormData] = useState({
     student_name: studentName || '',
     form_group: formGroup || '',
     item_name: '',
+    item_category: '',
     description: '',
     date_lost: new Date().toISOString().split('T')[0],
     last_location: ''
@@ -16,7 +18,11 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    const submitData = {
+      ...formData,
+      item_name: formData.item_category === 'Other' ? formData.item_name : formData.item_category
+    };
+    onSubmit(submitData);
   };
 
   return (
@@ -46,13 +52,53 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
 
       <div className="space-y-2">
         <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Item Name</Label>
-        <Input
-          value={formData.item_name}
-          onChange={(e) => setFormData({ ...formData, item_name: e.target.value })}
-          placeholder="e.g. Blue Water Bottle"
+        <Select 
+          value={formData.item_category} 
+          onValueChange={(value) => setFormData({ ...formData, item_category: value, item_name: '' })}
           required
-        />
+        >
+          <SelectTrigger style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+            <SelectValue placeholder="Select item type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Prep Blazer">Prep Blazer</SelectItem>
+            <SelectItem value="Senior Blazer">Senior Blazer</SelectItem>
+            <SelectItem value="Prep Winter Coat">Prep Winter Coat</SelectItem>
+            <SelectItem value="Prep Rain Jacket">Prep Rain Jacket</SelectItem>
+            <SelectItem value="Senior Black Coat">Senior Black Coat</SelectItem>
+            <SelectItem value="Senior Festival Coat">Senior Festival Coat</SelectItem>
+            <SelectItem value="Shirt">Shirt</SelectItem>
+            <SelectItem value="Girls Blouse">Girls Blouse</SelectItem>
+            <SelectItem value="Trousers">Trousers</SelectItem>
+            <SelectItem value="Shorts">Shorts</SelectItem>
+            <SelectItem value="Socks">Socks</SelectItem>
+            <SelectItem value="Sports Top">Sports Top</SelectItem>
+            <SelectItem value="Sports Shorts">Sports Shorts</SelectItem>
+            <SelectItem value="Tracksuit Bottoms">Tracksuit Bottoms</SelectItem>
+            <SelectItem value="iPad">iPad</SelectItem>
+            <SelectItem value="iPad Stylus">iPad Stylus</SelectItem>
+            <SelectItem value="Water Bottle">Water Bottle</SelectItem>
+            <SelectItem value="Pencil Case">Pencil Case</SelectItem>
+            <SelectItem value="Sports Equipment">Sports Equipment</SelectItem>
+            <SelectItem value="Back Pack">Back Pack</SelectItem>
+            <SelectItem value="Prep Sports Bag">Prep Sports Bag</SelectItem>
+            <SelectItem value="Senior Sports Bag">Senior Sports Bag</SelectItem>
+            <SelectItem value="Other">Other</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
+
+      {formData.item_category === 'Other' && (
+        <div className="space-y-2">
+          <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Custom Item Name</Label>
+          <Input
+            value={formData.item_name}
+            onChange={(e) => setFormData({ ...formData, item_name: e.target.value })}
+            placeholder="Enter item name"
+            required
+          />
+        </div>
+      )}
 
       <div className="space-y-2">
         <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Description</Label>

@@ -19,7 +19,14 @@ export default function StudentDashboard({ user }) {
 
   const { data: myLostItems = [], isLoading: isLoadingMine } = useQuery({
     queryKey: ['myLostItems', user.email],
-    queryFn: () => base44.entities.LostItem.filter({ reported_by: user.email }, '-created_date'),
+    queryFn: async () => {
+      const allItems = await base44.entities.LostItem.list('-created_date');
+      return allItems.filter(item => 
+        item.reported_by === user.email ||
+        (item.student_name?.toLowerCase() === (user.display_name || user.full_name)?.toLowerCase() &&
+         item.form_group?.toLowerCase() === user.form_group?.toLowerCase())
+      );
+    },
   });
 
   const { data: allLostItems = [], isLoading: isLoadingAll } = useQuery({

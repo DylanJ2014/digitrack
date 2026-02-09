@@ -11,7 +11,7 @@ export default function DashboardHeader({ user }) {
   };
 
   return (
-    <div className="shadow-md border-b border-gray-200" style={{ backgroundColor: '#F5F7FA' }}>
+    <div className="shadow-md border-b border-gray-200" style={{ backgroundColor: '#0F2236' }}>
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <img 

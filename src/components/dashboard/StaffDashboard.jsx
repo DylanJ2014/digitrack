@@ -61,6 +61,13 @@ export default function StaffDashboard({ user }) {
         existing.status === 'lost'
       );
       
+      const allUsers = await base44.entities.User.list();
+      const studentUser = allUsers.find(u => 
+        u.display_name?.toLowerCase() === data.student_name.toLowerCase() &&
+        u.form_group?.toLowerCase() === data.form_group.toLowerCase()
+      );
+      const reportedByEmail = studentUser ? studentUser.email : user.email;
+      
       if (existingItem) {
         await base44.entities.LostItem.update(existingItem.id, {
           status: 'found',
@@ -92,7 +99,7 @@ export default function StaffDashboard({ user }) {
           ...data,
           year_group: extractYearGroup(data.form_group),
           status: 'lost',
-          reported_by: user.email
+          reported_by: reportedByEmail
         });
         return { matched: false };
       }
@@ -109,6 +116,7 @@ export default function StaffDashboard({ user }) {
   const bulkCreateMutation = useMutation({
     mutationFn: async (items) => {
       const allItems = await base44.entities.LostItem.list();
+      const allUsers = await base44.entities.User.list();
       const results = { matched: 0, created: 0 };
       
       for (const item of items) {
@@ -118,6 +126,12 @@ export default function StaffDashboard({ user }) {
           existing.item_name.toLowerCase() === item.item_name.toLowerCase() &&
           existing.status === 'lost'
         );
+        
+        const studentUser = allUsers.find(u => 
+          u.display_name?.toLowerCase() === item.student_name.toLowerCase() &&
+          u.form_group?.toLowerCase() === item.form_group.toLowerCase()
+        );
+        const reportedByEmail = studentUser ? studentUser.email : user.email;
         
         if (existingItem) {
           await base44.entities.LostItem.update(existingItem.id, {
@@ -150,7 +164,7 @@ export default function StaffDashboard({ user }) {
             ...item,
             year_group: extractYearGroup(item.form_group),
             status: 'lost',
-            reported_by: user.email
+            reported_by: reportedByEmail
           });
           results.created++;
         }

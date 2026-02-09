@@ -61,12 +61,17 @@ export default function StaffDashboard({ user }) {
         existing.status === 'lost'
       );
       
-      const allUsers = await base44.entities.User.list();
-      const studentUser = allUsers.find(u => 
-        u.display_name?.toLowerCase() === data.student_name.toLowerCase() &&
-        u.form_group?.toLowerCase() === data.form_group.toLowerCase()
-      );
-      const reportedByEmail = studentUser ? studentUser.email : user.email;
+      let reportedByEmail = user.email;
+      try {
+        const allUsers = await base44.entities.User.list();
+        const studentUser = allUsers.find(u => 
+          u.display_name?.toLowerCase() === data.student_name.toLowerCase() &&
+          u.form_group?.toLowerCase() === data.form_group.toLowerCase()
+        );
+        if (studentUser) reportedByEmail = studentUser.email;
+      } catch (error) {
+        console.log('Could not fetch users, using staff email');
+      }
       
       if (existingItem) {
         await base44.entities.LostItem.update(existingItem.id, {
@@ -116,7 +121,12 @@ export default function StaffDashboard({ user }) {
   const bulkCreateMutation = useMutation({
     mutationFn: async (items) => {
       const allItems = await base44.entities.LostItem.list();
-      const allUsers = await base44.entities.User.list();
+      let allUsers = [];
+      try {
+        allUsers = await base44.entities.User.list();
+      } catch (error) {
+        console.log('Could not fetch users, using staff email for all items');
+      }
       const results = { matched: 0, created: 0 };
       
       for (const item of items) {

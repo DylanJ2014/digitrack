@@ -217,6 +217,7 @@ export default function StaffDashboard({ user }) {
                 <LogItemForm 
                   onSubmit={(data) => createItemMutation.mutate(data)}
                   isLoading={createItemMutation.isPending}
+                  hideLastLocation
                 />
               </DialogContent>
             </Dialog>
@@ -235,6 +236,7 @@ export default function StaffDashboard({ user }) {
                 <BulkLogItemForm 
                   onSubmit={(items) => bulkCreateMutation.mutate(items)}
                   isLoading={bulkCreateMutation.isPending}
+                  hideLastLocation
                 />
               </DialogContent>
             </Dialog>

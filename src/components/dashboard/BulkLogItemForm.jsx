@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, X } from 'lucide-react';
 
-export default function BulkLogItemForm({ onSubmit, isLoading }) {
+export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation }) {
   const [items, setItems] = useState([
     { student_name: '', form_group: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '' }
   ]);
@@ -156,15 +156,17 @@ export default function BulkLogItemForm({ onSubmit, isLoading }) {
                 />
               </div>
 
-              <div className="col-span-2 space-y-2">
-                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Last Known Location</Label>
-                <Input
-                  value={item.last_location}
-                  onChange={(e) => updateItem(index, 'last_location', e.target.value)}
-                  placeholder="e.g. Gym, Science Lab"
-                  style={{ fontFamily: 'Gill Sans, sans-serif' }}
-                />
-              </div>
+              {!hideLastLocation && (
+                <div className="col-span-2 space-y-2">
+                  <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Last Known Location</Label>
+                  <Input
+                    value={item.last_location}
+                    onChange={(e) => updateItem(index, 'last_location', e.target.value)}
+                    placeholder="e.g. Gym, Science Lab"
+                    style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         ))}

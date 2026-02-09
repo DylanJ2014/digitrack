@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-export default function LogItemForm({ onSubmit, isLoading, studentName, formGroup, hideStudentFields }) {
+export default function LogItemForm({ onSubmit, isLoading, studentName, formGroup, hideStudentFields, hideLastLocation }) {
   const [formData, setFormData] = useState({
     student_name: studentName || '',
     form_group: formGroup || '',
@@ -120,14 +120,16 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
         />
       </div>
 
-      <div className="space-y-2">
-        <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Last Known Location</Label>
-        <Input
-          value={formData.last_location}
-          onChange={(e) => setFormData({ ...formData, last_location: e.target.value })}
-          placeholder="e.g. Science Block, Room 12"
-        />
-      </div>
+      {!hideLastLocation && (
+        <div className="space-y-2">
+          <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Last Known Location</Label>
+          <Input
+            value={formData.last_location}
+            onChange={(e) => setFormData({ ...formData, last_location: e.target.value })}
+            placeholder="e.g. Science Block, Room 12"
+          />
+        </div>
+      )}
 
       <Button 
         type="submit" 

@@ -31,9 +31,18 @@ export default function StaffDashboard({ user }) {
         found_by: user.email 
       });
       
+      let locationMessage = '';
+      if (user.staff_role === 'Lost Property Coordinator - Prep') {
+        locationMessage = 'Head to Prep Lost Property';
+      } else if (user.staff_role === 'Lost Property Coordinator - Pre-Prep') {
+        locationMessage = 'Head to Pre-Prep Lost Property';
+      } else if (user.staff_role === 'Lost Property Coordinator - Senior') {
+        locationMessage = 'Head to Senior Lost Property';
+      }
+      
       await base44.entities.Notification.create({
         user_email: item.reported_by,
-        message: `Great news! Your ${item.item_name} has been found and is ready for collection.`,
+        message: `Great news! Your ${item.item_name} has been found and is ready for collection. ${locationMessage}`,
         item_name: item.item_name,
         item_id: item.id,
         is_read: false
@@ -60,9 +69,18 @@ export default function StaffDashboard({ user }) {
           last_location: data.last_location || existingItem.last_location
         });
         
+        let locationMessage = '';
+        if (user.staff_role === 'Lost Property Coordinator - Prep') {
+          locationMessage = 'Head to Prep Lost Property';
+        } else if (user.staff_role === 'Lost Property Coordinator - Pre-Prep') {
+          locationMessage = 'Head to Pre-Prep Lost Property';
+        } else if (user.staff_role === 'Lost Property Coordinator - Senior') {
+          locationMessage = 'Head to Senior Lost Property';
+        }
+        
         await base44.entities.Notification.create({
           user_email: existingItem.reported_by,
-          message: `Great news! Your ${existingItem.item_name} has been located and is ready for collection.`,
+          message: `Great news! Your ${existingItem.item_name} has been located and is ready for collection. ${locationMessage}`,
           item_name: existingItem.item_name,
           item_id: existingItem.id,
           is_read: false
@@ -109,9 +127,18 @@ export default function StaffDashboard({ user }) {
             last_location: item.last_location || existingItem.last_location
           });
           
+          let locationMessage = '';
+          if (user.staff_role === 'Lost Property Coordinator - Prep') {
+            locationMessage = 'Head to Prep Lost Property';
+          } else if (user.staff_role === 'Lost Property Coordinator - Pre-Prep') {
+            locationMessage = 'Head to Pre-Prep Lost Property';
+          } else if (user.staff_role === 'Lost Property Coordinator - Senior') {
+            locationMessage = 'Head to Senior Lost Property';
+          }
+          
           await base44.entities.Notification.create({
             user_email: existingItem.reported_by,
-            message: `Great news! Your ${existingItem.item_name} has been located and is ready for collection.`,
+            message: `Great news! Your ${existingItem.item_name} has been located and is ready for collection. ${locationMessage}`,
             item_name: existingItem.item_name,
             item_id: existingItem.id,
             is_read: false

@@ -11,6 +11,7 @@ export default function Registration() {
   const [user, setUser] = useState(null);
   const [userType, setUserType] = useState('');
   const [formData, setFormData] = useState({
+    full_name: '',
     school: '',
     form_group: '',
     house: '',
@@ -44,6 +45,7 @@ export default function Registration() {
     setSubmitting(true);
     
     const updateData = {
+      full_name: formData.full_name,
       user_type: userType,
       is_registered: true
     };
@@ -72,21 +74,31 @@ export default function Registration() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#0F2236', fontFamily: 'Gill Sans, sans-serif' }}>
+      <Card className="w-full max-w-md" style={{ backgroundColor: '#254B77', color: 'white' }}>
         <CardHeader className="text-center">
           <img 
             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
             alt="DigiTrack Logo" 
             className="h-16 mx-auto mb-4"
           />
-          <CardTitle className="text-2xl" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Complete Your Registration</CardTitle>
-          <p className="text-sm text-gray-600 mt-2">Welcome, {user?.full_name}</p>
+          <CardTitle className="text-2xl text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Complete Your Registration</CardTitle>
+          <p className="text-sm text-gray-200 mt-2">Welcome, {user?.email}</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>I am a...</Label>
+              <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Full Name</Label>
+              <Input
+                value={formData.full_name}
+                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                placeholder="Enter your full name"
+                required
+                style={{ fontFamily: 'Gill Sans, sans-serif' }}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>I am a...</Label>
               <Select value={userType} onValueChange={setUserType}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select your role" />
@@ -102,7 +114,7 @@ export default function Registration() {
             {userType === 'student' && (
               <>
                 <div className="space-y-2">
-                  <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>School</Label>
+                  <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>School</Label>
                   <Select value={formData.school} onValueChange={(value) => setFormData({ ...formData, school: value })}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select your school" />
@@ -115,7 +127,7 @@ export default function Registration() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Form Group</Label>
+                  <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Form Group</Label>
                   <Input
                     value={formData.form_group}
                     onChange={(e) => setFormData({ ...formData, form_group: e.target.value })}
@@ -124,7 +136,7 @@ export default function Registration() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>House</Label>
+                  <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>House</Label>
                   <Select value={formData.house} onValueChange={(value) => setFormData({ ...formData, house: value })}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select your house" />
@@ -150,7 +162,7 @@ export default function Registration() {
             {userType === 'parent' && (
               <>
                 <div className="space-y-2">
-                  <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Child's Full Name</Label>
+                  <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Child's Full Name</Label>
                   <Input
                     value={formData.child_name}
                     onChange={(e) => setFormData({ ...formData, child_name: e.target.value })}
@@ -159,7 +171,7 @@ export default function Registration() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Child's Form Group</Label>
+                  <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Child's Form Group</Label>
                   <Input
                     value={formData.child_form_group}
                     onChange={(e) => setFormData({ ...formData, child_form_group: e.target.value })}
@@ -172,7 +184,7 @@ export default function Registration() {
 
             {userType === 'staff' && (
               <div className="space-y-2">
-                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Staff Role</Label>
+                <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Staff Role</Label>
                 <Input
                   value={formData.staff_role}
                   onChange={(e) => setFormData({ ...formData, staff_role: e.target.value })}
@@ -186,7 +198,7 @@ export default function Registration() {
               <Button 
                 type="submit" 
                 className="w-full"
-                style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}
+                style={{ backgroundColor: '#0F2236', fontFamily: 'Gill Sans, sans-serif' }}
                 disabled={submitting}
               >
                 {submitting ? 'Completing Registration...' : 'Complete Registration'}

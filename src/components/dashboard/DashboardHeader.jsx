@@ -22,8 +22,8 @@ export default function DashboardHeader({ user }) {
         </div>
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right mr-2">
-            <p className="font-semibold text-gray-800" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.display_name || user?.full_name}</p>
-            <p className="text-xs text-gray-600 capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
+            <p className="font-semibold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.display_name || user?.full_name}</p>
+            <p className="text-xs text-white capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
           </div>
           {user?.user_type === 'student' && <NotificationBell userEmail={user.email} />}
           <Button 

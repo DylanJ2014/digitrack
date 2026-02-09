@@ -45,7 +45,7 @@ export default function Registration() {
     setSubmitting(true);
     
     const updateData = {
-      full_name: formData.full_name,
+      display_name: formData.full_name,
       user_type: userType,
       is_registered: true
     };

@@ -24,7 +24,7 @@ export default function Profile() {
       const currentUser = await base44.auth.me();
       setUser(currentUser);
       setFormData({
-        full_name: currentUser.full_name || '',
+        display_name: currentUser.display_name || currentUser.full_name || '',
         school: currentUser.school || '',
         form_group: currentUser.form_group || '',
         house: currentUser.house || '',
@@ -42,7 +42,7 @@ export default function Profile() {
     setSaving(true);
     
     const updateData = {
-      full_name: formData.full_name
+      display_name: formData.display_name
     };
     
     if (user.user_type === 'student') {
@@ -88,8 +88,8 @@ export default function Profile() {
               <div className="space-y-2">
                 <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Full Name</Label>
                 <Input
-                  value={formData.full_name}
-                  onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                  value={formData.display_name}
+                  onChange={(e) => setFormData({ ...formData, display_name: e.target.value })}
                   style={{ fontFamily: 'Gill Sans, sans-serif' }}
                 />
               </div>

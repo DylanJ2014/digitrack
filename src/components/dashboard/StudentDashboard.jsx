@@ -45,7 +45,7 @@ export default function StudentDashboard({ user }) {
   const createItemMutation = useMutation({
     mutationFn: (data) => base44.entities.LostItem.create({
       ...data,
-      student_name: user.full_name,
+      student_name: user.display_name || user.full_name,
       form_group: user.form_group,
       year_group: extractYearGroup(user.form_group),
       status: 'lost',
@@ -72,7 +72,7 @@ export default function StudentDashboard({ user }) {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-            {user.full_name}'s Lost Items
+            {user.display_name || user.full_name}'s Lost Items
           </h2>
           <Dialog open={showForm} onOpenChange={setShowForm}>
             <DialogTrigger asChild>
@@ -88,7 +88,7 @@ export default function StudentDashboard({ user }) {
               <LogItemForm 
                 onSubmit={(data) => createItemMutation.mutate(data)}
                 isLoading={createItemMutation.isPending}
-                studentName={user.full_name}
+                studentName={user.display_name || user.full_name}
                 formGroup={user.form_group}
                 hideStudentFields
               />

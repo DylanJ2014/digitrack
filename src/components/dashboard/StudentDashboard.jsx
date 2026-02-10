@@ -129,14 +129,14 @@ export default function StudentDashboard({ user }) {
                 onClick={() => setStatusFilter('lost')}
                 style={statusFilter === 'lost' ? { backgroundColor: '#dc2626', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
               >
-                LOST
+                Lost
               </Button>
               <Button
                 variant={statusFilter === 'found' ? 'default' : 'outline'}
                 onClick={() => setStatusFilter('found')}
                 style={statusFilter === 'found' ? { backgroundColor: '#22c55e', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
               >
-                LOCATED
+                Located
               </Button>
             </div>
             {isLoadingMine ? (
@@ -146,7 +146,7 @@ export default function StudentDashboard({ user }) {
                 <p className="text-white text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                   {statusFilter === 'all' 
                     ? "No lost items reported. Click \"Log Lost Item\" to report a missing item."
-                    : `No ${statusFilter === 'lost' ? 'LOST' : 'LOCATED'} items.`}
+                    : `No ${statusFilter === 'lost' ? 'Lost' : 'Located'} items.`}
                 </p>
               </div>
             ) : (

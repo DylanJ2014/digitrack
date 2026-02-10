@@ -2,16 +2,28 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Calendar, CheckCircle } from 'lucide-react';
+import { MapPin, Calendar, CheckCircle, Trash2 } from 'lucide-react';
 
-export default function LostItemCard({ item, onMarkFound, isMarkingFound, showStudentInfo }) {
+export default function LostItemCard({ item, onMarkFound, isMarkingFound, showStudentInfo, onDelete, canDelete }) {
   return (
     <Card className="bg-white">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
-          <CardTitle className="text-lg" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
-            {item.item_name}
-          </CardTitle>
+          <div className="flex items-center gap-2">
+            <CardTitle className="text-lg" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+              {item.item_name}
+            </CardTitle>
+            {canDelete && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-red-500 hover:text-red-700 hover:bg-red-50"
+                onClick={onDelete}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
           {item.status === 'found' ? (
             <Badge className="bg-green-500 hover:bg-green-600" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Located</Badge>
           ) : (

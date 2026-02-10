@@ -50,6 +50,14 @@ export default function StudentDashboard({ user }) {
     onSuccess: () => queryClient.invalidateQueries(['lostItems']),
   });
 
+  const deleteItemMutation = useMutation({
+    mutationFn: (itemId) => base44.entities.LostItem.delete(itemId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['myLostItems']);
+      queryClient.invalidateQueries(['allLostItems']);
+    },
+  });
+
   const createItemMutation = useMutation({
     mutationFn: (data) => base44.entities.LostItem.create({
       ...data,
@@ -157,6 +165,8 @@ export default function StudentDashboard({ user }) {
                     item={item} 
                     onMarkFound={() => markFoundMutation.mutate(item.id)}
                     isMarkingFound={markFoundMutation.isPending}
+                    onDelete={() => deleteItemMutation.mutate(item.id)}
+                    canDelete={true}
                   />
                 ))}
               </div>

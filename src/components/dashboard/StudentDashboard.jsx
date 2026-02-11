@@ -86,6 +86,18 @@ export default function StudentDashboard({ user }) {
     },
   });
 
+  const markLocatedMutation = useMutation({
+    mutationFn: (itemId) => base44.entities.LostItem.update(itemId, { 
+      status: 'found', 
+      found_date: new Date().toISOString().split('T')[0]
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['lostItems']);
+      queryClient.invalidateQueries(['myLostItems']);
+      queryClient.invalidateQueries(['allLostItems']);
+    },
+  });
+
   const deleteItemMutation = useMutation({
     mutationFn: (itemId) => base44.entities.LostItem.delete(itemId),
     onSuccess: () => {
@@ -199,6 +211,8 @@ export default function StudentDashboard({ user }) {
                     item={item} 
                     onMarkFound={() => markFoundMutation.mutate(item)}
                     isMarkingFound={markFoundMutation.isPending}
+                    onMarkLocated={() => markLocatedMutation.mutate(item.id)}
+                    isMarkingLocated={markLocatedMutation.isPending}
                     onDelete={() => deleteItemMutation.mutate(item.id)}
                     canDelete={true}
                     currentUserEmail={user.email}
@@ -234,6 +248,8 @@ export default function StudentDashboard({ user }) {
                     item={item} 
                     onMarkFound={() => markFoundMutation.mutate(item)}
                     isMarkingFound={markFoundMutation.isPending}
+                    onMarkLocated={() => markLocatedMutation.mutate(item.id)}
+                    isMarkingLocated={markLocatedMutation.isPending}
                     showStudentInfo
                     currentUserEmail={user.email}
                   />

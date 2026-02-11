@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Calendar, CheckCircle, Trash2 } from 'lucide-react';
 
-export default function LostItemCard({ item, onMarkFound, isMarkingFound, showStudentInfo, onDelete, canDelete, currentUserEmail }) {
+export default function LostItemCard({ item, onMarkFound, isMarkingFound, showStudentInfo, onDelete, canDelete, currentUserEmail, onMarkLocated, isMarkingLocated }) {
   return (
     <Card className="bg-white">
       <CardHeader className="pb-2">
@@ -64,6 +64,17 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
           >
             <CheckCircle className="h-4 w-4 mr-2" />
             Mark as Found
+          </Button>
+        )}
+        {item.status === 'awaiting_collection' && onMarkLocated && (
+          <Button 
+            className="w-full mt-4 bg-green-600 hover:bg-green-700" 
+            style={{ fontFamily: 'Gill Sans, sans-serif' }}
+            onClick={onMarkLocated}
+            disabled={isMarkingLocated}
+          >
+            <CheckCircle className="h-4 w-4 mr-2" />
+            Located
           </Button>
         )}
         {item.status === 'found' && (

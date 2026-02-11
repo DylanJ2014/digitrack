@@ -77,6 +77,14 @@ export default function StaffDashboard({ user }) {
     },
   });
 
+  const markLocatedMutation = useMutation({
+    mutationFn: (itemId) => base44.entities.LostItem.update(itemId, { 
+      status: 'found', 
+      found_date: new Date().toISOString().split('T')[0]
+    }),
+    onSuccess: () => queryClient.invalidateQueries(['allLostItems']),
+  });
+
   const createItemMutation = useMutation({
     mutationFn: async (data) => {
       const allItems = await base44.entities.LostItem.list();
@@ -337,6 +345,8 @@ export default function StaffDashboard({ user }) {
                     item={item} 
                     onMarkFound={item.status === 'lost' ? () => markFoundMutation.mutate(item) : undefined}
                     isMarkingFound={markFoundMutation.isPending}
+                    onMarkLocated={item.status === 'awaiting_collection' ? () => markLocatedMutation.mutate(item.id) : undefined}
+                    isMarkingLocated={markLocatedMutation.isPending}
                     showStudentInfo
                     onDelete={() => deleteItemMutation.mutate(item.id)}
                     canDelete={true}

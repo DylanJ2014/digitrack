@@ -34,9 +34,16 @@ export default function About() {
     <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
       <DashboardHeader user={user} />
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-white mb-8" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-          About DigiTrack
-        </h1>
+        <div className="flex items-center gap-4 mb-8">
+          <h1 className="text-4xl font-bold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+            About
+          </h1>
+          <img 
+            src="https://ucarecdn.com/c47e7224-5e36-4f0e-acd6-a6e82e3f6a15/DigiTracklogonobg.png" 
+            alt="DigiTrack Logo" 
+            className="h-16"
+          />
+        </div>
 
         <Card className="bg-white mb-6">
           <CardHeader>
@@ -57,24 +64,25 @@ export default function About() {
         <Card className="bg-white mb-6">
           <CardHeader>
             <CardTitle style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
-              How It Works
+              Lost Property Tips - Video
             </CardTitle>
           </CardHeader>
           <CardContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
             <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="DigiTrack Tutorial"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="rounded-lg"
-              ></iframe>
+              <p className="text-gray-500">Video will be inserted here</p>
             </div>
-            <p className="text-gray-600 text-sm">
-              Watch our tutorial video to learn how to use DigiTrack effectively.
+          </CardContent>
+        </Card>
+
+        <Card className="bg-white mb-6">
+          <CardHeader>
+            <CardTitle style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+              DigiTrack Founder - Dylan Jubraj
+            </CardTitle>
+          </CardHeader>
+          <CardContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+            <p className="text-gray-700">
+              Information about the founder will be added here.
             </p>
           </CardContent>
         </Card>

@@ -200,6 +200,7 @@ export default function StudentDashboard({ user }) {
                     onMarkFound={() => markFoundMutation.mutate(item.id)}
                     isMarkingFound={markFoundMutation.isPending}
                     showStudentInfo
+                    currentUserEmail={user.email}
                   />
                 ))}
               </div>

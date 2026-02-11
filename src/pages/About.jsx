@@ -34,16 +34,7 @@ export default function About() {
     <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
       <DashboardHeader user={user} />
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex items-center gap-4 mb-8">
-          <h1 className="text-4xl font-bold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-            About
-          </h1>
-          <img 
-            src="https://ucarecdn.com/c47e7224-5e36-4f0e-acd6-a6e82e3f6a15/DigiTracklogonobg.png" 
-            alt="DigiTrack Logo" 
-            className="h-16"
-          />
-        </div>
+
 
         <Card className="bg-white mb-6">
           <CardHeader>
@@ -56,7 +47,10 @@ export default function About() {
               DigiTrack is a comprehensive lost and found management system designed to help schools efficiently track and reunite students with their lost belongings.
             </p>
             <p className="text-gray-700">
-              Our platform streamlines the process of reporting lost items, searching for found items, and managing the entire lost property workflow for staff members.
+              Our platform streamlines the process of reporting lost items, searching for found items, and managing the entire lost property workflow for the entire school community.
+            </p>
+            <p className="text-gray-700">
+              Digitrack has been made possible by the wonderful support, encouragement and counsel from the teaching staff at Caterham School.
             </p>
           </CardContent>
         </Card>

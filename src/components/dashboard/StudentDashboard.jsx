@@ -15,7 +15,7 @@ export default function StudentDashboard({ user }) {
   const queryClient = useQueryClient();
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('lost');
+  const [statusFilter, setStatusFilter] = useState('all');
 
   const { data: myLostItems = [], isLoading: isLoadingMine } = useQuery({
     queryKey: ['myLostItems', user.email],
@@ -174,6 +174,13 @@ export default function StudentDashboard({ user }) {
           <TabsContent value="my-items">
             <div className="mb-4 flex gap-2">
               <Button
+                variant={statusFilter === 'all' ? 'default' : 'outline'}
+                onClick={() => setStatusFilter('all')}
+                style={statusFilter === 'all' ? { backgroundColor: 'white', color: '#254B77', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
+              >
+                All
+              </Button>
+              <Button
                 variant={statusFilter === 'lost' ? 'default' : 'outline'}
                 onClick={() => setStatusFilter('lost')}
                 style={statusFilter === 'lost' ? { backgroundColor: '#dc2626', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
@@ -197,15 +204,15 @@ export default function StudentDashboard({ user }) {
             </div>
             {isLoadingMine ? (
               <div className="text-white text-center py-8">Loading...</div>
-            ) : myLostItems.filter(item => item.status === statusFilter).length === 0 ? (
+            ) : myLostItems.filter(item => statusFilter === 'all' || item.status === statusFilter).length === 0 ? (
               <div className="bg-white/10 rounded-lg p-8 text-center">
                 <p className="text-white text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                  No {statusFilter === 'lost' ? 'Lost' : statusFilter === 'awaiting_collection' ? 'Awaiting Collection' : 'Located'} items.
+                  No {statusFilter === 'all' ? '' : statusFilter === 'lost' ? 'Lost' : statusFilter === 'awaiting_collection' ? 'Awaiting Collection' : 'Located'} items.
                 </p>
               </div>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {myLostItems.filter(item => item.status === statusFilter).map((item) => (
+                {myLostItems.filter(item => statusFilter === 'all' || item.status === statusFilter).map((item) => (
                   <LostItemCard 
                     key={item.id} 
                     item={item} 

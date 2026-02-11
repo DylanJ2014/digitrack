@@ -25,7 +25,7 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
             )}
           </div>
           {item.status === 'awaiting_collection' ? (
-            <Badge className="bg-green-500 hover:bg-green-600" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Awaiting Collection</Badge>
+            <Badge className="bg-amber-500 hover:bg-amber-600" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Awaiting Collection</Badge>
           ) : item.status === 'found' ? (
             <Badge className="bg-green-500 hover:bg-green-600" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Located</Badge>
           ) : (

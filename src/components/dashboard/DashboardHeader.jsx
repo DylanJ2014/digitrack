@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { LogOut, User } from 'lucide-react';
 import { createPageUrl } from '@/utils';
+import { Link } from 'react-router-dom';
 import NotificationBell from './NotificationBell';
 
 export default function DashboardHeader({ user }) {
@@ -14,11 +15,13 @@ export default function DashboardHeader({ user }) {
     <div className="shadow-md border-b border-gray-200" style={{ backgroundColor: '#0F2236' }}>
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <img 
-            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
-            alt="DigiTrack Logo" 
-            className="h-14"
-          />
+          <Link to={createPageUrl('Dashboard')} className="cursor-pointer">
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
+              alt="DigiTrack Logo" 
+              className="h-14 hover:opacity-80 transition-opacity"
+            />
+          </Link>
         </div>
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right mr-2">

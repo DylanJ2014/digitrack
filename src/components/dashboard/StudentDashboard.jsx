@@ -167,6 +167,7 @@ export default function StudentDashboard({ user }) {
                     isMarkingFound={markFoundMutation.isPending}
                     onDelete={() => deleteItemMutation.mutate(item.id)}
                     canDelete={true}
+                    currentUserEmail={user.email}
                   />
                 ))}
               </div>

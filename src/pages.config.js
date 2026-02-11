@@ -53,6 +53,7 @@ import Profile from './pages/Profile';
 import Registration from './pages/Registration';
 import About from './pages/About';
 import FAQs from './pages/FAQs';
+import Video from './pages/Video';
 
 
 export const PAGES = {
@@ -62,6 +63,7 @@ export const PAGES = {
     "Registration": Registration,
     "About": About,
     "FAQs": FAQs,
+    "Video": Video,
 }
 
 export const pagesConfig = {

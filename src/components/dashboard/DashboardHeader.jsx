@@ -34,9 +34,24 @@ export default function DashboardHeader({ user }) {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
+                <Link to={createPageUrl('Video')} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  Lost Property Video
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link to={createPageUrl('FAQs')} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                   FAQs
                 </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to={createPageUrl('Profile')} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  <User className="h-4 w-4 mr-2" />
+                  Profile Settings
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                <LogOut className="h-4 w-4 mr-2" />
+                Log Out
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -54,22 +69,6 @@ export default function DashboardHeader({ user }) {
             <p className="text-xs text-white capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
           </div>
           {user?.user_type === 'student' && <NotificationBell userEmail={user.email} />}
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={() => window.location.href = createPageUrl('Profile')}
-            className="hover:bg-white/50"
-          >
-            <User className="h-5 w-5 text-white" />
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={handleLogout}
-            className="hover:bg-white/50"
-          >
-            <LogOut className="h-5 w-5 text-white" />
-          </Button>
         </div>
       </div>
     </div>

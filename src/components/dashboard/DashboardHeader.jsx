@@ -1,10 +1,16 @@
 import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, Menu } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import NotificationBell from './NotificationBell';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export default function DashboardHeader({ user }) {
   const handleLogout = () => {
@@ -15,6 +21,25 @@ export default function DashboardHeader({ user }) {
     <div className="shadow-md border-b border-gray-200" style={{ backgroundColor: '#0F2236' }}>
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-6">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="hover:bg-white/50">
+                <Menu className="h-6 w-6 text-white" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              <DropdownMenuItem asChild>
+                <Link to={createPageUrl('About')} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  About DigiTrack
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to={createPageUrl('FAQs')} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  FAQs
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Link to={createPageUrl('Dashboard')} className="cursor-pointer">
             <img 
               src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 

@@ -51,6 +51,8 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Registration from './pages/Registration';
+import About from './pages/About';
+import FAQs from './pages/FAQs';
 
 
 export const PAGES = {
@@ -58,6 +60,8 @@ export const PAGES = {
     "Home": Home,
     "Profile": Profile,
     "Registration": Registration,
+    "About": About,
+    "FAQs": FAQs,
 }
 
 export const pagesConfig = {

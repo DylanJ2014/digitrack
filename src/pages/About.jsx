@@ -94,8 +94,17 @@ export default function About() {
             </CardTitle>
           </CardHeader>
           <CardContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-            <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-              <p className="text-gray-500">Video will be inserted here</p>
+            <div className="aspect-video rounded-lg overflow-hidden">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/_kDXiU7kHns"
+                title="Lost Property Tips Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
             </div>
           </CardContent>
         </Card>

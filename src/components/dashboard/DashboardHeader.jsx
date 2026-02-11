@@ -35,12 +35,6 @@ export default function DashboardHeader({ user }) {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to={createPageUrl('Video')} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                  <Play className="h-4 w-4 mr-2" />
-                  Lost Property Video
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
                 <Link to={createPageUrl('FAQs')} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                   <MessageSquare className="h-4 w-4 mr-2" />
                   FAQs

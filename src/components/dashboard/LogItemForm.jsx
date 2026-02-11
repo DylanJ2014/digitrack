@@ -105,7 +105,7 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
         <Textarea
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          placeholder="Describe the item (colour, brand, any distinguishing features)"
+          placeholder="Describe the item (colour, brand, size, label text and any distinguishing features)"
           rows={3}
         />
       </div>

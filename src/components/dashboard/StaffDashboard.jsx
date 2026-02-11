@@ -39,12 +39,20 @@ export default function StaffDashboard({ user }) {
         locationMessage = 'Head to Senior Lost Property';
       }
       
+      const notificationMessage = `Great news! Your ${item.item_name} has been found and is ready for collection. ${locationMessage}`;
+      
       await base44.entities.Notification.create({
         user_email: item.reported_by,
-        message: `Great news! Your ${item.item_name} has been found and is ready for collection. ${locationMessage}`,
+        message: notificationMessage,
         item_name: item.item_name,
         item_id: item.id,
         is_read: false
+      });
+
+      await base44.integrations.Core.SendEmail({
+        to: item.reported_by,
+        subject: `Your ${item.item_name} has been found!`,
+        body: `Dear ${item.student_name},\n\n${notificationMessage}\n\nBest regards,\nDigiTrack Lost Property Team`
       });
     },
     onSuccess: () => queryClient.invalidateQueries(['allLostItems']),
@@ -166,12 +174,20 @@ export default function StaffDashboard({ user }) {
             locationMessage = 'Head to Senior Lost Property';
           }
           
+          const notificationMessage = `Great news! Your ${existingItem.item_name} has been located and is ready for collection. ${locationMessage}`;
+          
           await base44.entities.Notification.create({
             user_email: existingItem.reported_by,
-            message: `Great news! Your ${existingItem.item_name} has been located and is ready for collection. ${locationMessage}`,
+            message: notificationMessage,
             item_name: existingItem.item_name,
             item_id: existingItem.id,
             is_read: false
+          });
+
+          await base44.integrations.Core.SendEmail({
+            to: existingItem.reported_by,
+            subject: `Your ${existingItem.item_name} has been found!`,
+            body: `Dear ${existingItem.student_name},\n\n${notificationMessage}\n\nBest regards,\nDigiTrack Lost Property Team`
           });
           
           results.matched++;

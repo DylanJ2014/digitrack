@@ -42,12 +42,36 @@ export default function StudentDashboard({ user }) {
   );
 
   const markFoundMutation = useMutation({
-    mutationFn: (itemId) => base44.entities.LostItem.update(itemId, { 
-      status: 'found', 
-      found_date: new Date().toISOString().split('T')[0],
-      found_by: user.email 
-    }),
-    onSuccess: () => queryClient.invalidateQueries(['lostItems']),
+    mutationFn: async (item) => {
+      await base44.entities.LostItem.update(item.id, { 
+        status: 'found', 
+        found_date: new Date().toISOString().split('T')[0],
+        found_by: user.email 
+      });
+
+      if (item.reported_by !== user.email) {
+        const message = `Great news! Your ${item.item_name} has been found and is ready for collection.`;
+        
+        await base44.entities.Notification.create({
+          user_email: item.reported_by,
+          message,
+          item_name: item.item_name,
+          item_id: item.id,
+          is_read: false
+        });
+
+        await base44.integrations.Core.SendEmail({
+          to: item.reported_by,
+          subject: `Your ${item.item_name} has been found!`,
+          body: `Dear ${item.student_name},\n\n${message}\n\nBest regards,\nDigiTrack Lost Property Team`
+        });
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['lostItems']);
+      queryClient.invalidateQueries(['myLostItems']);
+      queryClient.invalidateQueries(['allLostItems']);
+    },
   });
 
   const deleteItemMutation = useMutation({
@@ -163,7 +187,7 @@ export default function StudentDashboard({ user }) {
                   <LostItemCard 
                     key={item.id} 
                     item={item} 
-                    onMarkFound={() => markFoundMutation.mutate(item.id)}
+                    onMarkFound={() => markFoundMutation.mutate(item)}
                     isMarkingFound={markFoundMutation.isPending}
                     onDelete={() => deleteItemMutation.mutate(item.id)}
                     canDelete={true}
@@ -198,7 +222,7 @@ export default function StudentDashboard({ user }) {
                   <LostItemCard 
                     key={item.id} 
                     item={item} 
-                    onMarkFound={() => markFoundMutation.mutate(item.id)}
+                    onMarkFound={() => markFoundMutation.mutate(item)}
                     isMarkingFound={markFoundMutation.isPending}
                     showStudentInfo
                     currentUserEmail={user.email}

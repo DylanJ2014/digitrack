@@ -30,6 +30,18 @@ export default function StaffDashboard({ user }) {
         found_by: user.email 
       });
       
+      let studentEmail = item.reported_by;
+      try {
+        const allUsers = await base44.entities.User.list();
+        const studentUser = allUsers.find(u => 
+          u.display_name?.toLowerCase() === item.student_name.toLowerCase() &&
+          u.form_group?.toLowerCase() === item.form_group.toLowerCase()
+        );
+        if (studentUser) studentEmail = studentUser.email;
+      } catch (error) {
+        console.log('Could not fetch student email, using reported_by');
+      }
+      
       let locationMessage = '';
       if (user.staff_role === 'Lost Property Coordinator - Prep') {
         locationMessage = 'Head to Prep Lost Property';
@@ -42,7 +54,7 @@ export default function StaffDashboard({ user }) {
       const notificationMessage = `Great news! Your ${item.item_name} has been found and is ready for collection. ${locationMessage}`;
       
       await base44.entities.Notification.create({
-        user_email: item.reported_by,
+        user_email: studentEmail,
         message: notificationMessage,
         item_name: item.item_name,
         item_id: item.id,
@@ -50,7 +62,7 @@ export default function StaffDashboard({ user }) {
       });
 
       await base44.integrations.Core.SendEmail({
-        to: item.reported_by,
+        to: studentEmail,
         subject: `Your ${item.item_name} has been found!`,
         body: `Dear ${item.student_name},\n\n${notificationMessage}\n\nBest regards,\nDigiTrack Lost Property Team`
       });
@@ -95,6 +107,17 @@ export default function StaffDashboard({ user }) {
           last_location: data.last_location || existingItem.last_location
         });
         
+        let studentEmail = existingItem.reported_by;
+        try {
+          const studentUser = allUsers.find(u => 
+            u.display_name?.toLowerCase() === existingItem.student_name.toLowerCase() &&
+            u.form_group?.toLowerCase() === existingItem.form_group.toLowerCase()
+          );
+          if (studentUser) studentEmail = studentUser.email;
+        } catch (error) {
+          console.log('Could not find student email');
+        }
+        
         let locationMessage = '';
         if (user.staff_role === 'Lost Property Coordinator - Prep') {
           locationMessage = 'Head to Prep Lost Property';
@@ -107,7 +130,7 @@ export default function StaffDashboard({ user }) {
         const notificationMessage = `Great news! Your ${existingItem.item_name} has been located and is ready for collection. ${locationMessage}`;
         
         await base44.entities.Notification.create({
-          user_email: existingItem.reported_by,
+          user_email: studentEmail,
           message: notificationMessage,
           item_name: existingItem.item_name,
           item_id: existingItem.id,
@@ -115,7 +138,7 @@ export default function StaffDashboard({ user }) {
         });
 
         await base44.integrations.Core.SendEmail({
-          to: existingItem.reported_by,
+          to: studentEmail,
           subject: `Your ${existingItem.item_name} has been found!`,
           body: `Dear ${existingItem.student_name},\n\n${notificationMessage}\n\nBest regards,\nDigiTrack Lost Property Team`
         });
@@ -173,6 +196,13 @@ export default function StaffDashboard({ user }) {
             last_location: item.last_location || existingItem.last_location
           });
           
+          let studentEmail = existingItem.reported_by;
+          const studentUser = allUsers.find(u => 
+            u.display_name?.toLowerCase() === existingItem.student_name.toLowerCase() &&
+            u.form_group?.toLowerCase() === existingItem.form_group.toLowerCase()
+          );
+          if (studentUser) studentEmail = studentUser.email;
+          
           let locationMessage = '';
           if (user.staff_role === 'Lost Property Coordinator - Prep') {
             locationMessage = 'Head to Prep Lost Property';
@@ -185,7 +215,7 @@ export default function StaffDashboard({ user }) {
           const notificationMessage = `Great news! Your ${existingItem.item_name} has been located and is ready for collection. ${locationMessage}`;
           
           await base44.entities.Notification.create({
-            user_email: existingItem.reported_by,
+            user_email: studentEmail,
             message: notificationMessage,
             item_name: existingItem.item_name,
             item_id: existingItem.id,
@@ -193,7 +223,7 @@ export default function StaffDashboard({ user }) {
           });
 
           await base44.integrations.Core.SendEmail({
-            to: existingItem.reported_by,
+            to: studentEmail,
             subject: `Your ${existingItem.item_name} has been found!`,
             body: `Dear ${existingItem.student_name},\n\n${notificationMessage}\n\nBest regards,\nDigiTrack Lost Property Team`
           });

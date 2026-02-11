@@ -50,10 +50,22 @@ export default function StudentDashboard({ user }) {
       });
 
       if (item.reported_by !== user.email) {
+        let studentEmail = item.reported_by;
+        try {
+          const allUsers = await base44.entities.User.list();
+          const studentUser = allUsers.find(u => 
+            u.display_name?.toLowerCase() === item.student_name.toLowerCase() &&
+            u.form_group?.toLowerCase() === item.form_group.toLowerCase()
+          );
+          if (studentUser) studentEmail = studentUser.email;
+        } catch (error) {
+          console.log('Could not fetch student email');
+        }
+
         const message = `Great news! Your ${item.item_name} has been found and is ready for collection.`;
         
         await base44.entities.Notification.create({
-          user_email: item.reported_by,
+          user_email: studentEmail,
           message,
           item_name: item.item_name,
           item_id: item.id,
@@ -61,7 +73,7 @@ export default function StudentDashboard({ user }) {
         });
 
         await base44.integrations.Core.SendEmail({
-          to: item.reported_by,
+          to: studentEmail,
           subject: `Your ${item.item_name} has been found!`,
           body: `Dear ${item.student_name},\n\n${message}\n\nBest regards,\nDigiTrack Lost Property Team`
         });

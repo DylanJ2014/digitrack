@@ -19,13 +19,13 @@ export default function StaffDashboard({ user }) {
 
   const { data: allLostItems = [], isLoading } = useQuery({
     queryKey: ['allLostItems'],
-    queryFn: () => base44.entities.LostItem.filter({ status: 'lost' }, '-created_date'),
+    queryFn: () => base44.entities.LostItem.list('-created_date'),
   });
 
   const markFoundMutation = useMutation({
     mutationFn: async (item) => {
       await base44.entities.LostItem.update(item.id, { 
-        status: 'found', 
+        status: 'awaiting_collection', 
         found_date: new Date().toISOString().split('T')[0],
         found_by: user.email 
       });
@@ -48,6 +48,13 @@ export default function StaffDashboard({ user }) {
       });
     },
     onSuccess: () => queryClient.invalidateQueries(['allLostItems']),
+  });
+
+  const deleteItemMutation = useMutation({
+    mutationFn: (itemId) => base44.entities.LostItem.delete(itemId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['allLostItems']);
+    },
   });
 
   const createItemMutation = useMutation({
@@ -144,7 +151,7 @@ export default function StaffDashboard({ user }) {
         
         if (existingItem) {
           await base44.entities.LostItem.update(existingItem.id, {
-            status: 'found',
+            status: 'awaiting_collection',
             found_date: new Date().toISOString().split('T')[0],
             found_by: user.email,
             last_location: item.last_location || existingItem.last_location
@@ -274,9 +281,12 @@ export default function StaffDashboard({ user }) {
                   <LostItemCard 
                     key={item.id} 
                     item={item} 
-                    onMarkFound={() => markFoundMutation.mutate(item)}
+                    onMarkFound={item.status === 'lost' ? () => markFoundMutation.mutate(item) : undefined}
                     isMarkingFound={markFoundMutation.isPending}
                     showStudentInfo
+                    onDelete={() => deleteItemMutation.mutate(item.id)}
+                    canDelete={true}
+                    currentUserEmail={user.email}
                   />
                 ))}
               </div>

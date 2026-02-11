@@ -1,7 +1,7 @@
 import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { LogOut, User, Menu } from 'lucide-react';
+import { LogOut, User, Menu, Info, PlayCircle, HelpCircle } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import NotificationBell from './NotificationBell';
@@ -30,16 +30,19 @@ export default function DashboardHeader({ user }) {
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
                 <Link to={createPageUrl('About')} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  <Info className="h-4 w-4 mr-2" />
                   About DigiTrack
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to={createPageUrl('Video')} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  <PlayCircle className="h-4 w-4 mr-2" />
                   Lost Property Video
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to={createPageUrl('FAQs')} className="cursor-pointer" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  <HelpCircle className="h-4 w-4 mr-2" />
                   FAQs
                 </Link>
               </DropdownMenuItem>

@@ -60,7 +60,7 @@ export default function FAQs() {
                 What happens when someone finds my item?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                You'll receive both an in-app notification and an email alert when your item is marked as found. The item status will change to "Awaiting Collection" and you can proceed to collect it from the lost property office.
+                You'll receive an in-app notification alert when your item is marked as found. The item status will change to "Awaiting Collection" and you can proceed to collect it from the relevant lost property office at either the Prep, Pre-Prep or Senior School.
               </AccordionContent>
             </AccordionItem>
 

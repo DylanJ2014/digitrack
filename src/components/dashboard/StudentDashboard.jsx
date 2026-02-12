@@ -71,12 +71,6 @@ export default function StudentDashboard({ user }) {
           item_id: item.id,
           is_read: false
         });
-
-        await base44.integrations.Core.SendEmail({
-          to: studentEmail,
-          subject: `Your ${item.item_name} has been found!`,
-          body: `Dear ${item.student_name},\n\n${message}\n\nBest regards,\nDigiTrack Lost Property Team`
-        });
       }
     },
     onSuccess: () => {

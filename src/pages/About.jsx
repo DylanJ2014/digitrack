@@ -132,7 +132,7 @@ export default function About() {
                   Dylan and his friends often lose their school belongings which are costly to replace and utilises a lot of time and effort from parents, children and staff to locate items.
                 </p>
                 <p>
-                  Dylan was inspired to digitise reuniting lost property after seeing how SouthEastern trains used technology to locate customers with lost property. See the full case study here.
+                  Dylan was inspired to digitise reuniting lost property after seeing how SouthEastern trains used technology to locate customers with lost property. <a href="https://newsroom.southeasternrailway.co.uk/news/southeasterns-new-lost-property-scheme-sees-144-percent-boost-in-reunited-items" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">See the full case study here</a>.
                 </p>
                 <p>
                   Dylan is passionate to help schools limit their lost property challenges as he really does believe the use of technology will help to unlock current challenges and speed up reuniting lost property with its rightful owner.

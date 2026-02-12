@@ -29,6 +29,28 @@ export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation 
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Validate all items
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (!item.item_category) {
+        alert(`Item ${i + 1}: Please select an item name`);
+        return;
+      }
+      if (item.item_category === 'Other' && !item.item_name) {
+        alert(`Item ${i + 1}: Please enter a custom item name`);
+        return;
+      }
+      if (!item.description) {
+        alert(`Item ${i + 1}: Please enter a description`);
+        return;
+      }
+      if (!item.date_lost) {
+        alert(`Item ${i + 1}: Please select a date lost`);
+        return;
+      }
+    }
+    
     const processedItems = items.map(item => ({
       ...item,
       item_name: item.item_category === 'Other' ? item.item_name : item.item_category

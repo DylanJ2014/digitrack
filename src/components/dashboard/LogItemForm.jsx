@@ -19,6 +19,25 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Validate required fields
+    if (!formData.item_category) {
+      alert('Please select an item name');
+      return;
+    }
+    if (formData.item_category === 'Other' && !formData.item_name) {
+      alert('Please enter a custom item name');
+      return;
+    }
+    if (!formData.description) {
+      alert('Please enter a description');
+      return;
+    }
+    if (!formData.date_lost) {
+      alert('Please select a date lost');
+      return;
+    }
+    
     const submitData = {
       ...formData,
       item_name: formData.item_category === 'Other' ? formData.item_name : formData.item_category

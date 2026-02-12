@@ -97,6 +97,15 @@ export default function FAQs() {
 
             <AccordionItem value="item-6">
               <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
+                What if my lost property item is unlabelled?
+              </AccordionTrigger>
+              <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                We strongly encourage all students to label their belongings, no matter how big or small, and to regularly check that labels haven't come off over time. DigiTrack relies on student names to successfully reunite lost items with their owners. If your item is unlabelled, we recommend visiting the lost property office in person to check if your item is there.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-7">
+              <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
                 What if I can't find my item in the system?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -104,7 +113,7 @@ export default function FAQs() {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="item-7">
+            <AccordionItem value="item-8">
               <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
                 Can parents or guardians access DigiTrack?
               </AccordionTrigger>
@@ -113,7 +122,7 @@ export default function FAQs() {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="item-8">
+            <AccordionItem value="item-9">
               <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
                 Who can I contact for help?
               </AccordionTrigger>

@@ -44,7 +44,7 @@ export default function StudentDashboard({ user }) {
   const markFoundMutation = useMutation({
     mutationFn: async (item) => {
       await base44.entities.LostItem.update(item.id, { 
-        status: 'found', 
+        status: 'awaiting_collection', 
         found_date: new Date().toISOString().split('T')[0],
         found_by: user.email 
       });

@@ -110,22 +110,12 @@ export default function StaffDashboard({ user }) {
       const allItems = await base44.entities.LostItem.list();
       const existingItem = allItems.find(existing => 
         existing.student_name.toLowerCase() === data.student_name.toLowerCase() &&
-        existing.form_group.toLowerCase() === data.form_group.toLowerCase() &&
         existing.item_name.toLowerCase() === data.item_name.toLowerCase() &&
+        existing.reported_by?.toLowerCase() === data.student_email.toLowerCase() &&
         existing.status === 'lost'
       );
       
-      let reportedByEmail = user.email;
-      try {
-        const allUsers = await base44.entities.User.list();
-        const studentUser = allUsers.find(u => 
-          u.display_name?.toLowerCase() === data.student_name.toLowerCase() &&
-          u.form_group?.toLowerCase() === data.form_group.toLowerCase()
-        );
-        if (studentUser) reportedByEmail = studentUser.email;
-      } catch (error) {
-        console.log('Could not fetch users, using staff email');
-      }
+      const reportedByEmail = data.student_email;
       
       if (existingItem) {
         await base44.entities.LostItem.update(existingItem.id, {
@@ -135,16 +125,7 @@ export default function StaffDashboard({ user }) {
           last_location: data.last_location || existingItem.last_location
         });
         
-        let studentEmail = existingItem.reported_by;
-        try {
-          const studentUser = allUsers.find(u => 
-            u.display_name?.toLowerCase() === existingItem.student_name.toLowerCase() &&
-            u.form_group?.toLowerCase() === existingItem.form_group.toLowerCase()
-          );
-          if (studentUser) studentEmail = studentUser.email;
-        } catch (error) {
-          console.log('Could not find student email');
-        }
+        const studentEmail = existingItem.reported_by;
         
         let locationMessage = '';
         if (user.staff_role === 'Lost Property Coordinator - Prep') {
@@ -199,16 +180,12 @@ export default function StaffDashboard({ user }) {
       for (const item of items) {
         const existingItem = allItems.find(existing => 
           existing.student_name.toLowerCase() === item.student_name.toLowerCase() &&
-          existing.form_group.toLowerCase() === item.form_group.toLowerCase() &&
           existing.item_name.toLowerCase() === item.item_name.toLowerCase() &&
+          existing.reported_by?.toLowerCase() === item.student_email.toLowerCase() &&
           existing.status === 'lost'
         );
         
-        const studentUser = allUsers.find(u => 
-          u.display_name?.toLowerCase() === item.student_name.toLowerCase() &&
-          u.form_group?.toLowerCase() === item.form_group.toLowerCase()
-        );
-        const reportedByEmail = studentUser ? studentUser.email : user.email;
+        const reportedByEmail = item.student_email;
         
         if (existingItem) {
           await base44.entities.LostItem.update(existingItem.id, {
@@ -218,12 +195,7 @@ export default function StaffDashboard({ user }) {
             last_location: item.last_location || existingItem.last_location
           });
           
-          let studentEmail = existingItem.reported_by;
-          const studentUser = allUsers.find(u => 
-            u.display_name?.toLowerCase() === existingItem.student_name.toLowerCase() &&
-            u.form_group?.toLowerCase() === existingItem.form_group.toLowerCase()
-          );
-          if (studentUser) studentEmail = studentUser.email;
+          const studentEmail = existingItem.reported_by;
           
           let locationMessage = '';
           if (user.staff_role === 'Lost Property Coordinator - Prep') {

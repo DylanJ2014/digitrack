@@ -9,6 +9,7 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
   const [formData, setFormData] = useState({
     student_name: studentName || '',
     form_group: formGroup || '',
+    student_email: '',
     item_name: '',
     item_category: '',
     description: '',
@@ -44,6 +45,16 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
               value={formData.form_group}
               onChange={(e) => setFormData({ ...formData, form_group: e.target.value })}
               placeholder="e.g. 9A"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Email</Label>
+            <Input
+              type="email"
+              value={formData.student_email}
+              onChange={(e) => setFormData({ ...formData, student_email: e.target.value })}
+              placeholder="student@caterhamschool.co.uk"
               required
             />
           </div>

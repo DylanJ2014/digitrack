@@ -156,13 +156,13 @@ export default function StudentDashboard({ user }) {
     <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
       <DashboardHeader user={user} />
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
             {user.display_name || user.full_name}'s Lost Items
           </h2>
-          <div className="flex gap-3">
+          <div className="flex gap-2 sm:gap-3 flex-wrap">
             <Button 
-              className="bg-white/20 hover:bg-white/30 text-white" 
+              className="bg-white/20 hover:bg-white/30 text-white flex-1 sm:flex-none" 
               style={{ fontFamily: 'Gill Sans, sans-serif' }}
               onClick={() => {
                 queryClient.invalidateQueries(['myLostItems']);
@@ -174,7 +174,7 @@ export default function StudentDashboard({ user }) {
             </Button>
             <Dialog open={showForm} onOpenChange={setShowForm}>
               <DialogTrigger asChild>
-                <Button className="bg-white hover:bg-gray-100" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+                <Button className="bg-white hover:bg-gray-100 flex-1 sm:flex-none" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
                   <Plus className="h-4 w-4 mr-2" />
                   Log Lost Item
                 </Button>

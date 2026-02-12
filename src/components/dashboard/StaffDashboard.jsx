@@ -328,16 +328,16 @@ export default function StaffDashboard({ user }) {
           <label className="text-white text-sm" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Filter by Status:</label>
           <Tabs value={statusFilter} onValueChange={setStatusFilter} className="bg-white/10 rounded-lg">
             <TabsList className="bg-transparent">
-              <TabsTrigger value="all" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <TabsTrigger value="all" className="text-white data-[state=active]:bg-gray-100 data-[state=active]:text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 All
               </TabsTrigger>
-              <TabsTrigger value="lost" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <TabsTrigger value="lost" className="text-white data-[state=active]:bg-red-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 Lost
               </TabsTrigger>
-              <TabsTrigger value="awaiting_collection" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <TabsTrigger value="awaiting_collection" className="text-white data-[state=active]:bg-yellow-500 data-[state=active]:text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 Awaiting Collection
               </TabsTrigger>
-              <TabsTrigger value="located" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <TabsTrigger value="located" className="text-white data-[state=active]:bg-green-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 Located
               </TabsTrigger>
             </TabsList>

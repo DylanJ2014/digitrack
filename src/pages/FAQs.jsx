@@ -100,7 +100,7 @@ export default function FAQs() {
                 What if I can't find my item in the system?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                Try searching using different keywords or checking the "Find Lost Items" tab. If you still can't find it, make sure to log it as a lost item so you'll be notified if someone finds it. You can also visit the lost property office in person.
+                Try searching using different keywords or checking the "Find Lost Items" tab. If you still can't find it, make sure to log it as a lost item so you'll be notified if someone finds it. You can also visit the lost property office in person. Labelled items are generally reunited back with their owner and we encourage all items no matter how big or small to be labelled.
               </AccordionContent>
             </AccordionItem>
 

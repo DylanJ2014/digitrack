@@ -91,7 +91,7 @@ export default function FAQs() {
                 How long are items kept in lost property?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                Items are typically held for 30 days before being donated or disposed of. Please collect your items as soon as possible after being notified.
+                Items are typically held for 90 days before being donated or disposed of. Please collect your items as soon as possible after being notified.
               </AccordionContent>
             </AccordionItem>
 

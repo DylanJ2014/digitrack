@@ -106,7 +106,20 @@ export default function StudentDashboard({ user }) {
   });
 
   const createItemMutation = useMutation({
-    mutationFn: (data) => {
+    mutationFn: async (data) => {
+      // If logging for someone else, check if user exists
+      if (data.student_email && data.student_email !== user.email) {
+        const allUsers = await base44.entities.User.list();
+        const userExists = allUsers.find(u => 
+          u.display_name?.toLowerCase() === data.student_name.toLowerCase() &&
+          u.form_group?.toLowerCase() === data.form_group.toLowerCase()
+        );
+        
+        if (!userExists) {
+          throw new Error('User does not exist in DigiTrack');
+        }
+      }
+      
       const reportedByEmail = data.student_email || user.email;
       const formGroupValue = data.form_group || user.form_group;
       const finalData = {
@@ -123,6 +136,9 @@ export default function StudentDashboard({ user }) {
       queryClient.invalidateQueries(['lostItems']);
       queryClient.invalidateQueries(['myLostItems']);
       setShowForm(false);
+    },
+    onError: (error) => {
+      alert(error.message);
     },
   });
 

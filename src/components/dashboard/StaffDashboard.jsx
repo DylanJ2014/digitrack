@@ -87,6 +87,17 @@ export default function StaffDashboard({ user }) {
 
   const createItemMutation = useMutation({
     mutationFn: async (data) => {
+      // Check if user exists
+      const allUsers = await base44.entities.User.list();
+      const userExists = allUsers.find(u => 
+        u.display_name?.toLowerCase() === data.student_name.toLowerCase() &&
+        u.form_group?.toLowerCase() === data.form_group.toLowerCase()
+      );
+      
+      if (!userExists) {
+        throw new Error('User does not exist in DigiTrack');
+      }
+      
       const allItems = await base44.entities.LostItem.list();
       const existingItem = allItems.find(existing => 
         existing.student_name.toLowerCase() === data.student_name.toLowerCase() &&
@@ -144,20 +155,29 @@ export default function StaffDashboard({ user }) {
         alert('✓ Item matched with existing lost item and marked as located!');
       }
     },
+    onError: (error) => {
+      alert(error.message);
+    },
   });
 
   const bulkCreateMutation = useMutation({
     mutationFn: async (items) => {
       const allItems = await base44.entities.LostItem.list();
-      let allUsers = [];
-      try {
-        allUsers = await base44.entities.User.list();
-      } catch (error) {
-        console.log('Could not fetch users, using staff email for all items');
-      }
-      const results = { matched: 0, created: 0 };
+      const allUsers = await base44.entities.User.list();
+      const results = { matched: 0, created: 0, errors: [] };
       
       for (const item of items) {
+        // Check if user exists
+        const userExists = allUsers.find(u => 
+          u.display_name?.toLowerCase() === item.student_name.toLowerCase() &&
+          u.form_group?.toLowerCase() === item.form_group.toLowerCase()
+        );
+        
+        if (!userExists) {
+          results.errors.push(`${item.student_name} (${item.form_group}) does not exist in DigiTrack`);
+          continue;
+        }
+        
         const existingItem = allItems.find(existing => 
           existing.student_name.toLowerCase() === item.student_name.toLowerCase() &&
           existing.item_name.toLowerCase() === item.item_name.toLowerCase() &&
@@ -213,7 +233,11 @@ export default function StaffDashboard({ user }) {
     onSuccess: (results) => {
       queryClient.invalidateQueries(['allLostItems']);
       setShowBulkForm(false);
-      alert(`✓ ${results.matched} item(s) marked as located\n✓ ${results.created} new item(s) logged`);
+      let message = `✓ ${results.matched} item(s) marked as located\n✓ ${results.created} new item(s) logged`;
+      if (results.errors.length > 0) {
+        message += `\n\n⚠️ Errors:\n${results.errors.join('\n')}`;
+      }
+      alert(message);
     },
   });
 

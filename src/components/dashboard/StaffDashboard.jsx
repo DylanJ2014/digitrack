@@ -62,12 +62,6 @@ export default function StaffDashboard({ user }) {
         item_id: item.id,
         is_read: false
       });
-
-      await base44.integrations.Core.SendEmail({
-        to: studentEmail,
-        subject: `Your ${item.item_name} has been found!`,
-        body: `Dear ${item.student_name},\n\n${notificationMessage}\n\nBest regards,\nDigiTrack Lost Property Team`
-      });
     },
     onSuccess: () => queryClient.invalidateQueries(['allLostItems']),
   });
@@ -106,12 +100,6 @@ export default function StaffDashboard({ user }) {
         item_name: item.item_name,
         item_id: item.id,
         is_read: false
-      });
-
-      await base44.integrations.Core.SendEmail({
-        to: studentEmail,
-        subject: `Your ${item.item_name} has been located`,
-        body: `Dear ${item.student_name},\n\n${notificationMessage}\n\nBest regards,\nDigiTrack Lost Property Team`
       });
     },
     onSuccess: () => queryClient.invalidateQueries(['allLostItems']),
@@ -175,12 +163,6 @@ export default function StaffDashboard({ user }) {
           item_name: existingItem.item_name,
           item_id: existingItem.id,
           is_read: false
-        });
-
-        await base44.integrations.Core.SendEmail({
-          to: studentEmail,
-          subject: `Your ${existingItem.item_name} has been found!`,
-          body: `Dear ${existingItem.student_name},\n\n${notificationMessage}\n\nBest regards,\nDigiTrack Lost Property Team`
         });
         
         return { matched: true };
@@ -260,12 +242,6 @@ export default function StaffDashboard({ user }) {
             item_name: existingItem.item_name,
             item_id: existingItem.id,
             is_read: false
-          });
-
-          await base44.integrations.Core.SendEmail({
-            to: studentEmail,
-            subject: `Your ${existingItem.item_name} has been found!`,
-            body: `Dear ${existingItem.student_name},\n\n${notificationMessage}\n\nBest regards,\nDigiTrack Lost Property Team`
           });
           
           results.matched++;

@@ -32,17 +32,7 @@ export default function StaffDashboard({ user }) {
         found_by: user.email 
       });
       
-      let studentEmail = item.reported_by;
-      try {
-        const allUsers = await base44.entities.User.list();
-        const studentUser = allUsers.find(u => 
-          u.display_name?.toLowerCase() === item.student_name.toLowerCase() &&
-          u.form_group?.toLowerCase() === item.form_group.toLowerCase()
-        );
-        if (studentUser) studentEmail = studentUser.email;
-      } catch (error) {
-        console.log('Could not fetch student email, using reported_by');
-      }
+      const studentEmail = item.reported_by;
       
       let locationMessage = '';
       if (user.staff_role === 'Lost Property Coordinator - Prep') {
@@ -80,17 +70,7 @@ export default function StaffDashboard({ user }) {
         found_date: new Date().toISOString().split('T')[0]
       });
       
-      let studentEmail = item.reported_by;
-      try {
-        const allUsers = await base44.entities.User.list();
-        const studentUser = allUsers.find(u => 
-          u.display_name?.toLowerCase() === item.student_name.toLowerCase() &&
-          u.form_group?.toLowerCase() === item.form_group.toLowerCase()
-        );
-        if (studentUser) studentEmail = studentUser.email;
-      } catch (error) {
-        console.log('Could not fetch student email, using reported_by');
-      }
+      const studentEmail = item.reported_by;
       
       const notificationMessage = `Your ${item.item_name} has been collected and is now marked as located.`;
       

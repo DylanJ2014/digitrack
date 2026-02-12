@@ -28,11 +28,13 @@ export default function DashboardHeader({ user }) {
               className="h-14 hover:opacity-80 transition-opacity"
             />
           </Link>
-          <img 
-            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/c704f0cd0_CaterhamLogo1.png" 
-            alt="Caterham Logo" 
-            className="h-14"
-          />
+          <a href="https://www.caterhamschool.co.uk/" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/c704f0cd0_CaterhamLogo1.png" 
+              alt="Caterham Logo" 
+              className="h-14 hover:opacity-80 transition-opacity"
+            />
+          </a>
         </div>
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right mr-2">

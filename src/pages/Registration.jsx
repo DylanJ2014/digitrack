@@ -86,14 +86,22 @@ export default function Registration() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#0F2236', fontFamily: 'Gill Sans, sans-serif' }}>
-      <Card className="w-full max-w-md" style={{ backgroundColor: '#254B77', color: 'white' }}>
-        <CardHeader className="text-center">
-          <img 
-            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
-            alt="DigiTrack Logo" 
-            className="h-16 mx-auto mb-4"
-          />
+      <Card className="w-full max-w-md shadow-2xl" style={{ backgroundColor: '#254B77', color: 'white' }}>
+        <CardHeader className="text-center pb-4">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
+              alt="DigiTrack Logo" 
+              className="h-16"
+            />
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/c704f0cd0_CaterhamLogo1.png" 
+              alt="Caterham School Logo" 
+              className="h-16"
+            />
+          </div>
           <CardTitle className="text-2xl text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Complete Your Registration</CardTitle>
+          <p className="text-white/70 text-sm mt-2">Welcome to DigiTrack</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -226,8 +234,8 @@ export default function Registration() {
             {userType && (
               <Button 
                 type="submit" 
-                className="w-full"
-                style={{ backgroundColor: '#0F2236', fontFamily: 'Gill Sans, sans-serif' }}
+                className="w-full py-6 text-lg shadow-lg hover:shadow-xl transition-all"
+                style={{ backgroundColor: '#0F2236', color: 'white', fontFamily: 'Gill Sans, sans-serif' }}
                 disabled={submitting}
               >
                 {submitting ? 'Completing Registration...' : 'Complete Registration'}

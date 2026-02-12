@@ -36,28 +36,38 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
-      <div className="text-center max-w-md">
-        <div className="mb-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: '#0F2236', fontFamily: 'Gill Sans, sans-serif' }}>
+      <div className="text-center max-w-2xl">
+        <div className="flex items-center justify-center gap-6 mb-8">
           <img 
             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
             alt="DigiTrack Logo" 
-            className="h-24 mx-auto mb-6"
+            className="h-28"
           />
-          <p className="text-xl text-white/80 mb-2">Log, Locate, Love Lost Property</p>
-          <p className="text-white/60">Your school's lost property management system</p>
+          <img 
+            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/c704f0cd0_CaterhamLogo1.png" 
+            alt="Caterham School Logo" 
+            className="h-28"
+          />
+        </div>
+        
+        <div className="mb-10">
+          <h1 className="text-4xl font-bold text-white mb-4">Welcome to DigiTrack</h1>
+          <p className="text-2xl text-white/90 mb-3">Log, Locate, Love Lost Property</p>
+          <p className="text-lg text-white/70">Caterham School's digital lost property management system</p>
         </div>
         
         <Button 
           onClick={handleLogin}
-          className="w-full max-w-xs bg-white hover:bg-gray-100 text-lg py-6"
-          style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}
+          className="w-full max-w-sm text-lg py-7 shadow-lg hover:shadow-xl transition-all"
+          style={{ backgroundColor: '#254B77', color: 'white', fontFamily: 'Gill Sans, sans-serif' }}
         >
           Login / Register
         </Button>
 
-        <div className="mt-8 text-white/60 text-sm">
-          <p>Students • Parents • Staff</p>
+        <div className="mt-12 text-white/60 text-sm">
+          <p className="mb-2">For Students • Parents • Staff</p>
+          <p className="text-xs text-white/50">Please use your @caterhamschool.co.uk email address</p>
         </div>
       </div>
     </div>

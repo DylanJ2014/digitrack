@@ -80,10 +80,40 @@ export default function StaffDashboard({ user }) {
   });
 
   const markLocatedMutation = useMutation({
-    mutationFn: (itemId) => base44.entities.LostItem.update(itemId, { 
-      status: 'found', 
-      found_date: new Date().toISOString().split('T')[0]
-    }),
+    mutationFn: async (item) => {
+      await base44.entities.LostItem.update(item.id, { 
+        status: 'found', 
+        found_date: new Date().toISOString().split('T')[0]
+      });
+      
+      let studentEmail = item.reported_by;
+      try {
+        const allUsers = await base44.entities.User.list();
+        const studentUser = allUsers.find(u => 
+          u.display_name?.toLowerCase() === item.student_name.toLowerCase() &&
+          u.form_group?.toLowerCase() === item.form_group.toLowerCase()
+        );
+        if (studentUser) studentEmail = studentUser.email;
+      } catch (error) {
+        console.log('Could not fetch student email, using reported_by');
+      }
+      
+      const notificationMessage = `Your ${item.item_name} has been collected and is now marked as located.`;
+      
+      await base44.entities.Notification.create({
+        user_email: studentEmail,
+        message: notificationMessage,
+        item_name: item.item_name,
+        item_id: item.id,
+        is_read: false
+      });
+
+      await base44.integrations.Core.SendEmail({
+        to: studentEmail,
+        subject: `Your ${item.item_name} has been located`,
+        body: `Dear ${item.student_name},\n\n${notificationMessage}\n\nBest regards,\nDigiTrack Lost Property Team`
+      });
+    },
     onSuccess: () => queryClient.invalidateQueries(['allLostItems']),
   });
 
@@ -373,7 +403,7 @@ export default function StaffDashboard({ user }) {
                     item={item} 
                     onMarkFound={item.status === 'lost' ? () => markFoundMutation.mutate(item) : undefined}
                     isMarkingFound={markFoundMutation.isPending}
-                    onMarkLocated={item.status === 'awaiting_collection' ? () => markLocatedMutation.mutate(item.id) : undefined}
+                    onMarkLocated={item.status === 'awaiting_collection' ? () => markLocatedMutation.mutate(item) : undefined}
                     isMarkingLocated={markLocatedMutation.isPending}
                     showStudentInfo
                     onDelete={() => deleteItemMutation.mutate(item.id)}

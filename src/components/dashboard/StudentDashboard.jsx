@@ -42,7 +42,7 @@ export default function StudentDashboard({ user }) {
   );
 
   const markFoundMutation = useMutation({
-    mutationFn: async (item) => {
+    mutationFn: async ({ item, location }) => {
       await base44.entities.LostItem.update(item.id, { 
         status: 'awaiting_collection', 
         found_date: new Date().toISOString().split('T')[0],
@@ -62,7 +62,10 @@ export default function StudentDashboard({ user }) {
           console.log('Could not fetch student email');
         }
 
-        const message = `Good News, your ${item.item_name} has been found. Please head to the lost property office to locate your item`;
+        const locationText = location === 'pre-prep' ? 'Pre-Prep Lost Property' : 
+                            location === 'prep' ? 'Prep Lost Property' : 
+                            'Senior Lost Property';
+        const message = `Good News, your ${item.item_name} has been found. Please head to the ${locationText} office to locate your item`;
         
         await base44.entities.Notification.create({
           user_email: studentEmail,
@@ -254,12 +257,15 @@ export default function StudentDashboard({ user }) {
                   <LostItemCard 
                     key={item.id} 
                     item={item} 
-                    onMarkFound={() => markFoundMutation.mutate(item)}
+                    onMarkFoundPrePrep={() => markFoundMutation.mutate({ item, location: 'pre-prep' })}
+                    onMarkFoundPrep={() => markFoundMutation.mutate({ item, location: 'prep' })}
+                    onMarkFoundSenior={() => markFoundMutation.mutate({ item, location: 'senior' })}
                     isMarkingFound={markFoundMutation.isPending}
                     onMarkLocated={() => markLocatedMutation.mutate(item.id)}
                     isMarkingLocated={markLocatedMutation.isPending}
                     showStudentInfo
                     currentUserEmail={user.email}
+                    showLocationButtons
                   />
                 ))}
               </div>

@@ -6,7 +6,7 @@ import LostItemCard from './LostItemCard';
 import LogItemForm from './LogItemForm';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, RefreshCw } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -138,13 +138,25 @@ export default function StudentDashboard({ user }) {
           <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
             {user.display_name || user.full_name}'s Lost Items
           </h2>
-          <Dialog open={showForm} onOpenChange={setShowForm}>
-            <DialogTrigger asChild>
-              <Button className="bg-white hover:bg-gray-100" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
-                <Plus className="h-4 w-4 mr-2" />
-                Log Lost Item
-              </Button>
-            </DialogTrigger>
+          <div className="flex gap-3">
+            <Button 
+              className="bg-white/20 hover:bg-white/30 text-white" 
+              style={{ fontFamily: 'Gill Sans, sans-serif' }}
+              onClick={() => {
+                queryClient.invalidateQueries(['myLostItems']);
+                queryClient.invalidateQueries(['allLostItems']);
+              }}
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
+            <Dialog open={showForm} onOpenChange={setShowForm}>
+              <DialogTrigger asChild>
+                <Button className="bg-white hover:bg-gray-100" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Log Lost Item
+                </Button>
+              </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle style={{ fontFamily: 'Gill Sans, sans-serif' }}>Log a Lost Item</DialogTitle>
@@ -157,8 +169,9 @@ export default function StudentDashboard({ user }) {
                 hideStudentFields
               />
             </DialogContent>
-          </Dialog>
-        </div>
+            </Dialog>
+            </div>
+            </div>
 
         <Tabs defaultValue="my-items" className="w-full">
           <TabsList className="bg-white/10 mb-4">

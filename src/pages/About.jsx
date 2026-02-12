@@ -126,7 +126,7 @@ export default function About() {
               </div>
               <div className="md:w-2/3 space-y-4 text-gray-700">
                 <p>
-                  DigiTrack was founded in 2024 by Dylan Jubraj (current Caterham Senior School Student).
+                  DigiTrack was founded in 2024 by Dylan Jubraj (current Caterham Senior School student).
                 </p>
                 <p>
                   Dylan and his friends often lose their school belongings which are costly to replace and utilises a lot of time and effort from parents, children and staff to locate items.
@@ -135,7 +135,7 @@ export default function About() {
                   Dylan was inspired to digitise reuniting lost property after seeing how SouthEastern trains used technology to locate customers with lost property. See the full case study here.
                 </p>
                 <p>
-                  Dylan is passionate to bring the DigiTrack concept to life as he really does believe the use of technology will help to reduce the lost property challenges we have at Caterham School.
+                  Dylan is passionate to help schools limit their lost property challenges as he really does believe the use of technology will help to unlock current challenges and speed up reuniting lost property with its rightful owner.
                 </p>
               </div>
             </div>

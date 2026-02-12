@@ -158,13 +158,14 @@ export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation 
               </div>
 
               <div className="col-span-2 space-y-2">
-                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Description</Label>
+                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Description *</Label>
                 <Textarea
                   value={item.description}
                   onChange={(e) => updateItem(index, 'description', e.target.value)}
                   placeholder="Details about the item"
                   className="h-20"
                   style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                  required
                 />
               </div>
 

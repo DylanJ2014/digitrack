@@ -118,6 +118,7 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           placeholder="Describe the item (colour, brand, size, label text and any distinguishing features)"
           rows={3}
+          required
         />
       </div>
 

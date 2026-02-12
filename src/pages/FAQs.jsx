@@ -109,7 +109,7 @@ export default function FAQs() {
                 Who can I contact for help?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                If you need assistance, please contact the school office or visit the lost property office during school hours. Staff members are available to help you search for your items.
+                If you need assistance, please contact the reception office or visit the lost property office during school hours. Staff members throughout the school are available to help you search for your items.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

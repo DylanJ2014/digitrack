@@ -62,7 +62,7 @@ export default function StudentDashboard({ user }) {
           console.log('Could not fetch student email');
         }
 
-        const message = `Great news! Your ${item.item_name} has been found and is ready for collection.`;
+        const message = `Good News, your ${item.item_name} has been found. Please head to the lost property office to locate your item`;
         
         await base44.entities.Notification.create({
           user_email: studentEmail,

@@ -65,9 +65,6 @@ export default function Registration() {
       updateData.school = formData.school;
       updateData.form_group = formData.form_group;
       updateData.house = formData.house;
-    } else if (userType === 'parent') {
-      updateData.child_name = formData.child_name;
-      updateData.child_form_group = formData.child_form_group;
     } else if (userType === 'staff') {
       updateData.staff_role = formData.staff_role;
     }
@@ -138,7 +135,6 @@ export default function Registration() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="student">Student</SelectItem>
-                  <SelectItem value="parent">Parent</SelectItem>
                   <SelectItem value="staff">School Staff Member</SelectItem>
                 </SelectContent>
               </Select>
@@ -188,29 +184,6 @@ export default function Registration() {
                       <SelectItem value="Townsend/Viney">Townsend/Viney</SelectItem>
                     </SelectContent>
                   </Select>
-                </div>
-              </>
-            )}
-
-            {userType === 'parent' && (
-              <>
-                <div className="space-y-2">
-                  <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Child's Full Name</Label>
-                  <Input
-                    value={formData.child_name}
-                    onChange={(e) => setFormData({ ...formData, child_name: e.target.value })}
-                    placeholder="Enter your child's full name"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Child's Form Group</Label>
-                  <Input
-                    value={formData.child_form_group}
-                    onChange={(e) => setFormData({ ...formData, child_form_group: e.target.value })}
-                    placeholder="e.g. 9A"
-                    required
-                  />
                 </div>
               </>
             )}

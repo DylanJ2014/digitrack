@@ -101,16 +101,21 @@ export default function StudentDashboard({ user }) {
   });
 
   const createItemMutation = useMutation({
-    mutationFn: (data) => base44.entities.LostItem.create({
-      ...data,
-      student_name: user.display_name || user.full_name,
-      form_group: user.form_group,
-      year_group: extractYearGroup(user.form_group),
-      status: 'lost',
-      reported_by: user.email
-    }),
+    mutationFn: (data) => {
+      const reportedByEmail = data.student_email || user.email;
+      const finalData = {
+        ...data,
+        student_name: data.student_name || user.display_name || user.full_name,
+        form_group: data.form_group || user.form_group,
+        year_group: extractYearGroup(data.form_group || user.form_group),
+        status: 'lost',
+        reported_by: reportedByEmail
+      };
+      return base44.entities.LostItem.create(finalData);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(['lostItems']);
+      queryClient.invalidateQueries(['myLostItems']);
       setShowForm(false);
     },
   });

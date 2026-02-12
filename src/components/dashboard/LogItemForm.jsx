@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function LogItemForm({ onSubmit, isLoading, studentName, formGroup, hideStudentFields, hideLastLocation }) {
+  const [loggingFor, setLoggingFor] = useState('myself'); // 'myself' or 'someone-else'
   const [formData, setFormData] = useState({
     student_name: studentName || '',
     form_group: formGroup || '',
@@ -45,9 +46,43 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
     onSubmit(submitData);
   };
 
+  const showStudentFields = !hideStudentFields || loggingFor === 'someone-else';
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {!hideStudentFields && (
+      {hideStudentFields && (
+        <div className="space-y-2">
+          <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Who are you logging this for?</Label>
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              variant={loggingFor === 'myself' ? 'default' : 'outline'}
+              onClick={() => {
+                setLoggingFor('myself');
+                setFormData({ ...formData, student_name: studentName, form_group: formGroup, student_email: '' });
+              }}
+              style={loggingFor === 'myself' ? { backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
+              className="flex-1"
+            >
+              Myself
+            </Button>
+            <Button
+              type="button"
+              variant={loggingFor === 'someone-else' ? 'default' : 'outline'}
+              onClick={() => {
+                setLoggingFor('someone-else');
+                setFormData({ ...formData, student_name: '', form_group: '', student_email: '' });
+              }}
+              style={loggingFor === 'someone-else' ? { backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
+              className="flex-1"
+            >
+              Someone Else
+            </Button>
+          </div>
+        </div>
+      )}
+      
+      {showStudentFields && (
         <>
           <div className="space-y-2">
             <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Full Name</Label>

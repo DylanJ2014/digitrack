@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { format } from 'date-fns';
 
 export default function StaffDashboard({ user }) {
   const [showForm, setShowForm] = useState(false);
@@ -401,7 +402,6 @@ export default function StaffDashboard({ user }) {
                     <TableHead style={{ fontFamily: 'Gill Sans, sans-serif' }}>Form Group</TableHead>
                     <TableHead style={{ fontFamily: 'Gill Sans, sans-serif' }}>Item</TableHead>
                     <TableHead style={{ fontFamily: 'Gill Sans, sans-serif' }}>Date Lost</TableHead>
-                    <TableHead style={{ fontFamily: 'Gill Sans, sans-serif' }}>Last Location</TableHead>
                     <TableHead style={{ fontFamily: 'Gill Sans, sans-serif' }}>Action</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -411,8 +411,7 @@ export default function StaffDashboard({ user }) {
                       <TableCell style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.student_name}</TableCell>
                       <TableCell style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.form_group}</TableCell>
                       <TableCell style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.item_name}</TableCell>
-                      <TableCell style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.date_lost}</TableCell>
-                      <TableCell style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.last_location || '-'}</TableCell>
+                      <TableCell style={{ fontFamily: 'Gill Sans, sans-serif' }}>{format(new Date(item.date_lost), 'dd-MM-yyyy')}</TableCell>
                       <TableCell>
                         <Button 
                           size="sm" 

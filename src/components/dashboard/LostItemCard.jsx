@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Calendar, CheckCircle, Trash2 } from 'lucide-react';
+import { format } from 'date-fns';
 
 export default function LostItemCard({ item, onMarkFound, isMarkingFound, showStudentInfo, onDelete, canDelete, currentUserEmail, onMarkLocated, isMarkingLocated }) {
   return (
@@ -47,7 +48,7 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
         )}
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <Calendar className="h-4 w-4" />
-          <span style={{ fontFamily: 'Gill Sans, sans-serif' }}>Lost on {item.date_lost}</span>
+          <span style={{ fontFamily: 'Gill Sans, sans-serif' }}>Lost on {format(new Date(item.date_lost), 'dd-MM-yyyy')}</span>
         </div>
         {item.last_location && (
           <div className="flex items-center gap-2 text-sm text-gray-500">

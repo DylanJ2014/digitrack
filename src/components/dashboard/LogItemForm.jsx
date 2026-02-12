@@ -62,7 +62,7 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
       )}
 
       <div className="space-y-2">
-        <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Item Name</Label>
+        <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Item Name *</Label>
         <Select 
           value={formData.item_category} 
           onValueChange={(value) => setFormData({ ...formData, item_category: value, item_name: '' })}
@@ -112,7 +112,7 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
       )}
 
       <div className="space-y-2">
-        <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Description</Label>
+        <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Description *</Label>
         <Textarea
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -123,7 +123,7 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
       </div>
 
       <div className="space-y-2">
-        <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Date Lost</Label>
+        <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Date Lost *</Label>
         <Input
           type="date"
           value={formData.date_lost}

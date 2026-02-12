@@ -12,6 +12,7 @@ export default function Registration() {
   const [userType, setUserType] = useState('');
   const [formData, setFormData] = useState({
     full_name: '',
+    email: '',
     school: '',
     form_group: '',
     house: '',
@@ -21,6 +22,7 @@ export default function Registration() {
   });
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState('');
 
   useEffect(() => {
     const checkUser = async () => {
@@ -42,10 +44,19 @@ export default function Registration() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate email domain
+    const emailPattern = /^[a-zA-Z]+\.[a-zA-Z]+@caterhamschool\.co\.uk$/;
+    if (!emailPattern.test(formData.email)) {
+      setEmailError('Email must be in the format: firstname.surname@caterhamschool.co.uk');
+      return;
+    }
+    
     setSubmitting(true);
     
     const updateData = {
       display_name: formData.full_name,
+      email: formData.email,
       user_type: userType,
       is_registered: true
     };
@@ -95,6 +106,21 @@ export default function Registration() {
                 required
                 style={{ fontFamily: 'Gill Sans, sans-serif' }}
               />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>School Email Address</Label>
+              <Input
+                type="email"
+                value={formData.email}
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                  setEmailError('');
+                }}
+                placeholder="firstname.surname@caterhamschool.co.uk"
+                required
+                style={{ fontFamily: 'Gill Sans, sans-serif' }}
+              />
+              {emailError && <p className="text-red-300 text-sm">{emailError}</p>}
             </div>
             <div className="space-y-2">
               <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>I am a...</Label>

@@ -172,35 +172,24 @@ export default function StudentDashboard({ user }) {
           </TabsList>
 
           <TabsContent value="my-items">
-            <div className="mb-4 flex gap-2">
-              <Button
-                variant={statusFilter === 'all' ? 'default' : 'outline'}
-                onClick={() => setStatusFilter('all')}
-                style={statusFilter === 'all' ? { backgroundColor: 'white', color: '#254B77', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
-              >
-                All
-              </Button>
-              <Button
-                variant={statusFilter === 'lost' ? 'default' : 'outline'}
-                onClick={() => setStatusFilter('lost')}
-                style={statusFilter === 'lost' ? { backgroundColor: '#dc2626', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
-              >
-                Lost
-              </Button>
-              <Button
-                variant={statusFilter === 'awaiting_collection' ? 'default' : 'outline'}
-                onClick={() => setStatusFilter('awaiting_collection')}
-                style={statusFilter === 'awaiting_collection' ? { backgroundColor: '#f59e0b', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
-              >
-                Awaiting Collection
-              </Button>
-              <Button
-                variant={statusFilter === 'found' ? 'default' : 'outline'}
-                onClick={() => setStatusFilter('found')}
-                style={statusFilter === 'found' ? { backgroundColor: '#22c55e', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
-              >
-                Located
-              </Button>
+            <div className="mb-4 flex flex-wrap items-center gap-3">
+              <label className="text-white text-sm" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Filter by Status:</label>
+              <Tabs value={statusFilter} onValueChange={setStatusFilter} className="bg-white/10 rounded-lg">
+                <TabsList className="bg-transparent">
+                  <TabsTrigger value="all" className="text-white data-[state=active]:bg-gray-100 data-[state=active]:text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                    All
+                  </TabsTrigger>
+                  <TabsTrigger value="lost" className="text-white data-[state=active]:bg-red-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                    Lost
+                  </TabsTrigger>
+                  <TabsTrigger value="awaiting_collection" className="text-white data-[state=active]:bg-yellow-500 data-[state=active]:text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                    Awaiting Collection
+                  </TabsTrigger>
+                  <TabsTrigger value="found" className="text-white data-[state=active]:bg-green-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                    Located
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
             </div>
             {isLoadingMine ? (
               <div className="text-white text-center py-8">Loading...</div>

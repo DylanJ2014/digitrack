@@ -16,7 +16,7 @@ import { format } from 'date-fns';
 export default function StaffDashboard({ user }) {
   const [showForm, setShowForm] = useState(false);
   const [showBulkForm, setShowBulkForm] = useState(false);
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('lost');
   const queryClient = useQueryClient();
 
   const { data: allLostItems = [], isLoading } = useQuery({
@@ -227,11 +227,10 @@ export default function StaffDashboard({ user }) {
   };
 
   const filteredItems = allLostItems.filter(item => {
-    if (statusFilter === 'all') return true;
     if (statusFilter === 'lost') return item.status === 'lost';
     if (statusFilter === 'awaiting_collection') return item.status === 'awaiting_collection';
     if (statusFilter === 'located') return item.status === 'found';
-    return true;
+    return false;
   });
 
   return (
@@ -287,9 +286,6 @@ export default function StaffDashboard({ user }) {
           <label className="text-white text-sm" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Filter by Status:</label>
           <Tabs value={statusFilter} onValueChange={setStatusFilter} className="bg-white/10 rounded-lg">
             <TabsList className="bg-transparent">
-              <TabsTrigger value="all" className="text-white data-[state=active]:bg-gray-100 data-[state=active]:text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                All
-              </TabsTrigger>
               <TabsTrigger value="lost" className="text-white data-[state=active]:bg-red-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 Lost
               </TabsTrigger>
@@ -350,7 +346,7 @@ export default function StaffDashboard({ user }) {
                   Lost Property Report - All Years
                 </h3>
                 <p className="text-sm text-gray-500" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                  {filteredItems.length} item(s) {statusFilter === 'all' ? 'total' : `with status: ${statusFilter.replace('_', ' ')}`}
+                  {filteredItems.length} item(s) with status: {statusFilter.replace('_', ' ')}
                 </p>
               </div>
               <Table>

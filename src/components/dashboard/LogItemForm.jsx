@@ -22,6 +22,17 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
     e.preventDefault();
     
     // Validate required fields
+    if (loggingFor === 'someone-else' && hideStudentFields) {
+      if (!formData.student_name) {
+        alert('Please enter the student\'s full name');
+        return;
+      }
+      if (!formData.student_email) {
+        alert('Please enter the student\'s email');
+        return;
+      }
+    }
+    
     if (!formData.item_category) {
       alert('Please select an item name');
       return;
@@ -82,7 +93,7 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
         </div>
       )}
       
-      {showStudentFields && (
+      {showStudentFields && !hideStudentFields && (
         <>
           <div className="space-y-2">
             <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Full Name</Label>
@@ -104,6 +115,30 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
           </div>
           <div className="space-y-2">
             <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Email</Label>
+            <Input
+              type="email"
+              value={formData.student_email}
+              onChange={(e) => setFormData({ ...formData, student_email: e.target.value })}
+              placeholder="student@caterhamschool.co.uk"
+              required
+            />
+          </div>
+        </>
+      )}
+      
+      {loggingFor === 'someone-else' && hideStudentFields && (
+        <>
+          <div className="space-y-2">
+            <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Full Name *</Label>
+            <Input
+              value={formData.student_name}
+              onChange={(e) => setFormData({ ...formData, student_name: e.target.value })}
+              placeholder="Enter student's full name"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Email *</Label>
             <Input
               type="email"
               value={formData.student_email}

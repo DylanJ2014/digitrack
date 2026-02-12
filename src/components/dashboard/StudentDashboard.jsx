@@ -103,11 +103,12 @@ export default function StudentDashboard({ user }) {
   const createItemMutation = useMutation({
     mutationFn: (data) => {
       const reportedByEmail = data.student_email || user.email;
+      const formGroupValue = data.form_group || user.form_group;
       const finalData = {
         ...data,
         student_name: data.student_name || user.display_name || user.full_name,
-        form_group: data.form_group || user.form_group,
-        year_group: extractYearGroup(data.form_group || user.form_group),
+        form_group: formGroupValue,
+        year_group: extractYearGroup(formGroupValue),
         status: 'lost',
         reported_by: reportedByEmail
       };

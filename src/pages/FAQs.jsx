@@ -106,19 +106,19 @@ export default function FAQs() {
 
             <AccordionItem value="item-7">
               <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
-                Who can I contact for help?
+                Can parents or guardians access DigiTrack?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                If you need assistance, please contact the reception office or visit the lost property office during school hours. Staff members throughout the school are available to help you search for your items.
+                Parents and guardians are welcome to help locate their child's lost property by logging in through their child's school account. This ensures all items remain linked to the correct student profile and notifications are delivered appropriately.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-8">
               <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
-                Can parents or guardians access DigiTrack?
+                Who can I contact for help?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                Parents and guardians are welcome to help locate their child's lost property by logging in through their child's school account. This ensures all items remain linked to the correct student profile and notifications are delivered appropriately.
+                If you need assistance, please contact the reception office or visit the lost property office during school hours. Staff members throughout the school are available to help you search for your items.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

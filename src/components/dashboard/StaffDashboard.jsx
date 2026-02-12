@@ -15,6 +15,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 export default function StaffDashboard({ user }) {
   const [showForm, setShowForm] = useState(false);
   const [showBulkForm, setShowBulkForm] = useState(false);
+  const [statusFilter, setStatusFilter] = useState('all');
   const queryClient = useQueryClient();
 
   const { data: allLostItems = [], isLoading } = useQuery({
@@ -266,7 +267,13 @@ export default function StaffDashboard({ user }) {
     return 'Year 7';
   };
 
-
+  const filteredItems = allLostItems.filter(item => {
+    if (statusFilter === 'all') return true;
+    if (statusFilter === 'lost') return item.status === 'lost';
+    if (statusFilter === 'awaiting_collection') return item.status === 'awaiting_collection';
+    if (statusFilter === 'located') return item.status === 'found';
+    return true;
+  });
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
@@ -317,6 +324,26 @@ export default function StaffDashboard({ user }) {
           </div>
         </div>
 
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          <label className="text-white text-sm" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Filter by Status:</label>
+          <Tabs value={statusFilter} onValueChange={setStatusFilter} className="bg-white/10 rounded-lg">
+            <TabsList className="bg-transparent">
+              <TabsTrigger value="all" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                All
+              </TabsTrigger>
+              <TabsTrigger value="lost" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                Lost
+              </TabsTrigger>
+              <TabsTrigger value="awaiting_collection" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                Awaiting Collection
+              </TabsTrigger>
+              <TabsTrigger value="located" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                Located
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+
         <Tabs defaultValue="cards" className="w-full">
           <TabsList className="bg-white/10 mb-4">
             <TabsTrigger value="cards" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -331,15 +358,15 @@ export default function StaffDashboard({ user }) {
           <TabsContent value="cards">
             {isLoading ? (
               <div className="text-white text-center py-8">Loading...</div>
-            ) : allLostItems.length === 0 ? (
+            ) : filteredItems.length === 0 ? (
               <div className="bg-white/10 rounded-lg p-8 text-center">
                 <p className="text-white text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                  No lost items.
+                  No items found.
                 </p>
               </div>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {allLostItems.map((item) => (
+                {filteredItems.map((item) => (
                   <LostItemCard 
                     key={item.id} 
                     item={item} 
@@ -364,7 +391,7 @@ export default function StaffDashboard({ user }) {
                   Lost Property Report - All Years
                 </h3>
                 <p className="text-sm text-gray-500" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                  {allLostItems.length} item(s) currently missing
+                  {filteredItems.length} item(s) {statusFilter === 'all' ? 'total' : `with status: ${statusFilter.replace('_', ' ')}`}
                 </p>
               </div>
               <Table>
@@ -379,7 +406,7 @@ export default function StaffDashboard({ user }) {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {allLostItems.map((item) => (
+                  {filteredItems.map((item) => (
                     <TableRow key={item.id}>
                       <TableCell style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.student_name}</TableCell>
                       <TableCell style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.form_group}</TableCell>

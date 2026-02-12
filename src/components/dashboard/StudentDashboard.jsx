@@ -93,7 +93,9 @@ export default function StudentDashboard({ user }) {
   });
 
   const deleteItemMutation = useMutation({
-    mutationFn: (itemId) => base44.entities.LostItem.delete(itemId),
+    mutationFn: async (itemId) => {
+      await base44.entities.LostItem.delete(itemId);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(['myLostItems']);
       queryClient.invalidateQueries(['allLostItems']);

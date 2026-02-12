@@ -65,7 +65,8 @@ export default function StudentDashboard({ user }) {
         const locationText = location === 'pre-prep' ? 'Pre-Prep Lost Property' : 
                             location === 'prep' ? 'Prep Lost Property' : 
                             'Senior Lost Property';
-        const message = `Good News, your ${item.item_name} has been found. Please head to the ${locationText} office to locate your item`;
+        const finderName = user.display_name || user.full_name;
+        const message = `Good News, your ${item.item_name} has been found by ${finderName}. Please head to the ${locationText} office to locate your item`;
         
         await base44.entities.Notification.create({
           user_email: studentEmail,

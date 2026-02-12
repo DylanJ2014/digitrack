@@ -43,7 +43,8 @@ export default function StaffDashboard({ user }) {
         locationMessage = 'Head to Senior Lost Property';
       }
       
-      const notificationMessage = `Great news! Your ${item.item_name} has been found and is ready for collection. ${locationMessage}`;
+      const finderName = user.display_name || user.full_name;
+      const notificationMessage = `Great news! Your ${item.item_name} has been found by ${finderName} and is ready for collection. ${locationMessage}`;
       
       await base44.entities.Notification.create({
         user_email: studentEmail,
@@ -127,7 +128,8 @@ export default function StaffDashboard({ user }) {
           locationMessage = 'Head to Senior Lost Property';
         }
         
-        const notificationMessage = `Great news! Your ${existingItem.item_name} has been located and is ready for collection. ${locationMessage}`;
+        const finderName = user.display_name || user.full_name;
+        const notificationMessage = `Great news! Your ${existingItem.item_name} has been located by ${finderName} and is ready for collection. ${locationMessage}`;
         
         await base44.entities.Notification.create({
           user_email: studentEmail,
@@ -206,7 +208,8 @@ export default function StaffDashboard({ user }) {
             locationMessage = 'Head to Senior Lost Property';
           }
           
-          const notificationMessage = `Great news! Your ${existingItem.item_name} has been located and is ready for collection. ${locationMessage}`;
+          const finderName = user.display_name || user.full_name;
+          const notificationMessage = `Great news! Your ${existingItem.item_name} has been located by ${finderName} and is ready for collection. ${locationMessage}`;
           
           await base44.entities.Notification.create({
             user_email: studentEmail,

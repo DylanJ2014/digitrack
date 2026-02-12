@@ -3,7 +3,6 @@ import { base44 } from '@/api/base44Client';
 import { createPageUrl } from '@/utils';
 import DashboardHeader from '../components/dashboard/DashboardHeader';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Linkedin } from 'lucide-react';
 
 export default function About() {
   const [user, setUser] = useState(null);
@@ -115,6 +114,20 @@ export default function About() {
             <CardTitle style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
               DigiTrack Founder - Dylan Jubraj
             </CardTitle>
+            <a 
+              href="https://www.linkedin.com/in/dylan-jubraj-80526232b/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity mt-2"
+              style={{ fontFamily: 'Gill Sans, sans-serif' }}
+            >
+              <img 
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/699ecb3ee_LinkedIn.png" 
+                alt="LinkedIn" 
+                className="h-5 w-5"
+              />
+              <span className="text-blue-600">Dylan's LinkedIn Profile</span>
+            </a>
           </CardHeader>
           <CardContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
             <div className="flex flex-col md:flex-row gap-6 items-start">
@@ -138,15 +151,6 @@ export default function About() {
                 <p>
                   Dylan is passionate to help schools limit their lost property challenges as he really does believe the use of technology will help to unlock current challenges and speed up reuniting lost property with its rightful owner.
                 </p>
-                <a 
-                  href="https://www.linkedin.com/in/dylan-jubraj-80526232b/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors mt-4"
-                >
-                  <Linkedin className="h-5 w-5" />
-                  <span>Dylan's LinkedIn Profile</span>
-                </a>
               </div>
             </div>
           </CardContent>

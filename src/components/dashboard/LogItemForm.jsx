@@ -234,6 +234,16 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
       </div>
 
       <div className="space-y-2">
+        <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Date Logged</Label>
+        <Input
+          type="date"
+          value={new Date().toISOString().split('T')[0]}
+          disabled
+          className="bg-gray-100"
+        />
+      </div>
+
+      <div className="space-y-2">
         <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Date Lost *</Label>
         <Input
           type="date"

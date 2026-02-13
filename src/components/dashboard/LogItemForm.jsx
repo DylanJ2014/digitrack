@@ -221,7 +221,7 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
         />
       </div>
 
-      {!hideLastLocation && (
+      {!hideLastLocation && loggingFor === 'myself' && (
         <div className="space-y-2">
           <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Last Known Location</Label>
           <Input

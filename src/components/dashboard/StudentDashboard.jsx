@@ -21,11 +21,7 @@ export default function StudentDashboard({ user }) {
     queryKey: ['myLostItems', user.email],
     queryFn: async () => {
       const allItems = await base44.entities.LostItem.list('-created_date');
-      return allItems.filter(item => 
-        item.reported_by === user.email ||
-        (item.student_name?.toLowerCase() === (user.display_name || user.full_name)?.toLowerCase() &&
-         item.form_group?.toLowerCase() === user.form_group?.toLowerCase())
-      );
+      return allItems.filter(item => item.reported_by === user.email);
     },
   });
 
@@ -108,24 +104,27 @@ export default function StudentDashboard({ user }) {
 
   const createItemMutation = useMutation({
     mutationFn: async (data) => {
-      // If logging for someone else, check if user exists
+      let reportedByEmail = user.email;
+      let studentName = user.display_name || user.full_name;
+      let formGroupValue = user.form_group;
+      
+      // If logging for someone else, check if user exists by email
       if (data.student_email && data.student_email !== user.email) {
         const allUsers = await base44.entities.User.list();
-        const userExists = allUsers.find(u => 
-          u.display_name?.toLowerCase() === data.student_name.toLowerCase() &&
-          u.form_group?.toLowerCase() === data.form_group.toLowerCase()
-        );
+        const targetUser = allUsers.find(u => u.email === data.student_email);
         
-        if (!userExists) {
-          throw new Error('User does not exist in DigiTrack');
+        if (!targetUser) {
+          throw new Error('User with this email does not exist in DigiTrack');
         }
+        
+        reportedByEmail = data.student_email;
+        studentName = targetUser.display_name || targetUser.full_name;
+        formGroupValue = targetUser.form_group;
       }
       
-      const reportedByEmail = data.student_email || user.email;
-      const formGroupValue = data.form_group || user.form_group;
       const finalData = {
         ...data,
-        student_name: data.student_name || user.display_name || user.full_name,
+        student_name: studentName,
         form_group: formGroupValue,
         year_group: extractYearGroup(formGroupValue),
         status: 'lost',

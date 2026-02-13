@@ -106,16 +106,20 @@ export default function StudentDashboard({ user }) {
     mutationFn: async (data) => {
       const reportedByEmail = data.student_email || user.email;
       const studentName = data.student_name || user.display_name || user.full_name;
-      const formGroupValue = data.form_group || user.form_group;
       
       const finalData = {
         ...data,
         student_name: studentName,
-        form_group: formGroupValue,
-        year_group: extractYearGroup(formGroupValue),
         status: 'lost',
         reported_by: reportedByEmail
       };
+      
+      // Only add form_group and year_group if logging for yourself
+      if (!data.student_email || data.student_email === user.email) {
+        finalData.form_group = user.form_group;
+        finalData.year_group = extractYearGroup(user.form_group);
+      }
+      
       return base44.entities.LostItem.create(finalData);
     },
     onSuccess: () => {

@@ -104,23 +104,9 @@ export default function StudentDashboard({ user }) {
 
   const createItemMutation = useMutation({
     mutationFn: async (data) => {
-      let reportedByEmail = user.email;
-      let studentName = user.display_name || user.full_name;
-      let formGroupValue = user.form_group;
-      
-      // If logging for someone else, check if user exists by email
-      if (data.student_email && data.student_email !== user.email) {
-        const allUsers = await base44.entities.User.list();
-        const targetUser = allUsers.find(u => u.email === data.student_email);
-        
-        if (!targetUser) {
-          throw new Error('User with this email does not exist in DigiTrack');
-        }
-        
-        reportedByEmail = data.student_email;
-        studentName = targetUser.display_name || targetUser.full_name;
-        formGroupValue = targetUser.form_group;
-      }
+      const reportedByEmail = data.student_email || user.email;
+      const studentName = data.student_name || user.display_name || user.full_name;
+      const formGroupValue = data.form_group || user.form_group;
       
       const finalData = {
         ...data,

@@ -147,6 +147,15 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
               required
             />
           </div>
+          <div className="space-y-2">
+            <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Form Group *</Label>
+            <Input
+              value={formData.form_group}
+              onChange={(e) => setFormData({ ...formData, form_group: e.target.value })}
+              placeholder="e.g. 9A"
+              required
+            />
+          </div>
         </>
       )}
 

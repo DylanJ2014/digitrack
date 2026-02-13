@@ -169,11 +169,23 @@ export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation 
               )}
 
               <div className="space-y-2">
+                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Date Logged</Label>
+                <Input
+                  type="date"
+                  value={new Date().toISOString().split('T')[0]}
+                  disabled
+                  className="bg-gray-100"
+                  style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                />
+              </div>
+
+              <div className="space-y-2">
                 <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Date Lost *</Label>
                 <Input
                   type="date"
                   value={item.date_lost}
                   onChange={(e) => updateItem(index, 'date_lost', e.target.value)}
+                  max={new Date().toISOString().split('T')[0]}
                   required
                   style={{ fontFamily: 'Gill Sans, sans-serif' }}
                 />

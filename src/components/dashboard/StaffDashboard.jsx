@@ -145,7 +145,8 @@ export default function StaffDashboard({ user }) {
           ...data,
           year_group: extractYearGroup(data.form_group),
           status: 'lost',
-          reported_by: reportedByEmail
+          reported_by: reportedByEmail,
+          date_logged: new Date().toISOString().split('T')[0]
         });
         return { matched: false };
       }
@@ -225,7 +226,8 @@ export default function StaffDashboard({ user }) {
             ...item,
             year_group: extractYearGroup(item.form_group),
             status: 'lost',
-            reported_by: reportedByEmail
+            reported_by: reportedByEmail,
+            date_logged: new Date().toISOString().split('T')[0]
           });
           results.created++;
         }

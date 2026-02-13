@@ -111,25 +111,9 @@ export default function About() {
 
         <Card className="bg-white">
           <CardHeader>
-            <div className="flex items-center justify-between flex-wrap gap-4">
-              <CardTitle style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
-                DigiTrack Founder - Dylan Jubraj
-              </CardTitle>
-              <a 
-                href="https://www.linkedin.com/in/dylan-jubraj-80526232b/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-                style={{ fontFamily: 'Gill Sans, sans-serif' }}
-              >
-                <img 
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/699ecb3ee_LinkedIn.png" 
-                  alt="LinkedIn" 
-                  className="h-5 w-5"
-                />
-                <span className="text-blue-600">Dylan's LinkedIn Profile</span>
-              </a>
-            </div>
+            <CardTitle style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+              DigiTrack Founder - Dylan Jubraj
+            </CardTitle>
           </CardHeader>
           <CardContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
             <div className="flex flex-col md:flex-row gap-6 items-start">

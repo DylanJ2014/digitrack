@@ -237,8 +237,6 @@ export default function StudentDashboard({ user }) {
                   <LostItemCard 
                     key={item.id} 
                     item={item} 
-                    onMarkFound={() => markFoundMutation.mutate(item)}
-                    isMarkingFound={markFoundMutation.isPending}
                     onMarkLocated={() => markLocatedMutation.mutate(item.id)}
                     isMarkingLocated={markLocatedMutation.isPending}
                     onDelete={() => deleteItemMutation.mutate(item.id)}

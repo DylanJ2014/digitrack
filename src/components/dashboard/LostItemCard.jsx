@@ -101,6 +101,17 @@ export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, on
             Mark as Found
           </Button>
         )}
+        {item.status === 'lost' && onMarkLocated && !onMarkFound && !showLocationButtons && (
+          <Button 
+            className="w-full mt-4 bg-green-600 hover:bg-green-700" 
+            style={{ fontFamily: 'Gill Sans, sans-serif' }}
+            onClick={onMarkLocated}
+            disabled={isMarkingLocated}
+          >
+            <CheckCircle className="h-4 w-4 mr-2" />
+            Mark as Located
+          </Button>
+        )}
         {item.status === 'awaiting_collection' && onMarkLocated && (
           <Button 
             className="w-full mt-4 bg-green-600 hover:bg-green-700" 

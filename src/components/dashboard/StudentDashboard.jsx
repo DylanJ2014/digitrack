@@ -285,7 +285,7 @@ export default function StudentDashboard({ user }) {
                     isMarkingLocated={markLocatedMutation.isPending}
                     showStudentInfo
                     currentUserEmail={user.email}
-                    showLocationButtons
+                    showLocationButtons={item.created_by !== user.email}
                   />
                 ))}
               </div>

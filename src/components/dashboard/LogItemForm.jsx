@@ -15,7 +15,8 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
     item_category: '',
     description: '',
     date_lost: new Date().toISOString().split('T')[0],
-    last_location: ''
+    last_location: '',
+    collection_location: ''
   });
 
   const handleSubmit = (e) => {
@@ -29,6 +30,10 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
       }
       if (!formData.student_email) {
         alert('Please enter the student\'s email');
+        return;
+      }
+      if (!formData.collection_location) {
+        alert('Please select where you will place this item');
         return;
       }
     }
@@ -146,6 +151,23 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
               placeholder="student@caterhamschool.co.uk"
               required
             />
+          </div>
+          <div className="space-y-2">
+            <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Where will you place this item? *</Label>
+            <Select 
+              value={formData.collection_location} 
+              onValueChange={(value) => setFormData({ ...formData, collection_location: value })}
+              required
+            >
+              <SelectTrigger style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                <SelectValue placeholder="Select location" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Pre-Prep Lost Property Office">Pre-Prep Lost Property Office</SelectItem>
+                <SelectItem value="Prep Lost Property Office">Prep Lost Property Office</SelectItem>
+                <SelectItem value="Senior Lost Property Office">Senior Lost Property Office</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </>
       )}

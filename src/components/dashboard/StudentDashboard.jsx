@@ -120,7 +120,23 @@ export default function StudentDashboard({ user }) {
         finalData.year_group = extractYearGroup(user.form_group);
       }
       
-      return base44.entities.LostItem.create(finalData);
+      const item = await base44.entities.LostItem.create(finalData);
+      
+      // If logging for someone else, send notification
+      if (data.student_email && data.student_email !== user.email) {
+        const finderName = user.display_name || user.full_name;
+        const message = `Your ${data.item_name} has been identified by ${finderName}. You will receive a further notification when to head to ${data.collection_location} to collect it.`;
+        
+        await base44.entities.Notification.create({
+          user_email: data.student_email,
+          message,
+          item_name: data.item_name,
+          item_id: item.id,
+          is_read: false
+        });
+      }
+      
+      return item;
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['lostItems']);

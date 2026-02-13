@@ -111,7 +111,8 @@ export default function StudentDashboard({ user }) {
         ...data,
         student_name: studentName,
         status: 'lost',
-        reported_by: reportedByEmail
+        reported_by: reportedByEmail,
+        date_logged: new Date().toISOString().split('T')[0]
       };
       
       // Only add form_group and year_group if logging for yourself

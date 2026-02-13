@@ -239,6 +239,7 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
           type="date"
           value={formData.date_lost}
           onChange={(e) => setFormData({ ...formData, date_lost: e.target.value })}
+          max={new Date().toISOString().split('T')[0]}
           required
         />
       </div>

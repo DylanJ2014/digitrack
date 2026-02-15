@@ -233,7 +233,8 @@ export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation 
         <Button
           type="submit"
           disabled={isLoading}
-          style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}
+          className="bg-teal-600 hover:bg-teal-700 text-white border-0"
+          style={{ fontFamily: 'Gill Sans, sans-serif' }}
         >
           {isLoading ? 'Logging Items...' : `Log ${items.length} Item${items.length > 1 ? 's' : ''}`}
         </Button>

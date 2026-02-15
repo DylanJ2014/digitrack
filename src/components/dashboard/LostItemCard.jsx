@@ -7,11 +7,11 @@ import { format } from 'date-fns';
 
 export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, onMarkFoundPrep, onMarkFoundSenior, isMarkingFound, showStudentInfo, onDelete, canDelete, currentUserEmail, onMarkLocated, isMarkingLocated, showLocationButtons }) {
   return (
-    <Card className="bg-white">
+    <Card className="bg-white shadow-md hover:shadow-lg transition-shadow border-0">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-lg" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+            <CardTitle className="text-lg text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               {item.item_name}
             </CardTitle>
             {canDelete && (
@@ -59,9 +59,9 @@ export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, on
         {item.status === 'lost' && showLocationButtons && (
           <div className="space-y-2 mt-4">
             <Button 
-              className="w-full" 
+              className="w-full bg-teal-600 hover:bg-teal-700 text-white border-0" 
               size="xs"
-              style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}
+              style={{ fontFamily: 'Gill Sans, sans-serif' }}
               onClick={onMarkFoundPrePrep}
               disabled={isMarkingFound}
             >
@@ -69,9 +69,9 @@ export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, on
               Drop to Pre-Prep Lost Property
             </Button>
             <Button 
-              className="w-full" 
+              className="w-full bg-teal-600 hover:bg-teal-700 text-white border-0" 
               size="xs"
-              style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}
+              style={{ fontFamily: 'Gill Sans, sans-serif' }}
               onClick={onMarkFoundPrep}
               disabled={isMarkingFound}
             >
@@ -79,9 +79,9 @@ export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, on
               Drop to Prep Lost Property
             </Button>
             <Button 
-              className="w-full" 
+              className="w-full bg-teal-600 hover:bg-teal-700 text-white border-0" 
               size="xs"
-              style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}
+              style={{ fontFamily: 'Gill Sans, sans-serif' }}
               onClick={onMarkFoundSenior}
               disabled={isMarkingFound}
             >
@@ -92,8 +92,8 @@ export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, on
         )}
         {item.status === 'lost' && onMarkFound && !showLocationButtons && (
           <Button 
-            className="w-full mt-4" 
-            style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}
+            className="w-full mt-4 bg-teal-600 hover:bg-teal-700 text-white border-0" 
+            style={{ fontFamily: 'Gill Sans, sans-serif' }}
             onClick={onMarkFound}
             disabled={isMarkingFound}
           >

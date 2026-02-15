@@ -77,8 +77,8 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
                 setLoggingFor('myself');
                 setFormData({ ...formData, student_name: studentName, form_group: formGroup, student_email: '' });
               }}
-              style={loggingFor === 'myself' ? { backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
-              className="flex-1"
+              className={loggingFor === 'myself' ? 'bg-teal-600 hover:bg-teal-700 text-white border-0 flex-1' : 'flex-1 border-gray-300'}
+              style={{ fontFamily: 'Gill Sans, sans-serif' }}
             >
               Myself
             </Button>
@@ -89,8 +89,8 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
                 setLoggingFor('someone-else');
                 setFormData({ ...formData, student_name: '', form_group: '', student_email: '' });
               }}
-              style={loggingFor === 'someone-else' ? { backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' } : { fontFamily: 'Gill Sans, sans-serif' }}
-              className="flex-1"
+              className={loggingFor === 'someone-else' ? 'bg-teal-600 hover:bg-teal-700 text-white border-0 flex-1' : 'flex-1 border-gray-300'}
+              style={{ fontFamily: 'Gill Sans, sans-serif' }}
             >
               Someone Else
             </Button>
@@ -267,8 +267,8 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
 
       <Button 
         type="submit" 
-        className="w-full"
-        style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}
+        className="w-full bg-teal-600 hover:bg-teal-700 text-white border-0"
+        style={{ fontFamily: 'Gill Sans, sans-serif' }}
         disabled={isLoading}
       >
         {isLoading ? 'Logging Item...' : 'Log Lost Item'}

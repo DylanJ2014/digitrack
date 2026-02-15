@@ -29,14 +29,14 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#254B77' }}>
-        <div className="text-white text-xl" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Loading...</div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-gray-700 text-xl font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+    <div className="min-h-screen bg-gray-100" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
       {user?.user_type === 'student' && <StudentDashboard user={user} />}
       {user?.user_type === 'parent' && <ParentDashboard user={user} />}
       {user?.user_type === 'staff' && <StaffDashboard user={user} />}

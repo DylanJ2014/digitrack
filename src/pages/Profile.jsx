@@ -69,40 +69,41 @@ export default function Profile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
-        <div className="text-white text-center py-8" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Loading...</div>
+      <div className="min-h-screen bg-gray-100">
+        <div className="text-gray-700 text-center py-8 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+    <div className="min-h-screen bg-gray-100" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
       <DashboardHeader user={user} />
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <Card>
+        <Card className="bg-white shadow-lg border-0">
           <CardHeader>
-            <CardTitle style={{ fontFamily: 'Gill Sans, sans-serif' }}>Profile Settings</CardTitle>
+            <CardTitle className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Profile Settings</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSave} className="space-y-4">
               <div className="space-y-2">
-                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Full Name</Label>
+                <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Full Name</Label>
                 <Input
                   value={formData.display_name}
                   onChange={(e) => setFormData({ ...formData, display_name: e.target.value })}
+                  className="border-gray-200 focus:border-teal-500 focus:ring-teal-500"
                   style={{ fontFamily: 'Gill Sans, sans-serif' }}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Email</Label>
-                <Input value={user.email} disabled style={{ fontFamily: 'Gill Sans, sans-serif' }} />
+                <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Email</Label>
+                <Input value={user.email} disabled className="bg-gray-100" style={{ fontFamily: 'Gill Sans, sans-serif' }} />
                 <p className="text-xs text-gray-500" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Email cannot be changed</p>
               </div>
 
               <div className="space-y-2">
-                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>User Type</Label>
-                <Input value={user.user_type} disabled className="capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }} />
+                <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>User Type</Label>
+                <Input value={user.user_type} disabled className="capitalize bg-gray-100" style={{ fontFamily: 'Gill Sans, sans-serif' }} />
                 <p className="text-xs text-gray-500" style={{ fontFamily: 'Gill Sans, sans-serif' }}>User type cannot be changed</p>
               </div>
 
@@ -195,7 +196,8 @@ export default function Profile() {
               <div className="flex gap-3 pt-4">
                 <Button
                   type="submit"
-                  style={{ backgroundColor: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}
+                  className="bg-teal-600 hover:bg-teal-700 text-white border-0"
+                  style={{ fontFamily: 'Gill Sans, sans-serif' }}
                   disabled={saving}
                 >
                   {saving ? 'Saving...' : 'Save Changes'}
@@ -204,6 +206,7 @@ export default function Profile() {
                   type="button"
                   variant="outline"
                   onClick={() => window.location.href = createPageUrl('Dashboard')}
+                  className="border-gray-300"
                   style={{ fontFamily: 'Gill Sans, sans-serif' }}
                 >
                   Cancel

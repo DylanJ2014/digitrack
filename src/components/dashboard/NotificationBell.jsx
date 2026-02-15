@@ -25,10 +25,10 @@ export default function NotificationBell({ userEmail }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative hover:bg-white/50">
-          <Bell className="h-5 w-5 text-white" />
+        <Button variant="ghost" size="icon" className="relative hover:bg-gray-100">
+          <Bell className="h-5 w-5 text-gray-700" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
+            <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-medium">
               {unreadCount}
             </span>
           )}
@@ -47,8 +47,8 @@ export default function NotificationBell({ userEmail }) {
             <div className="divide-y">
               {notifications.map((notification) => (
                 <div
-                  key={notification.id}
-                  className={`p-3 hover:bg-gray-50 ${!notification.is_read ? 'bg-blue-50' : ''}`}
+                 key={notification.id}
+                 className={`p-3 hover:bg-gray-50 ${!notification.is_read ? 'bg-teal-50' : ''}`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <p className="text-sm" style={{ fontFamily: 'Gill Sans, sans-serif' }}>

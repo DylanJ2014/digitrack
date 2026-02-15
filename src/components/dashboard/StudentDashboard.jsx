@@ -159,16 +159,17 @@ export default function StudentDashboard({ user }) {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
+    <div className="min-h-screen bg-gray-100">
       <DashboardHeader user={user} />
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
             {user.display_name || user.full_name}'s Lost Items
           </h2>
           <div className="flex gap-2 sm:gap-3 flex-wrap">
             <Button 
-              className="bg-white/20 hover:bg-white/30 text-white flex-1 sm:flex-none" 
+              variant="outline"
+              className="flex-1 sm:flex-none border-gray-300" 
               style={{ fontFamily: 'Gill Sans, sans-serif' }}
               onClick={() => {
                 queryClient.invalidateQueries(['myLostItems']);
@@ -180,7 +181,7 @@ export default function StudentDashboard({ user }) {
             </Button>
             <Dialog open={showForm} onOpenChange={setShowForm}>
               <DialogTrigger asChild>
-                <Button className="bg-white hover:bg-gray-100 flex-1 sm:flex-none" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+                <Button className="bg-teal-600 hover:bg-teal-700 text-white border-0 flex-1 sm:flex-none" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                   <Plus className="h-4 w-4 mr-2" />
                   Log Lost Item
                 </Button>
@@ -202,11 +203,11 @@ export default function StudentDashboard({ user }) {
             </div>
 
         <Tabs defaultValue="my-items" className="w-full">
-          <TabsList className="bg-white/10 mb-4">
-            <TabsTrigger value="my-items" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+          <TabsList className="bg-white border border-gray-200 mb-4">
+            <TabsTrigger value="my-items" className="text-gray-700 data-[state=active]:bg-teal-600 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               My Lost Items
             </TabsTrigger>
-            <TabsTrigger value="find-items" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+            <TabsTrigger value="find-items" className="text-gray-700 data-[state=active]:bg-teal-600 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               <Search className="h-4 w-4 mr-2" />
               Find Lost Items
             </TabsTrigger>
@@ -214,26 +215,26 @@ export default function StudentDashboard({ user }) {
 
           <TabsContent value="my-items">
             <div className="mb-4 flex flex-wrap items-center gap-3">
-              <label className="text-white text-sm" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Filter by Status:</label>
-              <Tabs value={statusFilter} onValueChange={setStatusFilter} className="bg-white/10 rounded-lg">
+              <label className="text-gray-700 text-sm font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Filter by Status:</label>
+              <Tabs value={statusFilter} onValueChange={setStatusFilter} className="bg-white border border-gray-200 rounded-lg">
                 <TabsList className="bg-transparent">
-                  <TabsTrigger value="lost" className="text-white data-[state=active]:bg-red-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  <TabsTrigger value="lost" className="text-gray-700 data-[state=active]:bg-red-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                     Lost
                   </TabsTrigger>
-                  <TabsTrigger value="awaiting_collection" className="text-white data-[state=active]:bg-yellow-500 data-[state=active]:text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  <TabsTrigger value="awaiting_collection" className="text-gray-700 data-[state=active]:bg-amber-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                     Awaiting Collection
                   </TabsTrigger>
-                  <TabsTrigger value="found" className="text-white data-[state=active]:bg-green-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+                  <TabsTrigger value="found" className="text-gray-700 data-[state=active]:bg-green-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                     Located
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
             {isLoadingMine ? (
-              <div className="text-white text-center py-8">Loading...</div>
+              <div className="text-gray-700 text-center py-8 font-medium">Loading...</div>
             ) : myLostItems.filter(item => item.status === statusFilter).length === 0 ? (
-              <div className="bg-white/10 rounded-lg p-8 text-center">
-                <p className="text-white text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <div className="bg-white rounded-lg shadow-md p-8 text-center">
+                <p className="text-gray-600 text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                   No {statusFilter === 'lost' ? 'Lost' : statusFilter === 'awaiting_collection' ? 'Awaiting Collection' : 'Located'} items.
                 </p>
               </div>
@@ -260,15 +261,15 @@ export default function StudentDashboard({ user }) {
                 placeholder="Search by item name, description, student name, or location..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-white"
+                className="bg-white border-gray-300 focus:border-teal-500 focus:ring-teal-500"
                 style={{ fontFamily: 'Gill Sans, sans-serif' }}
               />
             </div>
             {isLoadingAll ? (
-              <div className="text-white text-center py-8">Loading...</div>
+              <div className="text-gray-700 text-center py-8 font-medium">Loading...</div>
             ) : filteredAllItems.length === 0 ? (
-              <div className="bg-white/10 rounded-lg p-8 text-center">
-                <p className="text-white text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <div className="bg-white rounded-lg shadow-md p-8 text-center">
+                <p className="text-gray-600 text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                   No lost items found matching your search.
                 </p>
               </div>

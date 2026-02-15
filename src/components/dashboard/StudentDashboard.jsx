@@ -81,15 +81,25 @@ export default function StudentDashboard({ user }) {
   });
 
   const markLocatedMutation = useMutation({
-    mutationFn: (itemId) => base44.entities.LostItem.update(itemId, { 
-      status: 'found', 
-      found_date: new Date().toISOString().split('T')[0]
-    }),
+    mutationFn: async (itemId) => {
+      console.log('Marking item as located:', itemId);
+      const result = await base44.entities.LostItem.update(itemId, { 
+        status: 'found', 
+        found_date: new Date().toISOString().split('T')[0]
+      });
+      console.log('Item updated successfully:', result);
+      return result;
+    },
     onSuccess: () => {
+      console.log('Invalidating queries...');
       queryClient.invalidateQueries(['lostItems']);
       queryClient.invalidateQueries(['myLostItems', user.email]);
       queryClient.invalidateQueries(['allLostItems']);
     },
+    onError: (error) => {
+      console.error('Error marking item as located:', error);
+      alert('Error updating item: ' + error.message);
+    }
   });
 
   const deleteItemMutation = useMutation({

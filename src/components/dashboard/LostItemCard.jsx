@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { MapPin, Calendar, CheckCircle, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 
-export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, onMarkFoundPrep, onMarkFoundSenior, isMarkingFound, showStudentInfo, onDelete, canDelete, currentUserEmail, onMarkLocated, isMarkingLocated, showLocationButtons, showOwnItemButtons }) {
+export default function LostItemCard({ item, onMarkFound, isMarkingFound, showStudentInfo, onDelete, canDelete, currentUserEmail, onMarkLocated, isMarkingLocated, showOwnItemButtons }) {
   return (
     <Card className="bg-white shadow-md hover:shadow-lg transition-shadow border-0">
       <CardHeader className="pb-2">
@@ -56,52 +56,18 @@ export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, on
             <span style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.last_location}</span>
           </div>
         )}
-        {item.status === 'lost' && showLocationButtons && onMarkFoundPrePrep && (
-          <div className="space-y-2 mt-4">
-            <Button 
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white border-0" 
-              size="xs"
-              style={{ fontFamily: 'Gill Sans, sans-serif' }}
-              onClick={onMarkFoundPrePrep}
-              disabled={isMarkingFound}
-            >
-              <CheckCircle className="h-3 w-3 mr-1" />
-              Drop to Pre-Prep Lost Property
-            </Button>
-            <Button 
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white border-0" 
-              size="xs"
-              style={{ fontFamily: 'Gill Sans, sans-serif' }}
-              onClick={onMarkFoundPrep}
-              disabled={isMarkingFound}
-            >
-              <CheckCircle className="h-3 w-3 mr-1" />
-              Drop to Prep Lost Property
-            </Button>
-            <Button 
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white border-0" 
-              size="xs"
-              style={{ fontFamily: 'Gill Sans, sans-serif' }}
-              onClick={onMarkFoundSenior}
-              disabled={isMarkingFound}
-            >
-              <CheckCircle className="h-3 w-3 mr-1" />
-              Drop to Senior Lost Property
-            </Button>
-          </div>
-        )}
-        {item.status === 'lost' && onMarkFound && !showLocationButtons && (
+        {item.status === 'lost' && onMarkFound && (
           <Button 
-            className="w-full mt-4 bg-teal-600 hover:bg-teal-700 text-white border-0" 
+            className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white border-0" 
             style={{ fontFamily: 'Gill Sans, sans-serif' }}
             onClick={onMarkFound}
             disabled={isMarkingFound}
           >
             <CheckCircle className="h-4 w-4 mr-2" />
-            Mark as Found
+            Mark as Located
           </Button>
         )}
-        {item.status === 'lost' && onMarkLocated && !showLocationButtons && (
+        {item.status === 'lost' && onMarkLocated && (
           <Button 
             className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white border-0" 
             style={{ fontFamily: 'Gill Sans, sans-serif' }}
@@ -112,7 +78,7 @@ export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, on
             Mark as Located
           </Button>
         )}
-        {item.status === 'awaiting_collection' && onMarkLocated && !showLocationButtons && (
+        {item.status === 'awaiting_collection' && onMarkLocated && (
           <Button 
             className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white border-0" 
             style={{ fontFamily: 'Gill Sans, sans-serif' }}

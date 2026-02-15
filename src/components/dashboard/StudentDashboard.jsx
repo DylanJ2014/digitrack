@@ -16,6 +16,9 @@ export default function StudentDashboard({ user }) {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('lost');
+  const [returnDialogOpen, setReturnDialogOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [returnLocation, setReturnLocation] = useState('');
 
   const { data: myLostItems = [], isLoading: isLoadingMine } = useQuery({
     queryKey: ['myLostItems', user.email],
@@ -62,7 +65,7 @@ export default function StudentDashboard({ user }) {
                             location === 'prep' ? 'Prep Lost Property' : 
                             'Senior Lost Property';
         const finderName = user.display_name || user.full_name;
-        const message = `Good News, your ${item.item_name} has been found by ${finderName}. Please head to the ${locationText} office to locate your item`;
+        const message = `Good News, your ${item.item_name} has been located by ${finderName}. Please head to the ${locationText} office to collect your item.`;
         
         await base44.entities.Notification.create({
           user_email: studentEmail,
@@ -76,8 +79,24 @@ export default function StudentDashboard({ user }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myLostItems', user.email] });
       queryClient.invalidateQueries({ queryKey: ['allLostItems'] });
+      setReturnDialogOpen(false);
+      setSelectedItem(null);
+      setReturnLocation('');
     },
   });
+
+  const handleMarkFound = (item) => {
+    setSelectedItem(item);
+    setReturnDialogOpen(true);
+  };
+
+  const handleConfirmReturn = () => {
+    if (!returnLocation) {
+      alert('Please select a location');
+      return;
+    }
+    markFoundMutation.mutate({ item: selectedItem, location: returnLocation });
+  };
 
   const markLocatedMutation = useMutation({
     mutationFn: async (itemId) => {
@@ -285,20 +304,57 @@ export default function StudentDashboard({ user }) {
                     <LostItemCard 
                       key={item.id} 
                       item={item} 
-                      onMarkFoundPrePrep={!isCreatedByMe ? () => markFoundMutation.mutate({ item, location: 'pre-prep' }) : undefined}
-                      onMarkFoundPrep={!isCreatedByMe ? () => markFoundMutation.mutate({ item, location: 'prep' }) : undefined}
-                      onMarkFoundSenior={!isCreatedByMe ? () => markFoundMutation.mutate({ item, location: 'senior' }) : undefined}
+                      onMarkFound={!isCreatedByMe ? () => handleMarkFound(item) : undefined}
                       isMarkingFound={markFoundMutation.isPending}
-                      onMarkLocated={!isCreatedByMe ? () => markLocatedMutation.mutate(item.id) : undefined}
-                      isMarkingLocated={markLocatedMutation.isPending}
                       showStudentInfo
                       currentUserEmail={user.email}
-                      showLocationButtons={!isCreatedByMe}
                     />
                   );
                 })}
               </div>
             )}
+
+            <Dialog open={returnDialogOpen} onOpenChange={setReturnDialogOpen}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle style={{ fontFamily: 'Gill Sans, sans-serif' }}>Where will you return this item?</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <select
+                    value={returnLocation}
+                    onChange={(e) => setReturnLocation(e.target.value)}
+                    className="w-full h-9 px-3 rounded-md border border-gray-300 bg-white text-sm"
+                    style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                  >
+                    <option value="">Select a location</option>
+                    <option value="pre-prep">Pre-Prep Lost Property</option>
+                    <option value="prep">Prep Lost Property</option>
+                    <option value="senior">Senior Lost Property</option>
+                  </select>
+                  <div className="flex gap-2 justify-end">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => {
+                        setReturnDialogOpen(false);
+                        setSelectedItem(null);
+                        setReturnLocation('');
+                      }}
+                      style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button 
+                      className="bg-green-600 hover:bg-green-700"
+                      onClick={handleConfirmReturn}
+                      disabled={markFoundMutation.isPending}
+                      style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                    >
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </TabsContent>
         </Tabs>
       </div>

@@ -263,16 +263,17 @@ export default function StaffDashboard({ user }) {
   });
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
+    <div className="min-h-screen bg-gray-100">
       <DashboardHeader user={user} />
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-          <h2 className="text-2xl font-bold text-white whitespace-nowrap" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+          <h2 className="text-2xl font-bold text-gray-900 whitespace-nowrap" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
             Staff Dashboard
           </h2>
           <div className="flex gap-3 flex-wrap">
             <Button 
-              className="bg-white/20 hover:bg-white/30 text-white" 
+              variant="outline"
+              className="border-gray-300" 
               style={{ fontFamily: 'Gill Sans, sans-serif' }}
               onClick={() => queryClient.invalidateQueries(['allLostItems'])}
             >
@@ -281,7 +282,7 @@ export default function StaffDashboard({ user }) {
             </Button>
             <Dialog open={showForm} onOpenChange={setShowForm}>
               <DialogTrigger asChild>
-                <Button className="bg-white hover:bg-gray-100" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+                <Button className="bg-teal-600 hover:bg-teal-700 text-white border-0" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                   <Plus className="h-4 w-4 mr-2" />
                   Log Single Item
                 </Button>
@@ -300,7 +301,7 @@ export default function StaffDashboard({ user }) {
 
             <Dialog open={showBulkForm} onOpenChange={setShowBulkForm}>
               <DialogTrigger asChild>
-                <Button className="bg-white hover:bg-gray-100" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+                <Button className="bg-teal-600 hover:bg-teal-700 text-white border-0" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                   <ListPlus className="h-4 w-4 mr-2" />
                   Log Multiple Items
                 </Button>
@@ -320,16 +321,16 @@ export default function StaffDashboard({ user }) {
         </div>
 
         <div className="mb-4 flex flex-wrap items-center gap-3">
-          <label className="text-white text-sm" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Filter by Status:</label>
-          <Tabs value={statusFilter} onValueChange={setStatusFilter} className="bg-white/10 rounded-lg">
+          <label className="text-gray-700 text-sm font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Filter by Status:</label>
+          <Tabs value={statusFilter} onValueChange={setStatusFilter} className="bg-white border border-gray-200 rounded-lg">
             <TabsList className="bg-transparent">
-              <TabsTrigger value="lost" className="text-white data-[state=active]:bg-red-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <TabsTrigger value="lost" className="text-gray-700 data-[state=active]:bg-red-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 Lost
               </TabsTrigger>
-              <TabsTrigger value="awaiting_collection" className="text-white data-[state=active]:bg-yellow-500 data-[state=active]:text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <TabsTrigger value="awaiting_collection" className="text-gray-700 data-[state=active]:bg-amber-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 Awaiting Collection
               </TabsTrigger>
-              <TabsTrigger value="located" className="text-white data-[state=active]:bg-green-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <TabsTrigger value="located" className="text-gray-700 data-[state=active]:bg-green-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 Located
               </TabsTrigger>
             </TabsList>
@@ -337,11 +338,11 @@ export default function StaffDashboard({ user }) {
         </div>
 
         <Tabs defaultValue="cards" className="w-full">
-          <TabsList className="bg-white/10 mb-4">
-            <TabsTrigger value="cards" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+          <TabsList className="bg-white border border-gray-200 mb-4">
+            <TabsTrigger value="cards" className="text-gray-700 data-[state=active]:bg-teal-600 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               Card View
             </TabsTrigger>
-            <TabsTrigger value="report" className="text-white data-[state=active]:bg-white data-[state=active]:text-[#254B77]" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+            <TabsTrigger value="report" className="text-gray-700 data-[state=active]:bg-teal-600 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               <FileText className="h-4 w-4 mr-2" />
               Report View
             </TabsTrigger>
@@ -349,10 +350,10 @@ export default function StaffDashboard({ user }) {
 
           <TabsContent value="cards">
             {isLoading ? (
-              <div className="text-white text-center py-8">Loading...</div>
+              <div className="text-gray-700 text-center py-8 font-medium">Loading...</div>
             ) : filteredItems.length === 0 ? (
-              <div className="bg-white/10 rounded-lg p-8 text-center">
-                <p className="text-white text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              <div className="bg-white rounded-lg shadow-md p-8 text-center">
+                <p className="text-gray-600 text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                   No items found.
                 </p>
               </div>
@@ -377,9 +378,9 @@ export default function StaffDashboard({ user }) {
           </TabsContent>
 
           <TabsContent value="report">
-            <div className="bg-white rounded-lg overflow-hidden">
-              <div className="p-4 border-b">
-                <h3 className="text-lg font-semibold" style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden border-0">
+              <div className="p-4 border-b border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                   Lost Property Report - All Years
                 </h3>
                 <p className="text-sm text-gray-500" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -406,7 +407,7 @@ export default function StaffDashboard({ user }) {
                       <TableCell>
                         <Button 
                           size="sm" 
-                          variant="outline"
+                          className="bg-teal-600 hover:bg-teal-700 text-white border-0"
                           onClick={() => markFoundMutation.mutate(item)}
                           disabled={markFoundMutation.isPending}
                           style={{ fontFamily: 'Gill Sans, sans-serif' }}

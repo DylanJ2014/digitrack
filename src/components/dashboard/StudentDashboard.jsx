@@ -45,7 +45,8 @@ export default function StudentDashboard({ user }) {
       await base44.entities.LostItem.update(item.id, { 
         status: 'awaiting_collection', 
         found_date: new Date().toISOString().split('T')[0],
-        found_by: user.email 
+        found_by: user.email,
+        date_logged: item.date_logged || new Date().toISOString().split('T')[0]
       });
 
       if (item.reported_by !== user.email) {

@@ -74,30 +74,23 @@ export default function StudentDashboard({ user }) {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['lostItems']);
-      queryClient.invalidateQueries(['myLostItems', user.email]);
-      queryClient.invalidateQueries(['allLostItems']);
+      queryClient.invalidateQueries({ queryKey: ['myLostItems', user.email] });
+      queryClient.invalidateQueries({ queryKey: ['allLostItems'] });
     },
   });
 
   const markLocatedMutation = useMutation({
     mutationFn: async (itemId) => {
-      console.log('Marking item as located:', itemId);
-      const result = await base44.entities.LostItem.update(itemId, { 
+      return await base44.entities.LostItem.update(itemId, { 
         status: 'found', 
         found_date: new Date().toISOString().split('T')[0]
       });
-      console.log('Item updated successfully:', result);
-      return result;
     },
     onSuccess: () => {
-      console.log('Invalidating queries...');
-      queryClient.invalidateQueries(['lostItems']);
-      queryClient.invalidateQueries(['myLostItems', user.email]);
-      queryClient.invalidateQueries(['allLostItems']);
+      queryClient.invalidateQueries({ queryKey: ['myLostItems', user.email] });
+      queryClient.invalidateQueries({ queryKey: ['allLostItems'] });
     },
     onError: (error) => {
-      console.error('Error marking item as located:', error);
       alert('Error updating item: ' + error.message);
     }
   });
@@ -107,8 +100,8 @@ export default function StudentDashboard({ user }) {
       await base44.entities.LostItem.delete(itemId);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['myLostItems', user.email]);
-      queryClient.invalidateQueries(['allLostItems']);
+      queryClient.invalidateQueries({ queryKey: ['myLostItems', user.email] });
+      queryClient.invalidateQueries({ queryKey: ['allLostItems'] });
     },
   });
 
@@ -150,9 +143,8 @@ export default function StudentDashboard({ user }) {
       return item;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['lostItems']);
-      queryClient.invalidateQueries(['myLostItems', user.email]);
-      queryClient.invalidateQueries(['allLostItems']);
+      queryClient.invalidateQueries({ queryKey: ['myLostItems', user.email] });
+      queryClient.invalidateQueries({ queryKey: ['allLostItems'] });
       setShowForm(false);
     },
     onError: (error) => {
@@ -183,8 +175,8 @@ export default function StudentDashboard({ user }) {
               className="flex-1 sm:flex-none border-gray-300" 
               style={{ fontFamily: 'Gill Sans, sans-serif' }}
               onClick={() => {
-                queryClient.invalidateQueries(['myLostItems']);
-                queryClient.invalidateQueries(['allLostItems']);
+                queryClient.invalidateQueries({ queryKey: ['myLostItems', user.email] });
+                queryClient.invalidateQueries({ queryKey: ['allLostItems'] });
               }}
             >
               <RefreshCw className="h-4 w-4 mr-2" />

@@ -75,7 +75,7 @@ export default function StudentDashboard({ user }) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['lostItems']);
-      queryClient.invalidateQueries(['myLostItems']);
+      queryClient.invalidateQueries(['myLostItems', user.email]);
       queryClient.invalidateQueries(['allLostItems']);
     },
   });
@@ -87,7 +87,7 @@ export default function StudentDashboard({ user }) {
     }),
     onSuccess: () => {
       queryClient.invalidateQueries(['lostItems']);
-      queryClient.invalidateQueries(['myLostItems']);
+      queryClient.invalidateQueries(['myLostItems', user.email]);
       queryClient.invalidateQueries(['allLostItems']);
     },
   });
@@ -97,7 +97,7 @@ export default function StudentDashboard({ user }) {
       await base44.entities.LostItem.delete(itemId);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['myLostItems']);
+      queryClient.invalidateQueries(['myLostItems', user.email]);
       queryClient.invalidateQueries(['allLostItems']);
     },
   });
@@ -141,7 +141,8 @@ export default function StudentDashboard({ user }) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['lostItems']);
-      queryClient.invalidateQueries(['myLostItems']);
+      queryClient.invalidateQueries(['myLostItems', user.email]);
+      queryClient.invalidateQueries(['allLostItems']);
       setShowForm(false);
     },
     onError: (error) => {

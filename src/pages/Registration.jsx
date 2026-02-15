@@ -75,45 +75,46 @@ export default function Registration() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#254B77' }}>
-        <div className="text-white text-xl">Loading...</div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-gray-700 text-xl font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#0F2236', fontFamily: 'Gill Sans, sans-serif' }}>
-      <Card className="w-full max-w-md shadow-2xl" style={{ backgroundColor: '#254B77', color: 'white' }}>
-        <CardHeader className="text-center pb-4">
-          <div className="flex items-center justify-center gap-4 mb-6">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+      <Card className="w-full max-w-md shadow-xl bg-white border-0">
+        <CardHeader className="text-center pb-6 pt-8">
+          <div className="flex items-center justify-center gap-6 mb-6">
             <img 
               src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/a3cd37e81_DigiTrack.png" 
               alt="DigiTrack Logo" 
-              className="h-16"
+              className="h-14"
             />
             <img 
               src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6988f8dff5282453314fa07b/c704f0cd0_CaterhamLogo1.png" 
               alt="Caterham School Logo" 
-              className="h-16"
+              className="h-14"
             />
           </div>
-          <CardTitle className="text-2xl text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Complete Your Registration</CardTitle>
-          <p className="text-white/70 text-sm mt-2">Welcome to DigiTrack</p>
+          <CardTitle className="text-2xl font-semibold text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Complete Your Registration</CardTitle>
+          <p className="text-gray-500 text-sm mt-2">Welcome to DigiTrack</p>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <CardContent className="px-8 pb-8">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Full Name</Label>
+              <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Full Name</Label>
               <Input
                 value={formData.full_name}
                 onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
                 placeholder="Enter your full name"
                 required
+                className="border-gray-200 focus:border-teal-500 focus:ring-teal-500"
                 style={{ fontFamily: 'Gill Sans, sans-serif' }}
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>School Email Address</Label>
+              <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>School Email Address</Label>
               <Input
                 type="email"
                 value={formData.email}
@@ -123,14 +124,15 @@ export default function Registration() {
                 }}
                 placeholder="firstname.surname@caterhamschool.co.uk"
                 required
+                className="border-gray-200 focus:border-teal-500 focus:ring-teal-500"
                 style={{ fontFamily: 'Gill Sans, sans-serif' }}
               />
-              {emailError && <p className="text-red-300 text-sm">{emailError}</p>}
+              {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
             </div>
             <div className="space-y-2">
-              <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>I am a...</Label>
+              <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>I am a...</Label>
               <Select value={userType} onValueChange={setUserType}>
-                <SelectTrigger>
+                <SelectTrigger className="border-gray-200 focus:border-teal-500 focus:ring-teal-500">
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
                 <SelectContent>
@@ -143,9 +145,9 @@ export default function Registration() {
             {userType === 'student' && (
               <>
                 <div className="space-y-2">
-                  <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>School</Label>
+                  <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>School</Label>
                   <Select value={formData.school} onValueChange={(value) => setFormData({ ...formData, school: value })}>
-                    <SelectTrigger>
+                    <SelectTrigger className="border-gray-200 focus:border-teal-500 focus:ring-teal-500">
                       <SelectValue placeholder="Select your school" />
                     </SelectTrigger>
                     <SelectContent>
@@ -156,18 +158,19 @@ export default function Registration() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Form Group</Label>
+                  <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Form Group</Label>
                   <Input
                     value={formData.form_group}
                     onChange={(e) => setFormData({ ...formData, form_group: e.target.value })}
                     placeholder="e.g. 9A"
                     required
+                    className="border-gray-200 focus:border-teal-500 focus:ring-teal-500"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>House</Label>
+                  <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>House</Label>
                   <Select value={formData.house} onValueChange={(value) => setFormData({ ...formData, house: value })}>
-                    <SelectTrigger>
+                    <SelectTrigger className="border-gray-200 focus:border-teal-500 focus:ring-teal-500">
                       <SelectValue placeholder="Select your house" />
                     </SelectTrigger>
                     <SelectContent>
@@ -190,9 +193,9 @@ export default function Registration() {
 
             {userType === 'staff' && (
               <div className="space-y-2">
-                <Label className="text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Staff Role</Label>
+                <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Staff Role</Label>
                 <Select value={formData.staff_role} onValueChange={(value) => setFormData({ ...formData, staff_role: value })}>
-                  <SelectTrigger>
+                  <SelectTrigger className="border-gray-200 focus:border-teal-500 focus:ring-teal-500">
                     <SelectValue placeholder="Select your role" />
                   </SelectTrigger>
                   <SelectContent>
@@ -207,8 +210,8 @@ export default function Registration() {
             {userType && (
               <Button 
                 type="submit" 
-                className="w-full py-6 text-lg shadow-lg hover:shadow-xl transition-all"
-                style={{ backgroundColor: '#0F2236', color: 'white', fontFamily: 'Gill Sans, sans-serif' }}
+                className="w-full py-6 text-lg font-medium shadow-md hover:shadow-lg transition-all bg-teal-600 hover:bg-teal-700 text-white border-0"
+                style={{ fontFamily: 'Gill Sans, sans-serif' }}
                 disabled={submitting}
               >
                 {submitting ? 'Completing Registration...' : 'Complete Registration'}

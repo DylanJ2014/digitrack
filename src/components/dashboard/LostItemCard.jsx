@@ -56,7 +56,7 @@ export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, on
             <span style={{ fontFamily: 'Gill Sans, sans-serif' }}>{item.last_location}</span>
           </div>
         )}
-        {item.status === 'lost' && showLocationButtons && (
+        {item.status === 'lost' && showLocationButtons && onMarkFoundPrePrep && (
           <div className="space-y-2 mt-4">
             <Button 
               className="w-full bg-teal-600 hover:bg-teal-700 text-white border-0" 

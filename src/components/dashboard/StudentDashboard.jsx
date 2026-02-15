@@ -351,8 +351,12 @@ export default function StudentDashboard({ user }) {
                       Cancel
                     </Button>
                     <Button 
+                      type="button"
                       className="bg-green-600 hover:bg-green-700"
-                      onClick={handleConfirmReturn}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleConfirmReturn();
+                      }}
                       disabled={markFoundMutation.isPending}
                       style={{ fontFamily: 'Gill Sans, sans-serif' }}
                     >

@@ -18,7 +18,7 @@ export default function DashboardHeader({ user }) {
   };
 
   return (
-    <div className="bg-white shadow-md border-b border-gray-200">
+    <div className="shadow-md border-b border-gray-200" style={{ backgroundColor: '#0F2236' }}>
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link to={createPageUrl('Dashboard')} className="cursor-pointer">
@@ -38,14 +38,14 @@ export default function DashboardHeader({ user }) {
         </div>
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right mr-2">
-            <p className="font-semibold text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.display_name || user?.full_name}</p>
-            <p className="text-xs text-gray-600 capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
+            <p className="font-semibold text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.display_name || user?.full_name}</p>
+            <p className="text-xs text-white capitalize" style={{ fontFamily: 'Gill Sans, sans-serif' }}>{user?.user_type}</p>
           </div>
           {user?.user_type === 'student' && <NotificationBell userEmail={user.email} />}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="hover:bg-gray-100">
-                <Menu className="h-6 w-6 text-gray-700" />
+              <Button variant="ghost" size="icon" className="hover:bg-white/50">
+                <Menu className="h-6 w-6 text-white" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

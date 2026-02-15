@@ -275,21 +275,24 @@ export default function StudentDashboard({ user }) {
               </div>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {filteredAllItems.map((item) => (
-                  <LostItemCard 
-                    key={item.id} 
-                    item={item} 
-                    onMarkFoundPrePrep={() => markFoundMutation.mutate({ item, location: 'pre-prep' })}
-                    onMarkFoundPrep={() => markFoundMutation.mutate({ item, location: 'prep' })}
-                    onMarkFoundSenior={() => markFoundMutation.mutate({ item, location: 'senior' })}
-                    isMarkingFound={markFoundMutation.isPending}
-                    onMarkLocated={() => markLocatedMutation.mutate(item.id)}
-                    isMarkingLocated={markLocatedMutation.isPending}
-                    showStudentInfo
-                    currentUserEmail={user.email}
-                    showLocationButtons={item.created_by !== user.email}
-                  />
-                ))}
+                {filteredAllItems.map((item) => {
+                  const isCreatedByMe = item.created_by === user.email;
+                  return (
+                    <LostItemCard 
+                      key={item.id} 
+                      item={item} 
+                      onMarkFoundPrePrep={!isCreatedByMe ? () => markFoundMutation.mutate({ item, location: 'pre-prep' }) : undefined}
+                      onMarkFoundPrep={!isCreatedByMe ? () => markFoundMutation.mutate({ item, location: 'prep' }) : undefined}
+                      onMarkFoundSenior={!isCreatedByMe ? () => markFoundMutation.mutate({ item, location: 'senior' }) : undefined}
+                      isMarkingFound={markFoundMutation.isPending}
+                      onMarkLocated={!isCreatedByMe ? () => markLocatedMutation.mutate(item.id) : undefined}
+                      isMarkingLocated={markLocatedMutation.isPending}
+                      showStudentInfo
+                      currentUserEmail={user.email}
+                      showLocationButtons={!isCreatedByMe}
+                    />
+                  );
+                })}
               </div>
             )}
           </TabsContent>

@@ -83,6 +83,9 @@ export default function StudentDashboard({ user }) {
       setSelectedItem(null);
       setReturnLocation('');
     },
+    onError: (error) => {
+      alert('Error marking item as located: ' + error.message);
+    },
   });
 
   const handleMarkFound = (item) => {
@@ -93,6 +96,10 @@ export default function StudentDashboard({ user }) {
   const handleConfirmReturn = () => {
     if (!returnLocation) {
       alert('Please select a location');
+      return;
+    }
+    if (!selectedItem) {
+      alert('No item selected');
       return;
     }
     markFoundMutation.mutate({ item: selectedItem, location: returnLocation });

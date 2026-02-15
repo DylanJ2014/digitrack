@@ -24,21 +24,21 @@ export default function About() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#254B77' }}>
-        <p className="text-white text-xl" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Loading...</p>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <p className="text-gray-700 text-xl font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
+    <div className="min-h-screen bg-gray-100">
       <DashboardHeader user={user} />
       <div className="max-w-4xl mx-auto px-4 py-8">
 
 
-        <Card className="bg-white mb-6">
+        <Card className="bg-white shadow-lg border-0 mb-6">
           <CardHeader>
-            <CardTitle style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+            <CardTitle className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               What is DigiTrack?
             </CardTitle>
           </CardHeader>
@@ -55,9 +55,9 @@ export default function About() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white mb-6">
+        <Card className="bg-white shadow-lg border-0 mb-6">
           <CardHeader>
-            <CardTitle style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+            <CardTitle className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               Key Features
             </CardTitle>
           </CardHeader>
@@ -87,9 +87,9 @@ export default function About() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white mb-6">
+        <Card className="bg-white shadow-lg border-0 mb-6">
           <CardHeader>
-            <CardTitle style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+            <CardTitle className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               Lost Property Tips - Video
             </CardTitle>
           </CardHeader>
@@ -109,9 +109,9 @@ export default function About() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white">
+        <Card className="bg-white shadow-lg border-0">
           <CardHeader>
-            <CardTitle style={{ color: '#254B77', fontFamily: 'Gill Sans, sans-serif' }}>
+            <CardTitle className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               DigiTrack Founder - Dylan Jubraj
             </CardTitle>
           </CardHeader>

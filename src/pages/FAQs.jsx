@@ -30,24 +30,24 @@ export default function FAQs() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#254B77' }}>
-        <p className="text-white text-xl" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Loading...</p>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <p className="text-gray-700 text-xl font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#254B77' }}>
+    <div className="min-h-screen bg-gray-100">
       <DashboardHeader user={user} />
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-white mb-8" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+        <h1 className="text-4xl font-bold text-gray-900 mb-8" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
           Frequently Asked Questions
         </h1>
 
-        <Card className="bg-white p-6">
+        <Card className="bg-white shadow-lg border-0 p-6">
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
-              <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
+              <AccordionTrigger className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 How do I report a lost item?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -56,7 +56,7 @@ export default function FAQs() {
             </AccordionItem>
 
             <AccordionItem value="item-2">
-              <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
+              <AccordionTrigger className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 What happens when someone finds my item?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -65,7 +65,7 @@ export default function FAQs() {
             </AccordionItem>
 
             <AccordionItem value="item-3">
-              <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
+              <AccordionTrigger className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 What do the different statuses mean?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -78,7 +78,7 @@ export default function FAQs() {
             </AccordionItem>
 
             <AccordionItem value="item-4">
-              <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
+              <AccordionTrigger className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 Can I search for items that others have lost?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -87,7 +87,7 @@ export default function FAQs() {
             </AccordionItem>
 
             <AccordionItem value="item-5">
-              <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
+              <AccordionTrigger className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 How long are items kept in lost property?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -96,7 +96,7 @@ export default function FAQs() {
             </AccordionItem>
 
             <AccordionItem value="item-6">
-              <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
+              <AccordionTrigger className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 What if my lost property item is unlabelled?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -105,7 +105,7 @@ export default function FAQs() {
             </AccordionItem>
 
             <AccordionItem value="item-7">
-              <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
+              <AccordionTrigger className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 What if I can't find my item in the system?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -114,7 +114,7 @@ export default function FAQs() {
             </AccordionItem>
 
             <AccordionItem value="item-8">
-              <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
+              <AccordionTrigger className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 Can parents or guardians access DigiTrack?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>
@@ -123,7 +123,7 @@ export default function FAQs() {
             </AccordionItem>
 
             <AccordionItem value="item-9">
-              <AccordionTrigger style={{ fontFamily: 'Gill Sans, sans-serif', color: '#254B77' }}>
+              <AccordionTrigger className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
                 Who can I contact for help?
               </AccordionTrigger>
               <AccordionContent style={{ fontFamily: 'Gill Sans, sans-serif' }}>

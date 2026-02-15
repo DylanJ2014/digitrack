@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { MapPin, Calendar, CheckCircle, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 
-export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, onMarkFoundPrep, onMarkFoundSenior, isMarkingFound, showStudentInfo, onDelete, canDelete, currentUserEmail, onMarkLocated, isMarkingLocated, showLocationButtons }) {
+export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, onMarkFoundPrep, onMarkFoundSenior, isMarkingFound, showStudentInfo, onDelete, canDelete, currentUserEmail, onMarkLocated, isMarkingLocated, showLocationButtons, showOwnItemButtons }) {
   return (
     <Card className="bg-white shadow-md hover:shadow-lg transition-shadow border-0">
       <CardHeader className="pb-2">
@@ -101,7 +101,7 @@ export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, on
             Mark as Found
           </Button>
         )}
-        {item.status === 'lost' && onMarkLocated && (item.reported_by === currentUserEmail || item.created_by === currentUserEmail) && (
+        {item.status === 'lost' && onMarkLocated && (showOwnItemButtons || item.reported_by === currentUserEmail || item.created_by === currentUserEmail) && (
           <Button 
             className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white border-0" 
             style={{ fontFamily: 'Gill Sans, sans-serif' }}
@@ -112,7 +112,7 @@ export default function LostItemCard({ item, onMarkFound, onMarkFoundPrePrep, on
             Mark as Located
           </Button>
         )}
-        {item.status === 'awaiting_collection' && onMarkLocated && (item.reported_by === currentUserEmail || item.created_by === currentUserEmail) && (
+        {item.status === 'awaiting_collection' && onMarkLocated && (showOwnItemButtons || item.reported_by === currentUserEmail || item.created_by === currentUserEmail) && (
           <Button 
             className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white border-0" 
             style={{ fontFamily: 'Gill Sans, sans-serif' }}

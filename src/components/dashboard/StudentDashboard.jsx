@@ -250,6 +250,7 @@ export default function StudentDashboard({ user }) {
                     onDelete={() => deleteItemMutation.mutate(item.id)}
                     canDelete={true}
                     currentUserEmail={user.email}
+                    showOwnItemButtons={true}
                   />
                 ))}
               </div>

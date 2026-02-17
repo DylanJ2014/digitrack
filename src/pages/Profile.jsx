@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { createPageUrl } from '@/utils';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 
@@ -14,6 +15,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [changingPassword, setChangingPassword] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
     newPassword: '',
@@ -94,8 +96,8 @@ export default function Profile() {
         currentPassword: passwordData.currentPassword,
         newPassword: passwordData.newPassword
       });
-      alert('Password changed successfully!');
       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      setShowSuccessDialog(true);
     } catch (error) {
       console.error('Failed to change password:', error);
       const errorMsg = error.data?.detail?.[0]?.msg || error.message || 'Please try again.';
@@ -310,6 +312,26 @@ export default function Profile() {
             </form>
           </CardContent>
         </Card>
+
+        <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle style={{ fontFamily: 'Gill Sans, sans-serif' }}>Success</DialogTitle>
+            </DialogHeader>
+            <p className="text-gray-700" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              Your password has been successfully updated
+            </p>
+            <DialogFooter>
+              <Button 
+                onClick={() => setShowSuccessDialog(false)}
+                className="bg-teal-600 hover:bg-teal-700"
+                style={{ fontFamily: 'Gill Sans, sans-serif' }}
+              >
+                OK
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

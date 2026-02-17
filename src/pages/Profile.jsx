@@ -76,18 +76,12 @@ export default function Profile() {
   const handleChangePassword = async (e) => {
     e.preventDefault();
     
-    // Get values from form inputs directly
-    const formElements = e.target.elements;
-    const currentPassword = formElements.currentPassword.value;
-    const newPassword = formElements.newPassword.value;
-    const confirmPassword = formElements.confirmPassword.value;
-    
-    if (newPassword !== confirmPassword) {
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
       alert('New passwords do not match');
       return;
     }
     
-    if (newPassword.length < 6) {
+    if (passwordData.newPassword.length < 6) {
       alert('New password must be at least 6 characters');
       return;
     }
@@ -96,9 +90,9 @@ export default function Profile() {
     
     try {
       await base44.auth.changePassword({
-        user_id: user.id,
-        current_password: currentPassword,
-        new_password: newPassword
+        userId: user.id,
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword
       });
       alert('Password changed successfully!');
       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });

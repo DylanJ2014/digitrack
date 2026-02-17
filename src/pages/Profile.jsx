@@ -13,6 +13,12 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [changingPassword, setChangingPassword] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
 
   useEffect(() => {
     const loadUser = async () => {
@@ -64,6 +70,33 @@ export default function Profile() {
       console.error('Failed to save:', error);
       alert(`Failed to save: ${error.message || 'Please try again.'}`);
       setSaving(false);
+    }
+  };
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      alert('New passwords do not match');
+      return;
+    }
+    
+    if (passwordData.newPassword.length < 6) {
+      alert('New password must be at least 6 characters');
+      return;
+    }
+    
+    setChangingPassword(true);
+    
+    try {
+      await base44.auth.changePassword(passwordData.currentPassword, passwordData.newPassword);
+      alert('Password changed successfully!');
+      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (error) {
+      console.error('Failed to change password:', error);
+      alert(`Failed to change password: ${error.message || 'Please try again.'}`);
+    } finally {
+      setChangingPassword(false);
     }
   };
 
@@ -212,6 +245,60 @@ export default function Profile() {
                   Cancel
                 </Button>
               </div>
+            </form>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-white shadow-lg border-0 mt-6">
+          <CardHeader>
+            <CardTitle className="text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Change Password</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleChangePassword} className="space-y-4">
+              <div className="space-y-2">
+                <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Current Password</Label>
+                <Input
+                  type="password"
+                  value={passwordData.currentPassword}
+                  onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+                  className="border-gray-200 focus:border-teal-500 focus:ring-teal-500"
+                  style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>New Password</Label>
+                <Input
+                  type="password"
+                  value={passwordData.newPassword}
+                  onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                  className="border-gray-200 focus:border-teal-500 focus:ring-teal-500"
+                  style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Confirm New Password</Label>
+                <Input
+                  type="password"
+                  value={passwordData.confirmPassword}
+                  onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                  className="border-gray-200 focus:border-teal-500 focus:ring-teal-500"
+                  style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                  required
+                />
+              </div>
+
+              <Button
+                type="submit"
+                className="bg-teal-600 hover:bg-teal-700 text-white border-0"
+                style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                disabled={changingPassword}
+              >
+                {changingPassword ? 'Changing Password...' : 'Change Password'}
+              </Button>
             </form>
           </CardContent>
         </Card>

@@ -89,7 +89,11 @@ export default function Profile() {
     setChangingPassword(true);
     
     try {
-      await base44.auth.changePassword(passwordData.currentPassword, passwordData.newPassword);
+      await base44.auth.changePassword({
+        userId: user.id,
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword
+      });
       alert('Password changed successfully!');
       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
     } catch (error) {

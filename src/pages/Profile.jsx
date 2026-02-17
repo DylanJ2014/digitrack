@@ -90,15 +90,16 @@ export default function Profile() {
     
     try {
       await base44.auth.changePassword({
-        userId: user.id,
-        currentPassword: passwordData.currentPassword,
-        newPassword: passwordData.newPassword
+        user_id: user.id,
+        current_password: passwordData.currentPassword,
+        new_password: passwordData.newPassword
       });
       alert('Password changed successfully!');
       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
     } catch (error) {
       console.error('Failed to change password:', error);
-      alert(`Failed to change password: ${error.message || 'Please try again.'}`);
+      const errorMsg = error.data?.detail?.[0]?.msg || error.message || 'Please try again.';
+      alert(`Failed to change password: ${errorMsg}`);
     } finally {
       setChangingPassword(false);
     }

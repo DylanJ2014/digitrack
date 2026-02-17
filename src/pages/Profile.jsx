@@ -76,12 +76,18 @@ export default function Profile() {
   const handleChangePassword = async (e) => {
     e.preventDefault();
     
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
+    // Get values from form inputs directly
+    const formElements = e.target.elements;
+    const currentPassword = formElements.currentPassword.value;
+    const newPassword = formElements.newPassword.value;
+    const confirmPassword = formElements.confirmPassword.value;
+    
+    if (newPassword !== confirmPassword) {
       alert('New passwords do not match');
       return;
     }
     
-    if (passwordData.newPassword.length < 6) {
+    if (newPassword.length < 6) {
       alert('New password must be at least 6 characters');
       return;
     }
@@ -91,8 +97,8 @@ export default function Profile() {
     try {
       await base44.auth.changePassword({
         user_id: user.id,
-        current_password: passwordData.currentPassword,
-        new_password: passwordData.newPassword
+        current_password: currentPassword,
+        new_password: newPassword
       });
       alert('Password changed successfully!');
       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
@@ -264,6 +270,7 @@ export default function Profile() {
                 <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Current Password</Label>
                 <Input
                   type="password"
+                  name="currentPassword"
                   value={passwordData.currentPassword}
                   onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
                   className="border-gray-200 focus:border-teal-500 focus:ring-teal-500"
@@ -276,6 +283,7 @@ export default function Profile() {
                 <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>New Password</Label>
                 <Input
                   type="password"
+                  name="newPassword"
                   value={passwordData.newPassword}
                   onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
                   className="border-gray-200 focus:border-teal-500 focus:ring-teal-500"
@@ -288,6 +296,7 @@ export default function Profile() {
                 <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Confirm New Password</Label>
                 <Input
                   type="password"
+                  name="confirmPassword"
                   value={passwordData.confirmPassword}
                   onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
                   className="border-gray-200 focus:border-teal-500 focus:ring-teal-500"

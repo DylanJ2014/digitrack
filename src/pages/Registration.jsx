@@ -101,6 +101,7 @@ export default function Registration() {
           <p className="text-white text-base font-bold mt-2">Welcome to DigiTrack</p>
         </CardHeader>
         <CardContent className="px-8 pb-8">
+          <div className="bg-white rounded-lg p-6">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <Label className="text-gray-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Full Name</Label>
@@ -218,6 +219,7 @@ export default function Registration() {
               </Button>
             )}
           </form>
+          </div>
         </CardContent>
       </Card>
     </div>

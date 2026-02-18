@@ -24,6 +24,10 @@ export default function StaffDashboard({ user }) {
     queryFn: () => base44.entities.LostItem.list('-created_date'),
   });
 
+  const lostCount = allLostItems.filter(item => item.status === 'lost').length;
+  const awaitingCount = allLostItems.filter(item => item.status === 'awaiting_collection').length;
+  const locatedCount = allLostItems.filter(item => item.status === 'found').length;
+
   const markFoundMutation = useMutation({
     mutationFn: async (item) => {
       await base44.entities.LostItem.update(item.id, { 
@@ -325,13 +329,13 @@ export default function StaffDashboard({ user }) {
           <Tabs value={statusFilter} onValueChange={setStatusFilter} className="bg-white border border-gray-200 rounded-lg">
             <TabsList className="bg-transparent">
               <TabsTrigger value="lost" className="text-gray-700 data-[state=active]:bg-red-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                Lost
+                Lost ({lostCount})
               </TabsTrigger>
               <TabsTrigger value="awaiting_collection" className="text-gray-700 data-[state=active]:bg-amber-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                Awaiting Collection
+                Awaiting Collection ({awaitingCount})
               </TabsTrigger>
               <TabsTrigger value="located" className="text-gray-700 data-[state=active]:bg-green-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                Located
+                Located ({locatedCount})
               </TabsTrigger>
             </TabsList>
           </Tabs>

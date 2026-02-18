@@ -82,7 +82,7 @@ export default function Registration() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ fontFamily: 'Gill Sans, sans-serif', backgroundColor: '#254B77' }}>
       <Card className="w-full max-w-md shadow-xl bg-white border-0">
         <CardHeader className="text-center pb-6 pt-8">
           <div className="flex items-center justify-center gap-6 mb-6">
@@ -97,7 +97,7 @@ export default function Registration() {
               className="h-14"
             />
           </div>
-          <CardTitle className="text-2xl font-semibold text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Complete Your Registration</CardTitle>
+          <CardTitle className="text-2xl font-semibold text-gray-900" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Complete your Registration</CardTitle>
           <p className="text-gray-500 text-sm mt-2">Welcome to DigiTrack</p>
         </CardHeader>
         <CardContent className="px-8 pb-8">

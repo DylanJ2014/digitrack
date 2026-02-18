@@ -92,7 +92,7 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
         {item.status === 'found' && (
           <div className="mt-4 p-3 bg-green-50 rounded-md border border-green-200">
             <p className="text-sm text-green-700 font-medium" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-              ✓ {item.found_by === currentUserEmail && item.reported_by === currentUserEmail ? 'Successfully Located' : 'Item successfully claimed'}
+              ✓ {item.reported_by === currentUserEmail ? 'Item successfully found' : 'Item successfully claimed'}
             </p>
           </div>
         )}

@@ -30,7 +30,10 @@ export default function StudentDashboard({ user }) {
 
   const { data: allLostItems = [], isLoading: isLoadingAll } = useQuery({
     queryKey: ['allLostItems'],
-    queryFn: () => base44.entities.LostItem.filter({ status: 'lost' }, '-created_date'),
+    queryFn: async () => {
+      const allItems = await base44.entities.LostItem.list('-created_date');
+      return allItems.filter(item => item.status === 'lost');
+    },
   });
 
   const filteredAllItems = allLostItems.filter(item => 
@@ -90,8 +93,13 @@ export default function StudentDashboard({ user }) {
   });
 
   const handleMarkFound = (item) => {
-    setSelectedItem(item);
-    setReturnDialogOpen(true);
+    // If it's their own item, directly mark as located without popup
+    if (item.reported_by === user.email) {
+      markLocatedMutation.mutate(item.id);
+    } else {
+      setSelectedItem(item);
+      setReturnDialogOpen(true);
+    }
   };
 
   const handleConfirmReturn = () => {
@@ -307,13 +315,12 @@ export default function StudentDashboard({ user }) {
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {filteredAllItems.map((item) => {
-                  const isCreatedByMe = item.created_by === user.email;
                   return (
                     <LostItemCard 
                       key={item.id} 
                       item={item} 
-                      onMarkFound={!isCreatedByMe ? () => handleMarkFound(item) : undefined}
-                      isMarkingFound={markFoundMutation.isPending}
+                      onMarkFound={() => handleMarkFound(item)}
+                      isMarkingFound={markFoundMutation.isPending || markLocatedMutation.isPending}
                       showStudentInfo
                       currentUserEmail={user.email}
                     />

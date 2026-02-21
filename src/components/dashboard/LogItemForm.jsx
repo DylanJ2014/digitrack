@@ -101,24 +101,6 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
       {showStudentFields && !hideStudentFields && (
         <>
           <div className="space-y-2">
-            <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Full Name</Label>
-            <Input
-              value={formData.student_name}
-              onChange={(e) => setFormData({ ...formData, student_name: e.target.value })}
-              placeholder="Enter student's full name"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Form Group</Label>
-            <Input
-              value={formData.form_group}
-              onChange={(e) => setFormData({ ...formData, form_group: e.target.value })}
-              placeholder="e.g. 9A"
-              required
-            />
-          </div>
-          <div className="space-y-2">
             <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Email</Label>
             <Input
               type="email"

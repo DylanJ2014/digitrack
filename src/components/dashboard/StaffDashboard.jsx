@@ -131,12 +131,23 @@ export default function StaffDashboard({ user }) {
       } else {
         const newItem = await base44.entities.LostItem.create({
           ...data,
-          status: 'lost',
+          status: 'awaiting_collection',
           reported_by: data.student_email,
-          date_logged: new Date().toISOString().split('T')[0]
+          date_logged: new Date().toISOString().split('T')[0],
+          found_date: new Date().toISOString().split('T')[0],
+          found_by: user.email
         });
         
-        const message = `Your ${data.item_name} has been logged as lost by staff. You will be notified when it is found.`;
+        let office = '';
+        if (user.staff_role === 'Lost Property Coordinator - Prep') {
+          office = 'Prep Lost Property Office';
+        } else if (user.staff_role === 'Lost Property Coordinator - Pre-Prep') {
+          office = 'Pre-Prep Lost Property Office';
+        } else if (user.staff_role === 'Lost Property Coordinator - Senior') {
+          office = 'Senior Lost Property Office';
+        }
+        
+        const message = `Good News, your ${data.item_name} has been found by ${office}. Please head across to collect your item`;
         await base44.entities.Notification.create({
           user_email: data.student_email,
           message,
@@ -205,12 +216,23 @@ export default function StaffDashboard({ user }) {
           } else {
             const newItem = await base44.entities.LostItem.create({
               ...item,
-              status: 'lost',
+              status: 'awaiting_collection',
               reported_by: item.student_email,
-              date_logged: new Date().toISOString().split('T')[0]
+              date_logged: new Date().toISOString().split('T')[0],
+              found_date: new Date().toISOString().split('T')[0],
+              found_by: user.email
             });
             
-            const message = `Your ${item.item_name} has been logged as lost by staff. You will be notified when it is found.`;
+            let office = '';
+            if (user.staff_role === 'Lost Property Coordinator - Prep') {
+              office = 'Prep Lost Property Office';
+            } else if (user.staff_role === 'Lost Property Coordinator - Pre-Prep') {
+              office = 'Pre-Prep Lost Property Office';
+            } else if (user.staff_role === 'Lost Property Coordinator - Senior') {
+              office = 'Senior Lost Property Office';
+            }
+            
+            const message = `Good News, your ${item.item_name} has been found by ${office}. Please head across to collect your item`;
             await base44.entities.Notification.create({
               user_email: item.student_email,
               message,

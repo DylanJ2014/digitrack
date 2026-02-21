@@ -92,26 +92,12 @@ export default function StaffDashboard({ user }) {
 
   const createItemMutation = useMutation({
     mutationFn: async (data) => {
-      // Check if user exists
-      const allUsers = await base44.entities.User.list();
-      const userExists = allUsers.find(u => 
-        u.display_name?.toLowerCase() === data.student_name.toLowerCase() &&
-        u.form_group?.toLowerCase() === data.form_group.toLowerCase()
-      );
-      
-      if (!userExists) {
-        throw new Error('User does not exist in DigiTrack');
-      }
-      
       const allItems = await base44.entities.LostItem.list();
       const existingItem = allItems.find(existing => 
-        existing.student_name.toLowerCase() === data.student_name.toLowerCase() &&
         existing.item_name.toLowerCase() === data.item_name.toLowerCase() &&
         existing.reported_by?.toLowerCase() === data.student_email.toLowerCase() &&
         existing.status === 'lost'
       );
-      
-      const reportedByEmail = data.student_email;
       
       if (existingItem) {
         await base44.entities.LostItem.update(existingItem.id, {
@@ -120,8 +106,6 @@ export default function StaffDashboard({ user }) {
           found_by: user.email,
           last_location: data.last_location || existingItem.last_location
         });
-        
-        const studentEmail = existingItem.reported_by;
         
         let locationMessage = '';
         if (user.staff_role === 'Lost Property Coordinator - Prep') {
@@ -136,7 +120,7 @@ export default function StaffDashboard({ user }) {
         const notificationMessage = `Great news! Your ${existingItem.item_name} has been located by ${finderName} and is ready for collection. ${locationMessage}`;
         
         await base44.entities.Notification.create({
-          user_email: studentEmail,
+          user_email: data.student_email,
           message: notificationMessage,
           item_name: existingItem.item_name,
           item_id: existingItem.id,
@@ -145,13 +129,22 @@ export default function StaffDashboard({ user }) {
         
         return { matched: true };
       } else {
-        await base44.entities.LostItem.create({
+        const newItem = await base44.entities.LostItem.create({
           ...data,
-          year_group: extractYearGroup(data.form_group),
           status: 'lost',
-          reported_by: reportedByEmail,
+          reported_by: data.student_email,
           date_logged: new Date().toISOString().split('T')[0]
         });
+        
+        const message = `Your ${data.item_name} has been logged as lost by staff. You will be notified when it is found.`;
+        await base44.entities.Notification.create({
+          user_email: data.student_email,
+          message,
+          item_name: data.item_name,
+          item_id: newItem.id,
+          is_read: false
+        });
+        
         return { matched: false };
       }
     },
@@ -170,70 +163,66 @@ export default function StaffDashboard({ user }) {
   const bulkCreateMutation = useMutation({
     mutationFn: async (items) => {
       const allItems = await base44.entities.LostItem.list();
-      const allUsers = await base44.entities.User.list();
       const results = { matched: 0, created: 0, errors: [] };
       
       for (const item of items) {
-        // Check if user exists
-        const userExists = allUsers.find(u => 
-          u.display_name?.toLowerCase() === item.student_name.toLowerCase() &&
-          u.form_group?.toLowerCase() === item.form_group.toLowerCase()
-        );
-        
-        if (!userExists) {
-          results.errors.push(`${item.student_name} (${item.form_group}) does not exist in DigiTrack`);
-          continue;
-        }
-        
-        const existingItem = allItems.find(existing => 
-          existing.student_name.toLowerCase() === item.student_name.toLowerCase() &&
-          existing.item_name.toLowerCase() === item.item_name.toLowerCase() &&
-          existing.reported_by?.toLowerCase() === item.student_email.toLowerCase() &&
-          existing.status === 'lost'
-        );
-        
-        const reportedByEmail = item.student_email;
-        
-        if (existingItem) {
-          await base44.entities.LostItem.update(existingItem.id, {
-            status: 'awaiting_collection',
-            found_date: new Date().toISOString().split('T')[0],
-            found_by: user.email,
-            last_location: item.last_location || existingItem.last_location
-          });
+        try {
+          const existingItem = allItems.find(existing => 
+            existing.item_name.toLowerCase() === item.item_name.toLowerCase() &&
+            existing.reported_by?.toLowerCase() === item.student_email.toLowerCase() &&
+            existing.status === 'lost'
+          );
           
-          const studentEmail = existingItem.reported_by;
-          
-          let locationMessage = '';
-          if (user.staff_role === 'Lost Property Coordinator - Prep') {
-            locationMessage = 'Head to Prep Lost Property';
-          } else if (user.staff_role === 'Lost Property Coordinator - Pre-Prep') {
-            locationMessage = 'Head to Pre-Prep Lost Property';
-          } else if (user.staff_role === 'Lost Property Coordinator - Senior') {
-            locationMessage = 'Head to Senior Lost Property';
+          if (existingItem) {
+            await base44.entities.LostItem.update(existingItem.id, {
+              status: 'awaiting_collection',
+              found_date: new Date().toISOString().split('T')[0],
+              found_by: user.email,
+              last_location: item.last_location || existingItem.last_location
+            });
+            
+            let locationMessage = '';
+            if (user.staff_role === 'Lost Property Coordinator - Prep') {
+              locationMessage = 'Head to Prep Lost Property';
+            } else if (user.staff_role === 'Lost Property Coordinator - Pre-Prep') {
+              locationMessage = 'Head to Pre-Prep Lost Property';
+            } else if (user.staff_role === 'Lost Property Coordinator - Senior') {
+              locationMessage = 'Head to Senior Lost Property';
+            }
+            
+            const finderName = user.display_name || user.full_name;
+            const notificationMessage = `Great news! Your ${existingItem.item_name} has been located by ${finderName} and is ready for collection. ${locationMessage}`;
+            
+            await base44.entities.Notification.create({
+              user_email: item.student_email,
+              message: notificationMessage,
+              item_name: existingItem.item_name,
+              item_id: existingItem.id,
+              is_read: false
+            });
+            
+            results.matched++;
+          } else {
+            const newItem = await base44.entities.LostItem.create({
+              ...item,
+              status: 'lost',
+              reported_by: item.student_email,
+              date_logged: new Date().toISOString().split('T')[0]
+            });
+            
+            const message = `Your ${item.item_name} has been logged as lost by staff. You will be notified when it is found.`;
+            await base44.entities.Notification.create({
+              user_email: item.student_email,
+              message,
+              item_name: item.item_name,
+              item_id: newItem.id,
+              is_read: false
+            });
+            
+            results.created++;
           }
-          
-          const finderName = user.display_name || user.full_name;
-          const notificationMessage = `Great news! Your ${existingItem.item_name} has been located by ${finderName} and is ready for collection. ${locationMessage}`;
-          
-          await base44.entities.Notification.create({
-            user_email: studentEmail,
-            message: notificationMessage,
-            item_name: existingItem.item_name,
-            item_id: existingItem.id,
-            is_read: false
-          });
-          
-          results.matched++;
-        } else {
-          await base44.entities.LostItem.create({
-            ...item,
-            year_group: extractYearGroup(item.form_group),
-            status: 'lost',
-            reported_by: reportedByEmail,
-            date_logged: new Date().toISOString().split('T')[0]
-          });
-          results.created++;
+        } catch (error) {
+          results.errors.push(`${item.student_email}: ${error.message}`);
         }
       }
       
@@ -250,14 +239,7 @@ export default function StaffDashboard({ user }) {
     },
   });
 
-  const extractYearGroup = (formGroup) => {
-    const match = formGroup?.match(/(\d+)/);
-    if (match) {
-      const year = parseInt(match[1]);
-      if (year >= 7 && year <= 13) return `Year ${year}`;
-    }
-    return 'Year 7';
-  };
+
 
   const filteredItems = allLostItems.filter(item => {
     if (statusFilter === 'lost') return item.status === 'lost';

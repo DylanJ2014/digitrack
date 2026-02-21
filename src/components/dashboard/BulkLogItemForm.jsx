@@ -8,11 +8,11 @@ import { Plus, X } from 'lucide-react';
 
 export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation }) {
   const [items, setItems] = useState([
-    { student_name: '', form_group: '', student_email: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '' }
+    { student_name: '', student_email: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '' }
   ]);
 
   const addItem = () => {
-    setItems([...items, { student_name: '', form_group: '', student_email: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '' }]);
+    setItems([...items, { student_name: '', student_email: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '' }]);
   };
 
   const removeItem = (index) => {
@@ -80,28 +80,6 @@ export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation 
             </h4>
             
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Name *</Label>
-                <Input
-                  value={item.student_name}
-                  onChange={(e) => updateItem(index, 'student_name', e.target.value)}
-                  placeholder="Full name"
-                  required
-                  style={{ fontFamily: 'Gill Sans, sans-serif' }}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Form Group *</Label>
-                <Input
-                  value={item.form_group}
-                  onChange={(e) => updateItem(index, 'form_group', e.target.value)}
-                  placeholder="e.g. 9A"
-                  required
-                  style={{ fontFamily: 'Gill Sans, sans-serif' }}
-                />
-              </div>
-
               <div className="space-y-2">
                 <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Email *</Label>
                 <Input

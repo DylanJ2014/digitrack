@@ -6,7 +6,7 @@ import LostItemCard from './LostItemCard';
 import LogItemForm from './LogItemForm';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Plus, Search, RefreshCw } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -205,18 +205,6 @@ export default function StudentDashboard({ user }) {
             {user.display_name || user.full_name}'s Lost Items
           </h2>
           <div className="flex gap-2 sm:gap-3 flex-wrap">
-            <Button 
-              variant="outline"
-              className="flex-1 sm:flex-none border-gray-300" 
-              style={{ fontFamily: 'Gill Sans, sans-serif' }}
-              onClick={() => {
-                queryClient.invalidateQueries({ queryKey: ['myLostItems', user.email] });
-                queryClient.invalidateQueries({ queryKey: ['allLostItems'] });
-              }}
-            >
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh
-            </Button>
             <Dialog open={showForm} onOpenChange={setShowForm}>
               <DialogTrigger asChild>
                 <Button className="bg-teal-600 hover:bg-teal-700 text-white border-0 flex-1 sm:flex-none" style={{ fontFamily: 'Gill Sans, sans-serif' }}>

@@ -81,7 +81,7 @@ export default function About() {
               </li>
               <li className="flex items-start">
                 <span className="text-green-600 mr-2">✓</span>
-                <span className="text-gray-700">Status tracking from lost to located</span>
+                <span className="text-gray-700">Status tracking from lost to returned</span>
               </li>
             </ul>
           </CardContent>

@@ -81,6 +81,16 @@ export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation 
             
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
+                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Name</Label>
+                <Input
+                  value={item.student_name}
+                  onChange={(e) => updateItem(index, 'student_name', e.target.value)}
+                  placeholder="Full name"
+                  style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                />
+              </div>
+
+              <div className="space-y-2">
                 <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Student Email *</Label>
                 <Input
                   type="email"

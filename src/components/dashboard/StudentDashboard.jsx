@@ -251,7 +251,7 @@ export default function StudentDashboard({ user }) {
                     Awaiting Collection
                   </TabsTrigger>
                   <TabsTrigger value="found" className="text-gray-700 data-[state=active]:bg-green-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                    Located
+                    Returned
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
@@ -261,7 +261,7 @@ export default function StudentDashboard({ user }) {
             ) : myLostItems.filter(item => item.status === statusFilter).length === 0 ? (
               <div className="bg-white rounded-lg shadow-md p-8 text-center">
                 <p className="text-gray-600 text-lg" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                  No {statusFilter === 'lost' ? 'Lost' : statusFilter === 'awaiting_collection' ? 'Awaiting Collection' : 'Located'} items.
+                  No {statusFilter === 'lost' ? 'Lost' : statusFilter === 'awaiting_collection' ? 'Awaiting Collection' : 'Returned'} items.
                 </p>
               </div>
             ) : (

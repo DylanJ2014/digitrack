@@ -330,7 +330,7 @@ export default function StaffDashboard({ user }) {
                 Awaiting Collection ({awaitingCount})
               </TabsTrigger>
               <TabsTrigger value="located" className="text-gray-700 data-[state=active]:bg-green-500 data-[state=active]:text-white" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-                Located ({locatedCount})
+                Returned ({locatedCount})
               </TabsTrigger>
             </TabsList>
           </Tabs>

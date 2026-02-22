@@ -64,7 +64,7 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
             disabled={isMarkingFound}
           >
             <CheckCircle className="h-4 w-4 mr-2" />
-            Mark as Returned
+            Mark as Located
           </Button>
         )}
         {item.status === 'lost' && onMarkLocated && (
@@ -86,7 +86,7 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
             disabled={isMarkingLocated}
           >
             <CheckCircle className="h-4 w-4 mr-2" />
-            Returned
+            Mark as Returned
           </Button>
         )}
         {item.status === 'found' && (

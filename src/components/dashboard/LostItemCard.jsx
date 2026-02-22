@@ -28,7 +28,7 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
           {item.status === 'awaiting_collection' ? (
             <Badge className="bg-amber-500 hover:bg-amber-600" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Awaiting Collection</Badge>
           ) : item.status === 'found' ? (
-            <Badge className="bg-green-500 hover:bg-green-600" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Located</Badge>
+            <Badge className="bg-green-500 hover:bg-green-600" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Returned</Badge>
           ) : (
             <Badge variant="destructive" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Lost</Badge>
           )}
@@ -64,7 +64,7 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
             disabled={isMarkingFound}
           >
             <CheckCircle className="h-4 w-4 mr-2" />
-            Mark as Located
+            Mark as Returned
           </Button>
         )}
         {item.status === 'lost' && onMarkLocated && (
@@ -75,7 +75,7 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
             disabled={isMarkingLocated}
           >
             <CheckCircle className="h-4 w-4 mr-2" />
-            Mark as Located
+            Mark as Returned
           </Button>
         )}
         {item.status === 'awaiting_collection' && onMarkLocated && (
@@ -86,7 +86,7 @@ export default function LostItemCard({ item, onMarkFound, isMarkingFound, showSt
             disabled={isMarkingLocated}
           >
             <CheckCircle className="h-4 w-4 mr-2" />
-            Located
+            Returned
           </Button>
         )}
         {item.status === 'found' && (

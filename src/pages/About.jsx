@@ -126,7 +126,7 @@ export default function About() {
               </div>
               <div className="md:w-2/3 space-y-4 text-gray-700">
                 <p>
-                  DigiTrack was founded in 2024 by Dylan Jubraj (current Caterham Senior School student).
+                  DigiTrack was founded in 2024 by Dylan Jubraj (current Caterham School student).
                 </p>
                 <p>
                   Dylan and his friends often lose their school belongings which are costly to replace and utilises a lot of time and effort from parents, children and staff to locate items.

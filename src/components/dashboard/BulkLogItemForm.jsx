@@ -66,7 +66,8 @@ export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation 
     
     const processedItems = items.map(item => ({
       ...item,
-      item_name: item.item_category === 'Other' ? item.item_name : item.item_category
+      item_name: item.item_category === 'Other' ? item.item_name : item.item_category,
+      photo_url: item.photo_url || undefined
     }));
     onSubmit(processedItems);
   };

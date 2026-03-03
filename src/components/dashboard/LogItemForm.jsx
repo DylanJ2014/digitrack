@@ -9,6 +9,22 @@ import { Camera, Upload, X } from 'lucide-react';
 
 export default function LogItemForm({ onSubmit, isLoading, studentName, formGroup, hideStudentFields, hideLastLocation }) {
   const [loggingFor, setLoggingFor] = useState('myself'); // 'myself' or 'someone-else'
+  const [photoUrl, setPhotoUrl] = useState('');
+  const [photoPreview, setPhotoPreview] = useState('');
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
+
+  const handlePhotoUpload = async (file) => {
+    if (!file) return;
+    setUploadingPhoto(true);
+    const preview = URL.createObjectURL(file);
+    setPhotoPreview(preview);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    setPhotoUrl(file_url);
+    setUploadingPhoto(false);
+  };
+
   const [formData, setFormData] = useState({
     student_name: studentName || '',
     form_group: formGroup || '',

@@ -215,6 +215,55 @@ export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation 
                   />
                 </div>
               )}
+
+              <div className="col-span-2 space-y-2">
+                <Label style={{ fontFamily: 'Gill Sans, sans-serif' }}>Photo of Item (optional)</Label>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="flex-1 border-gray-300"
+                    style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                    onClick={() => fileInputRefs.current[index]?.click()}
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload Photo
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="flex-1 border-gray-300"
+                    style={{ fontFamily: 'Gill Sans, sans-serif' }}
+                    onClick={() => cameraInputRefs.current[index]?.click()}
+                  >
+                    <Camera className="h-4 w-4 mr-2" />
+                    Take Photo
+                  </Button>
+                </div>
+                <input
+                  ref={el => fileInputRefs.current[index] = el}
+                  type="file" accept="image/*" className="hidden"
+                  onChange={(e) => handlePhotoUpload(index, e.target.files[0])}
+                />
+                <input
+                  ref={el => cameraInputRefs.current[index] = el}
+                  type="file" accept="image/*" capture="environment" className="hidden"
+                  onChange={(e) => handlePhotoUpload(index, e.target.files[0])}
+                />
+                {item.uploading_photo && <p className="text-sm text-gray-500" style={{ fontFamily: 'Gill Sans, sans-serif' }}>Uploading photo...</p>}
+                {item.photo_preview && !item.uploading_photo && (
+                  <div className="relative inline-block mt-2">
+                    <img src={item.photo_preview} alt="Item preview" className="h-32 w-32 object-cover rounded-lg border border-gray-200" />
+                    <button
+                      type="button"
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5"
+                      onClick={() => { updateItem(index, 'photo_preview', ''); updateItem(index, 'photo_url', ''); }}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ))}

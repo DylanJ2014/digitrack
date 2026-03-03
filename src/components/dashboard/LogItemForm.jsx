@@ -75,7 +75,8 @@ export default function LogItemForm({ onSubmit, isLoading, studentName, formGrou
     
     const submitData = {
       ...formData,
-      item_name: formData.item_category === 'Other' ? formData.item_name : formData.item_category
+      item_name: formData.item_category === 'Other' ? formData.item_name : formData.item_category,
+      photo_url: photoUrl || undefined
     };
     onSubmit(submitData);
   };

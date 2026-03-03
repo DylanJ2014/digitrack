@@ -25,7 +25,7 @@ export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation 
   };
 
   const addItem = () => {
-    setItems([...items, { student_name: '', student_email: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '' }]);
+    setItems([...items, { student_name: '', student_email: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '', photo_url: '', photo_preview: '', uploading_photo: false }]);
   };
 
   const removeItem = (index) => {

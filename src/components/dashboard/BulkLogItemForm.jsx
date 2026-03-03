@@ -9,8 +9,20 @@ import { base44 } from '@/api/base44Client';
 
 export default function BulkLogItemForm({ onSubmit, isLoading, hideLastLocation }) {
   const [items, setItems] = useState([
-    { student_name: '', student_email: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '' }
+    { student_name: '', student_email: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '', photo_url: '', photo_preview: '', uploading_photo: false }
   ]);
+  const fileInputRefs = useRef([]);
+  const cameraInputRefs = useRef([]);
+
+  const handlePhotoUpload = async (index, file) => {
+    if (!file) return;
+    const preview = URL.createObjectURL(file);
+    updateItem(index, 'photo_preview', preview);
+    updateItem(index, 'uploading_photo', true);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    updateItem(index, 'photo_url', file_url);
+    updateItem(index, 'uploading_photo', false);
+  };
 
   const addItem = () => {
     setItems([...items, { student_name: '', student_email: '', item_name: '', item_category: '', description: '', date_lost: '', last_location: '' }]);

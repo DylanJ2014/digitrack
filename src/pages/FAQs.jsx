@@ -72,7 +72,7 @@ export default function FAQs() {
                 <ul className="space-y-2">
                   <li><strong>Lost:</strong> The item has been reported as lost and is still missing.</li>
                   <li><strong>Awaiting Collection:</strong> The item has been found and is ready for you to collect.</li>
-                  <li><strong>Located:</strong> The item has been successfully reunited with its owner.</li>
+                  <li><strong>Returned:</strong> The item has been successfully reunited with its owner.</li>
                 </ul>
               </AccordionContent>
             </AccordionItem>

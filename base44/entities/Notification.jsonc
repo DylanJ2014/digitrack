@@ -1,0 +1,32 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user to notify"
+    },
+    "message": {
+      "type": "string",
+      "description": "Notification message"
+    },
+    "item_name": {
+      "type": "string",
+      "description": "Name of the found item"
+    },
+    "item_id": {
+      "type": "string",
+      "description": "ID of the lost item"
+    },
+    "is_read": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the notification has been read"
+    }
+  },
+  "required": [
+    "user_email",
+    "message",
+    "item_name"
+  ]
+}

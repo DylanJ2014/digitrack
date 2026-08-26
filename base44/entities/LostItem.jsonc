@@ -1,0 +1,82 @@
+{
+  "name": "LostItem",
+  "type": "object",
+  "properties": {
+    "student_name": {
+      "type": "string",
+      "description": "Full name of the student who lost the item"
+    },
+    "form_group": {
+      "type": "string",
+      "description": "Form group of the student"
+    },
+    "year_group": {
+      "type": "string",
+      "enum": [
+        "Year 7",
+        "Year 8",
+        "Year 9",
+        "Year 10",
+        "Year 11",
+        "Year 12",
+        "Year 13"
+      ],
+      "description": "Year group extracted from form group"
+    },
+    "item_name": {
+      "type": "string",
+      "description": "Name of the lost item"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the lost item"
+    },
+    "date_lost": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the item was lost"
+    },
+    "date_logged": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the item was logged into the system"
+    },
+    "last_location": {
+      "type": "string",
+      "description": "Last known location of the item"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "lost",
+        "found",
+        "awaiting_collection"
+      ],
+      "default": "lost",
+      "description": "Current status of the item"
+    },
+    "found_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when item was marked as found"
+    },
+    "found_by": {
+      "type": "string",
+      "description": "Email of user who marked item as found"
+    },
+    "reported_by": {
+      "type": "string",
+      "description": "Email of user who reported the item"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "URL of the photo of the lost item"
+    }
+  },
+  "required": [
+    "student_name",
+    "item_name",
+    "date_lost",
+    "date_logged"
+  ]
+}
